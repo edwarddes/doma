@@ -143,48 +143,6 @@ if(isset($QR) && $QR->IsValid)
 }
 ?>
 </div>
-<?php
-  if(__("SHOW_COMMENT") && $map->Comment != "") print '<div id="comment">'. nl2br($map->Comment) .'</div>';
-
-  if(__("SHOW_VISITOR_COMMENTS"))
-  {
-?>
-<div class="clear"></div>
-<a id="showPostedComments"<?php if($vd["ShowComments"]) print ' class="hidden"'; ?> href="#"><?php print __("SHOW_COMMENTS"); ?></a>
-<a id="hidePostedComments"<?php if(!$vd["ShowComments"]) print ' class="hidden"'; ?> href="#"><?php print __("HIDE_COMMENTS"); ?></a>
-(<span id="comments_count"><?php print count($vd["Comments"]); ?></span>)
-</div>
-
-<div id="postedComments"<?php if(!$vd["ShowComments"]) print ' class="hidden"'; ?>">
-  <?php 
-    foreach($vd["Comments"] as $comment) 
-    {
-      include(dirname(__FILE__) ."/show_comment.php");
-    }
-  ?>
-</div>
-  
-<div class="commentBox<?php if(!$vd["ShowComments"]) print " hidden"; ?>" id="commentBox">
-  <div id="commentBoxHeader"><?php print __("POST_COMMENTS") ?></a></div>
-  <div id="userDetails">
-    <input type="hidden" id="map_user" value="<?php print getCurrentUser()->Username ?>">
-    <label for="user_name"><?php print __("NAME") ?>:</label>
-    <input type="text" id="user_name"<?php if(Helper::IsLoggedInUser()) print " value='" . hsc(Helper::GetLoggedInUser()->FirstName. " " .Helper::GetLoggedInUser()->LastName) ."'"; ?> /> 
-    <label id="userEmailLabel" for="user_email"><?php print __("EMAIL") ?>:</label>
-    <input type="text" id="user_email"<?php if(Helper::IsLoggedInUser()) print "value='". hsc(Helper::GetLoggedInUser()->Email) ."'"; ?> />
-  </div>
-  <textarea id="commentMark" name="commentMark"></textarea>
-  <a id="submitComment" href="#" class="small button comment"><?php print __("SAVE") ?></a>
-  <input type="hidden" id="missingCommentText" value="<?php print hsc(__("MISSING_COMMENT")); ?>"/>
-  <input type="hidden" id="invalidEmailText" value="<?php print hsc(__("INVALID_EMAIL")); ?>"/>
-  <input type="hidden" id="commentDeleteConfirmationText" value="<?php print hsc(__("COMMENT_DELETE_CONFIRMATION")); ?>"/>
-  </div>
-
-<?php 
-}
-?>
-
-
 
 <div class="clear"></div>
 

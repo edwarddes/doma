@@ -56,7 +56,7 @@
       if($startDate) $where[] = "DATE(M.Date)>='$startDateString'";
       if($endDate) $where[] = "DATE(M.Date)<='$endDateString'";
       if($categoryID) $where[] = "M.CategoryID='$categoryID'";
-      if($filter != null && $filter != "") $where[] = "(M.Name LIKE '%$filter%' OR M.Comment LIKE '%$filter%' OR M.Organiser LIKE '%$filter%' OR M.Country LIKE '%$filter%' OR M.Discipline LIKE '%$filter%' OR M.MapName LIKE '%$filter%')";
+      if($filter != null && $filter != "") $where[] = "(M.Name LIKE '%$filter%' OR M.Organiser LIKE '%$filter%' OR M.Country LIKE '%$filter%' OR M.Discipline LIKE '%$filter%' OR M.MapName LIKE '%$filter%')";
       $where[] = "(M.ProtectedUntil IS NULL OR M.ProtectedUntil<='$now' OR M.UserID='$requestingUserID')";
 
       $sql = "SELECT M.*, M.ID AS MapID, M.Name AS Map_Name, C.*, C.Name AS CategoryName, U.* FROM `". DB_MAP_TABLE ."` M ".
@@ -782,64 +782,6 @@
 	  $error = mysqli_error($GLOBALS["dbCon"]);
       if($error) Helper::WriteToLog("MYSQL ERROR: ". $error);
       return $result;
-    }
-
-    public static function GetCommentsByMapId($mapId)
-    {
-      $mapId = mysqli_real_escape_string($GLOBALS["dbCon"], $mapId);
-      $sql = "SELECT C.* ".
-             "FROM `". DB_COMMENT_TABLE ."` C ".
-             "WHERE C.MapID='$mapId' ".
-             "ORDER BY C.DateCreated";
-
-      $rs = self::Query($sql);
-
-      $comments = array();
-      while($r = mysqli_fetch_assoc($rs))
-      {
-        $comment = new Comment();
-        $comment->LoadFromArray($r);
-        $comments[$comment->ID] = $comment;
-      }
-
-      return $comments;
-    }
-    public static function GetLastComments($numberOfComments, $requestingUserID = 0)
-    {
-      $numberOfComments = (int)$numberOfComments;
-      $requestingUserID = mysqli_real_escape_string($GLOBALS["dbCon"], $requestingUserID);
-      $now = mysqli_real_escape_string($GLOBALS["dbCon"], gmdate("Y-m-d H:i:s"));
-      $sql = "select distinct m.ID, m.UserID, m.Name, ".
-      "(select concat(FirstName,' ',LastName) from `". DB_USER_TABLE ."` where id=m.userid) as user_flname, ".
-      "(select UserName from `". DB_USER_TABLE ."` where id=m.userid) as user_name, ".
-      "(select count(*) from `". DB_COMMENT_TABLE ."` where mapid=m.id) as comments_count, ".
-      "(select name from `". DB_COMMENT_TABLE ."` where mapid=m.id order by datecreated desc limit 0,1) as comment_name, ".
-      "(select datecreated from `". DB_COMMENT_TABLE ."` where mapid=m.id order by datecreated desc limit 0,1) as comment_date ".
-      "from `". DB_MAP_TABLE ."` as m ".
-      "inner join `". DB_COMMENT_TABLE ."` as c on m.id=c.mapid ".
-      "WHERE (m.ProtectedUntil IS NULL OR m.ProtectedUntil<='$now' OR m.UserID='$requestingUserID') ".
-      "order by comment_date desc ".
-      "limit 0,$numberOfComments";
-
-      $rs = self::Query($sql);
-
-      $last_comments = array();
-
-      while($r = mysqli_fetch_assoc($rs))
-      {
-        $last_comment = array();
-        $last_comment["ID"]=$r["ID"];
-        $last_comment["UserID"]=$r["UserID"];
-        $last_comment["UserName"]=$r["user_name"];
-        $last_comment["UserFLName"]=$r["user_flname"];
-        $last_comment["Name"]=$r["Name"];
-        $last_comment["CommentsCount"]=$r["comments_count"];
-        $last_comment["CommentName"]=$r["comment_name"];
-        $last_comment["CommentDate"]=$r["comment_date"];
-        $last_comments[$last_comment["ID"]] = $last_comment;
-      }
-
-      return $last_comments;
     }
   }
 ?>

@@ -95,9 +95,6 @@
   // *********************************************************************************************************
   //   SETTINGS ADDED IN DOMA 3.0
   // *********************************************************************************************************
-  // The name of the database tables where visitor comment information is stored. Do not change unless you have a reason.
-  // The database table must _not_ exist before creation of the site.
-  define('DB_COMMENT_TABLE', 'doma_comments');
 
   // Path to temporary file storage directory, relative to this file. Don't change unless you have a good reason.
   // The directory is created during creation. Write access to the directory for the server user account under which PHP runs is required.

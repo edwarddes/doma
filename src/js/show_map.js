@@ -16,88 +16,8 @@ $(document).ready(function()
     ToggleImage();
   });
   
-  $('#hidePostedComments').click(function() {
-    $("#postedComments").hide();
-    $("#commentBox").hide();
-    $('#hidePostedComments').toggle();
-    $('#showPostedComments').toggle();
-    reloadGM();
-    return false;
-  });	
-
-  $('#showPostedComments').click(function() {
-    $("#postedComments").show();
-    $("#commentBox").show();
-    //$("#commentMark").focus();
-    $("#commentBox").children("a#submitComment").show();    
-    $('#showPostedComments').toggle();
-    $('#hidePostedComments').toggle();
-    reloadGM();
-    return false;
-  });	
   
   $("abbr.timeago").timeago();
-  
-  //SubmitComment
-  $('a.comment').click(function() {
-    var id =  $("#id").val();	
-    var comment_text = $("#commentMark").val();
-    var user_name = $("#user_name").val();
-    var user_email = $("#user_email").val();
-    var map_user = $("#map_user").val();
-    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    var passed = false;
-    if((comment_text == "")||(user_name == ""))
-    {
-      alert($("#missingCommentText").val());
-    }
-    else
-    {
-      passed = true;
-    }
-    if((user_email != "")&&(!emailReg.test(user_email)))
-    {
-      alert($("#invalidEmailText").val());
-      passed = false;
-    }
-    if(passed)
-    {
-      $.post(
-        "add_comment.php", 
-        { comment_text: comment_text, map_id: id, user_name: user_name, user_email: user_email, user: map_user },
-        function(response)
-        {
-          $('#postedComments').append($(response).fadeIn('slow'));
-          $("abbr.timeago").timeago();
-          $("#comments_count").text( $("#postedComments > div").size());
-          $("#commentMark").val("");
-        }
-      );
-    }
-    
-  });
-  
-  	//deleteComment
-		$('a.c_delete').live("click", function(e){
-			if(confirm($("#commentDeleteConfirmationText").val())==false)
-			return false;
-			e.preventDefault();
-			var parent  = $('a.c_delete').parent();
-			var c_id =  $(this).attr('id').replace('CID-','');	
-			$.ajax({
-				type: 'get',
-				url: 'delete_comment.php?cid='+ c_id,
-				data: '',
-				beforeSend: function(){
-				},
-				success: function(){
-					$('#commentPanel-'+c_id).fadeOut(200,function(){
-						$('#commentPanel-'+c_id).remove();
-					});
-          $("#comments_count").text( $("#comments_count").text() - 1);
-				}
-			});
-		});
     
     reloadGM();
   

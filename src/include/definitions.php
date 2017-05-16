@@ -19,7 +19,6 @@
 
   // set default values to new configuration settings added in DOMA version 3 and later that the user has not specified in config.php
   $newConfigurationSettings = array(
-    'DB_COMMENT_TABLE' => 'doma_comments',
     'TEMP_FILE_PATH' => 'temp',
     'SHOW_LANGUAGES_IN_TOPBAR' => '1',
     'LANGUAGES_AVAILABLE' => 'Česky;cs|Dansk;da|Deutsch;de|Eesti;et|English;en|Español;es|Français;fr|Italiano;it|Magyar;hu|Norsk;nb|Polski;pl|Português;pt|Русский;ru|Svenska;sv|Türkçe;tr|Український;ua',

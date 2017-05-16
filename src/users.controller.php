@@ -28,12 +28,6 @@
         : (isset($_GET["lastMaps"]) && $_GET["lastMaps"] == "all" ? 999999 : 10);
       $viewData["LastMaps"] = DataAccess::GetMaps(0, 0, 0, 0, null, $numberOfMaps, "createdTime", Helper::GetLoggedInUserID());
       
-      // last x comments
-      $numberOfComments = isset($_GET["lastComments"]) && is_numeric($_GET["lastComments"]) 
-        ? (int)$_GET["lastComments"] 
-        : (isset($_GET["lastComments"]) && $_GET["lastComments"] == "all" ? 999999 : 10);
-      $viewData["LastComments"] = DataAccess::GetLastComments($numberOfComments, Helper::GetLoggedInUserID());
-      
       $viewData["OverviewMapData"] = null;
       $categories = DataAccess::GetCategoriesByUserID();
       foreach($viewData["LastMaps"] as $map)

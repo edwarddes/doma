@@ -62,12 +62,6 @@
               "ALTER TABLE `". DB_MAP_TABLE ."` CHANGE `Name` `Name` VARCHAR(100) character set utf8 collate $collation NOT NULL")
             ),
 
-      array("version" => "3.0.1",
-            "scripts" => array(
-               //comments
-              "CREATE TABLE `". DB_COMMENT_TABLE ."` (`ID` int(10) NOT NULL AUTO_INCREMENT, `MapID` int(10) NOT NULL, `Name` varchar(200) CHARACTER SET utf8 NOT NULL, `Email` varchar(200) CHARACTER SET utf8 DEFAULT NULL, `Comment` text CHARACTER SET utf8 NOT NULL, `DateCreated` datetime NOT NULL, `UserIP` varchar(200) CHARACTER SET utf8 NOT NULL, PRIMARY KEY (`ID`)) ENGINE = MYISAM DEFAULT CHARSET=utf8")
-           ),
-
       array("version" => "3.0.2",
             "scripts" => array(
               //some indices

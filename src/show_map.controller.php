@@ -25,8 +25,6 @@
       if(Helper::MapIsProtected($map)) die("The map is protected until ". date("Y-m-d H:i:s", Helper::StringToTime($map->ProtectedUntil, true)) .".");
             
       if($map->UserID != getCurrentUser()->ID) die();
-      
-      $viewData["Comments"] = DataAccess::GetCommentsByMapId($map->ID);
 
       $viewData["Name"] = $map->Name .' ('. date(__("DATE_FORMAT"), Helper::StringToTime($map->Date, true)) .')';
 
