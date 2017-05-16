@@ -199,7 +199,6 @@
             'RelayLeg' => array('name' => 'RelayLeg', 'type' => 'xsd:string'),
             'MapName' => array('name' => 'MapName', 'type' => 'xsd:string'),
             'ResultListUrl' => array('name' => 'ResultListUrl', 'type' => 'xsd:string'),
-            'Comment' => array('name' => 'Comment', 'type' => 'xsd:string'),
             'MapImageData' => array('name' => 'MapImageData', 'type' => 'xsd:base64Binary'),
             'MapImageFileExtension' => array('name' => 'MapImageFileExtension', 'type' => 'xsd:string'),
             'BlankMapImageData' => array('name' => 'BlankMapImageData', 'type' => 'xsd:base64Binary')
@@ -369,7 +368,6 @@
           "RelayLeg" => $m->RelayLeg,
           "MapName" => $m->MapName,
           "ResultListUrl" => $m->ResultListUrl,
-          "Comment" => $m->Comment
         );
       }
       $errorMessage = mysqli_error($GLOBALS["dbCon"]);
@@ -451,7 +449,6 @@
       $map->RelayLeg = $mapInfo["RelayLeg"];
       $map->MapName = $mapInfo["MapName"];
       $map->ResultListUrl = $mapInfo["ResultListUrl"];
-      $map->Comment = $mapInfo["Comment"];
       $map->LastChangedTime = gmdate("Y-m-d H:i:s");
       if(!$mapInfo["ID"]) $map->CreatedTime = gmdate("Y-m-d H:i:s");
 

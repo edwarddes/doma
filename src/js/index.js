@@ -1,15 +1,5 @@
 $(document).ready(function() 
 {
-  $(".toggleComment").click(function() 
-  {
-    toggleComment($(this).parent().parent());
-  });
-
-  $(".comment div").click(function() 
-  {
-    toggleComment($(this).parent().parent());
-  });
-
   $("#categoryID").change(function() { submitForm(); });
   $("#year").change(function() { submitForm()});
   $("#displayMode").change(function() { submitForm(); });
@@ -20,12 +10,6 @@ $(document).ready(function()
  });
 
 });
-
-function toggleComment(baseElement)
-{
-  $(".longComment", baseElement).toggleClass('hidden');
-  $(".shortComment", baseElement).toggleClass('hidden');
-}
 
 function submitForm()
 {

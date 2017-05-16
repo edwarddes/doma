@@ -50,7 +50,6 @@
       
       $viewData["Previous"] = $previous;
       $viewData["Next"] = $next;
-      $viewData["ShowComments"] = (isset($_GET["showComments"]) && $_GET["showComments"] = true) || !__("COLLAPSE_VISITOR_COMMENTS");
       
       $viewData["FirstMapImageName"] = Helper::GetMapImage($map);
       if($map->BlankMapImage) $viewData["SecondMapImageName"] = Helper::GetBlankMapImage($map);

@@ -26,7 +26,6 @@
       "MapImage" => "",
       "BlankMapImage" => "",
       "ThumbnailImage" => "",
-      "Comment" => "",
       "Views" => 0,
       "LastChangedTime" => null,
       "CreatedTime" => null,

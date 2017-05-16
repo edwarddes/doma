@@ -113,13 +113,6 @@
 </div>
 <?php } ?>
 
-<?php if(__("SHOW_COMMENT")) { ?>
-<div class="container">
-<label for="comment"><?php print __("COMMENT")?></label>
-<textarea name="comment" id="comment" rows="5" cols="60"><?php print hsc($map->Comment)?></textarea>
-</div>
-<?php } ?>
-
 <div class="container">
 <label for="mapImage"><?php print __("MAP_IMAGE_FILE")?></label>
 <input type="file" id="mapImage" name="mapImage" class="tooltipControl" />

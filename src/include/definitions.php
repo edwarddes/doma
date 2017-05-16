@@ -48,7 +48,6 @@
   include_once(dirname(__FILE__) ."/user_class.php");
   include_once(dirname(__FILE__) ."/session_class.php");
   include_once(dirname(__FILE__) ."/category_class.php");
-  include_once(dirname(__FILE__) ."/comment_class.php");
 
   // check that config.php is valid (no garbage characters in the beginning)
   $fp = fopen(dirname(__FILE__) ."/../config.php", "r");

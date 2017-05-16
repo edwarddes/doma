@@ -489,12 +489,6 @@ form.wide h2 + p
   font-size: 80%;
 }
 
-.map .comment
-{
-  clear: both;
-  padding-top: 0.5em;
-}
-
 .map .bottom
 {
   clear: both;
@@ -849,69 +843,6 @@ img.button
   vertical-align: bottom; 
   padding-top: 0.5em;  
 }
-
-/* comments *******************************************************************************************************/
-.commentBox
-{
-  background-color: #e7e7ff;
-  border-top: 1px solid #a7a7ff;
-  padding: 1em 2em;
-  line-height: 15px;
-  border-radius: 0 0 5px 5px;
-}
-
-.commentBox #commentBoxHeader
-{
-  font-weight: bold;
-  padding-bottom: 0.5em;
-}
-
-.commentBox input
-{
-  border: 1px solid #cccccc;
-}
-
-.commentBox input
-{
-  width: 20em;
-}
-
-.commentBox  #userEmailLabel
-{
-  padding-left: 2em;  
-}
-
-.commentBox #userDetails
-{
-  margin-bottom: 0.5em;
-}
-
-.commentBox textarea
-{
-  width: 100%;
-  height: 4em;
-  border: 1px solid #cccccc;
-  margin-bottom: 0.5em;
-}
-
-.commentPanel	
-{
-	background-color: #e7e7ff;
-  border-top: 1px solid #a7a7ff;
-  padding: 1em 2em;
-}
-
-.postedTime 
-{
-  color:#666666;
-  padding-top: 0.5em;
-}
-
-.commentName 
-{
-  font-weight: bold;
-}
-
 
 /* tooltip for overview maps *******************************************************************************************************/
 #tt 

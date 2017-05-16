@@ -71,32 +71,6 @@
 
     </div>
 
-    <?php
-      if(__("SHOW_COMMENT") && $map->Comment)
-      {
-        if(!$mapInfo["IsExpandableComment"])
-        {
-          ?>
-          <div class="comment"><?php print $map->Comment; ?></div>
-          <?php
-        }
-        else
-        {
-          ?>
-          <div>
-            <div class="comment shortComment">
-              <img src="gfx/plus.png" class="button toggleComment" alt="" />
-              <div class="indent"><?php print $mapInfo["ContractedComment"]; ?></div>
-            </div>
-            <div class="comment longComment hidden">
-              <img src="gfx/minus.png" class="button toggleComment" alt="" />
-              <div class="indent"><?php print nl2br($map->Comment); ?></div>
-            </div>
-          </div>
-          <?php
-        }
-      }
-      ?>
     <?php if($map->IsGeocoded) { ?>
       <div class="clear"></div>
       <div class="googleMapsContainer"></div>

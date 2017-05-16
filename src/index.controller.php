@@ -101,16 +101,6 @@
         if(__("SHOW_COUNTRY") && $map->Country) $atoms[] = $map->Country;
         $mapInfo["MapAreaOrganiserCountry"] = join(", ", $atoms);
         
-        if($map->Comment)
-        {
-          $maxLength = 130;
-          $strippedComment = strip_tags($map->Comment);
-          $mapInfo["IsExpandableComment"] = !($strippedComment == $map->Comment && strlen($map->Comment) <= $maxLength);
-          if($mapInfo["IsExpandableComment"])
-          {
-            $mapInfo["ContractedComment"] = substr($strippedComment, 0, $maxLength) ."...";
-          }
-        }
         $viewData["MapInfo"][$map->ID] = $mapInfo;
         
         if(($viewData["DisplayMode"] == "overviewMap")&&($map->IsGeocoded))

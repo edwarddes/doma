@@ -220,66 +220,6 @@
   </div>
 <?php } ?>
 
-<?php
-    if(count($vd["LastComments"]) > 0)
-    {
-      ?>
-<h2>
-  <?php print __("LAST_COMMENTS")?>
-  <span class="selectNumber">
-    <a href="users.php?lastComments=10">10</a>
-    <span class="separator">|</span>
-    <a href="users.php?lastComments=20">20</a>
-    <span class="separator">|</span>
-    <a href="users.php?lastComments=50">50</a>
-    <span class="separator">|</span>
-    <a href="users.php?lastComments=all"><?php print __("SHOW_ALL")?></a>
-  </span>
-</h2>      
-<table class="fullWidth">
-<thead>
-  <tr>
-    <th><?php print __("NAME")?></th>
-    <th><?php print __("MAP")?></th>
-    <th><?php print __("COMMENTS_COUNT")?></th>
-    <th><?php print __("COMMENT_FROM")?></th>
-    <th><?php print __("UPDATED")?></th>
-  </tr>
-</thead>
-<tbody>
-      <?php
-      $count = 0;
-      foreach($vd["LastComments"] as $last_comment)
-      {
-        $count++;
-        $url = "index.php?user=". $last_comment["UserName"];
-        $nameLink = Helper::EncapsulateLink(hsc($last_comment["UserFLName"]), $url);    
-        $mapLink = '<a href="show_map.php?user='. $last_comment["UserName"] .'&map='. $last_comment["ID"] .'&showComments=true" class="thumbnailHoverLink">'. 
-                   hsc($last_comment["Name"]).
-                   '</a>'; 
-        
-        $updated = date(__("DATETIME_FORMAT"), Helper::StringToTime($last_comment["CommentDate"], true));
-
-       
-        ?>
-        <tr class="<?php print ($count % 2 == 1 ? "odd" : "even")?>">
-          <td><?php print $nameLink?></td>
-          <td>
-            <?php print $mapLink?>
-          </td>
-          <td><?php print $last_comment["CommentsCount"]?></td>
-          <td><?php print $last_comment["CommentName"]?></td>
-          <td><?php print $updated?></td>
-        </tr>
-        <?php          
-      }
-    }
-    ?>
-</tbody>
-</table>
-    <?php
-  }
-?>
 </form>
 </div>
 </div>
