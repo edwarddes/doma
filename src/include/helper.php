@@ -156,6 +156,18 @@
        Session::SetIsLoggedInAdmin(null);
     }
 
+	public static function LoginUserByAccountId($accountId)
+	{
+        $user = DataAccess::GetUserByAccountID($accountId);
+        if($user)
+        {
+          Session::SetLoggedInUser($user);
+          self::SetUser($user);
+          return true;
+        }
+        return false;
+	}
+	
     public static function LoginUser($username, $password)
     {
       $user = DataAccess::GetUserByUsernameAndPassword($username, $password);
