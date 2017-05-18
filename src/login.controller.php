@@ -25,22 +25,7 @@
         $location = "index.php?". Helper::CreateQuerystring(getCurrentUser());
         Helper::LogoutUser();
         Helper::Redirect($location);
-      }
-
-      if(isset($_POST["login"]))
-      {
-        $currentUserID = getCurrentUser()->ID;
-        if(Helper::LoginUser(stripslashes($_POST["username"]), stripslashes($_POST["password"])))
-        {
-          if(getCurrentUser()->ID == $currentUserID) Helper::Redirect("index.php?". Helper::CreateQuerystring(getCurrentUser()));
-        }
-        $errors[] = __("INVALID_USERNAME_OR_PASSWORD");
-      }
-
-      if(isset($_POST["forgotPassword"]))
-      {
-        Helper::Redirect("send_new_password.php?". Helper::CreateQuerystring(getCurrentUser()));
-      }
+	  }
       
       $viewData["Errors"] = $errors;
       return $viewData;

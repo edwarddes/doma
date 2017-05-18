@@ -20,11 +20,9 @@
 <div id="wrapper">
 <?php Helper::CreateTopbar() ?>
 <div id="content">
-<form class="wide" method="post" action="<?php print Helper::SelfPath()?>?<?php print Helper::CreateQuerystring(getCurrentUser())?>">
+
 
 <h1><?php print __("LOGIN")?></h1>
-
-<?php if(isset($_GET["action"]) && $_GET["action"] == "newPasswordSent") print '<p>'. sprintf(__("NEW_PASSWORD_SENT"), getCurrentUser()->Email) .'</p>'; ?>
 
 <?php if(count($vd["Errors"]) > 0) { ?>
 <ul class="error">
@@ -38,22 +36,21 @@
 <?php } ?>
 
 <div class="container">
-<label for="username"><?php print __("USERNAME")?></label>
-<input type="text" class="text" name="username" id="username" value="" />
+<script>
+                (function(w,d,t,s,p,c,r,u){a=d.createElement(t);a.async=1;
+                    a.src=u+s;es=d.getElementsByTagName(t);e=es[es.length-1];
+                    e.parentNode.insertBefore(a,e);w[p]=c;w[r]=u;
+		})(window,document,'script','/js/oauth/npsi.js','client_id',
+                'zd17Stpsdmpuyh2/TozYtYglWLg6LHxx3t2+ECvmrDmKZdnb2QTbuu10+3ym8/y106LsDlsRniY=','domain',
+                'https://secure.orienteeringusa.org/np');
+
+		setting = {	
+                    "redirect_uri":"http://127.0.0.1/doma/oauth.php" //required
+		}		
+	  </script>
 </div>
 
-<div class="container">
-<label for="password"><?php print __("PASSWORD")?></label>
-<input type="password" class="password" name="password" id="password" value="" />
-</div>
 
-<div class="buttons">
-<input type="submit" class="submit" name="login" value="<?php print __("LOGIN")?>" />
-<?php if(getCurrentUser()->Email) { ?> <input type="submit" class="submit" name="forgotPassword" value="<?php print __("FORGOT_PASSWORD")?>" /> <?php } ?>
-<input type="submit" class="submit" name="cancel" value="<?php print __("CANCEL")?>" />
-</div>
-
-</form>
 </div>
 </div>
 </body>
