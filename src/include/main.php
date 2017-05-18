@@ -18,11 +18,11 @@
   {
     $currentUser = getCurrentUser();
     if(!$currentUser || 
-       $currentUser->Username != $_GET["user"] || 
+       $currentUser->ID != $_GET["user"] || 
        !Session::GetLanguageStrings() || 
        (isset($_GET["lang"]) && Session::GetLanguageCode() != $_GET["lang"]))
     {
-      Helper::SetUser(DataAccess::GetUserByUsername($_GET["user"]));
+      Helper::SetUser(DataAccess::GetUserByID($_GET["user"]));
     }
   }
   else

@@ -88,7 +88,7 @@
 
     public static function CreateQuerystring($user, $mapID = 0)
     {
-      $qs = "user=". urlencode($user->Username);
+      $qs = "user=". urlencode($user->ID);
       if($mapID) $qs .= "&amp;map=". $mapID;
       return $qs;
     }
