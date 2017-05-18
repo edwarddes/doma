@@ -20,7 +20,7 @@
 <div id="wrapper">
 <?php Helper::CreateTopbar() ?>
 <div id="content">
-
+<form>
 
 <h1><?php print __("LOGIN")?></h1>
 
@@ -49,7 +49,7 @@
 		}		
 	  </script>
 </div>
-
+</form>
 
 </div>
 </div>
