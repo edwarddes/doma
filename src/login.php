@@ -47,6 +47,9 @@
 		setting = {	
                     "redirect_uri":"http://127.0.0.1/doma/oauth.php" //required
 		}		
+		c_css = {
+			"label":"Sign In with OUSA"
+		}
 	  </script>
 </div>
 </form>
