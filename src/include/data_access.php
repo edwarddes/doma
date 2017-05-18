@@ -459,18 +459,23 @@
         return null;
       }
     }
-
-    public static function GetSingleUserID()
+	
+    public static function GetUserByAccountID($accountID)
     {
-      $sql = "SELECT ID FROM `". DB_USER_TABLE ."` WHERE Visible=1";
+      $id = mysqli_real_escape_string($GLOBALS["dbCon"], $id);
+      $sql = "SELECT * FROM `". DB_USER_TABLE ."` WHERE AccountID='$accountID'";
       $rs = self::Query($sql);
 
-      if(mysqli_num_rows($rs) == 1)
+      if($r = mysqli_fetch_assoc($rs))
       {
-        $r = mysqli_fetch_assoc($rs);
-        return $r["ID"];
+        $user = new User();
+        $user->LoadFromArray($r);
+        return $user;
       }
-      return null;
+      else
+      {
+        return null;
+      }
     }
 
     public static function GetUserByUsernameAndPassword($username, $password)

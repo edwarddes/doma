@@ -10,9 +10,7 @@
       
       if(!getCurrentUser()) 
       {
-        $singleUserID = DataAccess::GetSingleUserID();
-        if(!$singleUserID) Helper::Redirect("users.php");
-        Helper::SetUser(DataAccess::GetUserByID($singleUserID));
+        Helper::Redirect("users.php");
       }
       
       // user is hidden - redirect to user list page
