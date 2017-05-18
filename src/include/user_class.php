@@ -9,6 +9,7 @@
       "ID" => 0, 
       "Username" => "", 
       "Password" => "", 
+	  "AccountID" => 0,
       "FirstName" => "", 
       "LastName" => "", 
       "Email" => "", 
