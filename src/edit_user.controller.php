@@ -53,8 +53,6 @@
       {
         // populate user object with data from form elements
         $user->Username = stripslashes($_POST["username"]);
-        $password = stripslashes($_POST["password"]);
-        if($password) $user->Password = md5($password);
         $user->FirstName = stripslashes($_POST["firstName"]);
         $user->LastName = stripslashes($_POST["lastName"]);
         $user->Email = stripslashes($_POST["email"]);
@@ -194,10 +192,6 @@
         {
           $errors[] = __("NO_USERNAME_ENTERED");
         }
-        if(!$user->ID && trim($password) == "")
-        {
-          $errors[] = __("NO_PASSWORD_ENTERED");
-        }
         if(trim($user->FirstName) == "")
         {
           $errors[] = __("NO_FIRST_NAME_ENTERED");
@@ -240,7 +234,7 @@
             $subject = __("NEW_USER_EMAIL_SUBJECT");
             $baseAddress = Helper::GlobalPath("");
             $userAddress = Helper::GlobalPath("index.php?user=". $user->Username);
-            $body = sprintf(__("NEW_USER_EMAIL_BODY"), $user->FirstName, $baseAddress, $userAddress, $user->Username, $password);
+            $body = sprintf(__("NEW_USER_EMAIL_BODY"), $user->FirstName, $baseAddress, $userAddress, $user->Username, "");
             $emailSent = true;
             $emailSentSuccessfully = Helper::SendEmail($fromName, $user->Email, $subject, $body);
           }

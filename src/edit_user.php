@@ -63,12 +63,6 @@
 </div>
 
 <div class="container">
-<label for="password"><?php print __("PASSWORD")?></label>
-<input type="password" class="password tooltipControl" name="password" value="<?php if(isset($password)) print hsc($password); ?>" /><?php if($vd["IsNewUser"]) print ' <span class="required">*</span>'; ?>
-<div class="tooltip hidden"><?php print ($vd["IsAdmin"] ? ($vd["User"]->ID ? __("ADMIN_PASSWORD_DESCRIPTION_EXISTING_USER") : __("ADMIN_PASSWORD_DESCRIPTION_NEW_USER")) : __("PASSWORD_DESCRIPTION"))?></div>
-</div>
-
-<div class="container">
 <label for="firstName"><?php print __("FIRST_NAME")?></label>
 <input type="text" class="text tooltipControl" name="firstName" value="<?php print hsc($vd["User"]->FirstName)?>" /> <span class="required">*</span>
 <div class="tooltip hidden"><?php print ($vd["IsAdmin"] ? __("ADMIN_FIRST_NAME_DESCRIPTION") : __("FIRST_NAME_DESCRIPTION"))?></div>

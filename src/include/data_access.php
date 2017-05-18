@@ -478,25 +478,6 @@
       }
     }
 
-    public static function GetUserByUsernameAndPassword($username, $password)
-    {
-      $username = mysqli_real_escape_string($GLOBALS["dbCon"], $username);
-      $password = mysqli_real_escape_string($GLOBALS["dbCon"], md5($password));
-      $sql = "SELECT * FROM `". DB_USER_TABLE ."` WHERE Username='$username' AND Password='$password' AND Visible=1";
-      $rs = self::Query($sql);
-
-      if($r = mysqli_fetch_assoc($rs))
-      {
-        $user = new User();
-        $user->LoadFromArray($r);
-        return $user;
-      }
-      else
-      {
-        return null;
-      }
-    }
-
     public static function GetUserByUsername($username)
     {
       $username = mysqli_real_escape_string($GLOBALS["dbCon"], $username);
