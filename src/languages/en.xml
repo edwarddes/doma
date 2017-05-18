@@ -33,9 +33,6 @@
     <string key="SHOW_RESULT_LIST_URL" description="SHOW_RESULT_LIST_URL_DESCRIPTION">
       1
     </string> 
-    <string key="SHOW_COMMENT" description="SHOW_COMMENT_DESCRIPTION">
-      1
-    </string>
     <!-- BEGIN new customizable strings in version 3.0 ******************************************************************* -->
     <string key="SHOW_DISTANCE" description="SHOW_DISTANCE_DESCRIPTION">
       1
@@ -47,15 +44,6 @@
       1
     </string> 
     <string key="SHOW_AVGHR" description="SHOW_AVGHR_DESCRIPTION">
-      1
-    </string> 
-    <string key="SHOW_VISITOR_COMMENTS" description="SHOW_VISITOR_COMMENTS_DESCRIPTION">
-      1
-    </string> 
-    <string key="COLLAPSE_VISITOR_COMMENTS" description="COLLAPSE_VISITOR_COMMENTS_DESCRIPTION">
-      1
-    </string> 
-    <string key="EMAIL_VISITOR_COMMENTS" description="EMAIL_VISITOR_COMMENTS_DESCRIPTION">
       1
     </string> 
     <!-- END new customizable strings in version 3.0 ********************************************************************* -->
