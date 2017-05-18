@@ -167,18 +167,6 @@
         }
         return false;
 	}
-	
-    public static function LoginUser($username, $password)
-    {
-      $user = DataAccess::GetUserByUsernameAndPassword($username, $password);
-      if($user)
-      {
-        Session::SetLoggedInUser($user);
-        self::SetUser($user);
-        return true;
-      }
-      return false;
-    }
 
     public static function LoginUserByUsername($username)
     {
@@ -547,17 +535,6 @@
     public static function IsValidEmailAddress($emailAddress)
     {
       return preg_match('/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$/', $emailAddress);
-    }
-
-    public static function CreatePassword($length)
-    {
-      $password = "";
-      $chars = "abcdefghijkmnpqrstuvwxyz23456789";
-      for($i=0; $i<$length; $i++)
-      {
-        $password .= substr($chars, rand(0, strlen($chars)-1), 1);
-      }
-      return $password;
     }
 
     public static function WriteToLog($message)
