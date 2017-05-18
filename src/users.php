@@ -148,6 +148,9 @@
   ?>
 </tbody>
 </table>
+<?php  
+}
+?>
 <?php
     if(count($vd["LastMaps"]) > 0)
     {
