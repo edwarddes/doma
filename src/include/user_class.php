@@ -7,7 +7,6 @@
     protected $ClassName = "User";
     public $Data = array(
       "ID" => 0, 
-      "Username" => "", 
 	  "AccountID" => 0,
       "FirstName" => "", 
       "LastName" => "", 

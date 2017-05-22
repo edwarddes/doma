@@ -52,7 +52,6 @@
       if(isset($_POST["save"]) || isset($_POST["delete"]) || $deleteCategory || $addCategory)
       {
         // populate user object with data from form elements
-        $user->Username = stripslashes($_POST["username"]);
         $user->FirstName = stripslashes($_POST["firstName"]);
         $user->LastName = stripslashes($_POST["lastName"]);
         $user->Email = stripslashes($_POST["email"]);
@@ -184,14 +183,6 @@
       if(isset($_POST["save"]))
       {
         // validate
-        if(DataAccess::UsernameExists($user->Username, $user->ID))
-        {
-          $errors[] = __("USERNAME_EXISTS");
-        }
-        if(trim($user->Username) == "")
-        {
-          $errors[] = __("NO_USERNAME_ENTERED");
-        }
         if(trim($user->FirstName) == "")
         {
           $errors[] = __("NO_FIRST_NAME_ENTERED");
@@ -233,8 +224,8 @@
             $fromName = __("DOMA_ADMIN_EMAIL_NAME");
             $subject = __("NEW_USER_EMAIL_SUBJECT");
             $baseAddress = Helper::GlobalPath("");
-            $userAddress = Helper::GlobalPath("index.php?user=". $user->Username);
-            $body = sprintf(__("NEW_USER_EMAIL_BODY"), $user->FirstName, $baseAddress, $userAddress, $user->Username, "");
+            $userAddress = Helper::GlobalPath("index.php?user=". $user->ID);
+            $body = sprintf(__("NEW_USER_EMAIL_BODY"), $user->FirstName, $baseAddress, $userAddress, "", "");
             $emailSent = true;
             $emailSentSuccessfully = Helper::SendEmail($fromName, $user->Email, $subject, $body);
           }

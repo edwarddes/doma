@@ -167,19 +167,18 @@
         }
         return false;
 	}
-
-    public static function LoginUserByUsername($username)
-    {
-      $user = DataAccess::GetUserByUsername($username);
-      if($user)
-      {
-        Session::SetLoggedInUser($user);
-        self::SetUser($user);
-        return true;
-      }
-      return false;
-    }
-
+	
+	public static function LoginUserById($ID)
+	{
+        $user = DataAccess::GetUserByID($ID);
+        if($user)
+        {
+          Session::SetLoggedInUser($user);
+          self::SetUser($user);
+          return true;
+        }
+        return false;
+	}
 
     public static function IsLoggedInUser()
     {
@@ -844,7 +843,7 @@
           {
             $user = new User();
             $user->Load($map->UserID);
-            $ret[]=$map->ID.";".$user->Username;
+            $ret[]=$map->ID.";".$user->ID;
           }
         }
         if(count($ret)>0)

@@ -70,9 +70,6 @@
 <table class="fullWidth">
 <thead>
   <tr>
-    <?php if(Helper::IsLoggedInAdmin()) { ?>
-    <th><?php print __("USERNAME")?></th>
-    <?php } ?>
     <th><?php print __("NAME")?></th>
     <th><?php print __("NO_OF_MAPS")?></th>
     <th><?php print __("LAST_MAP")?></th>
@@ -114,14 +111,11 @@
       }
     }
     
-    $url = ($u->Visible ? "users.php?loginAsUser=". urlencode($u->Username) : "");
+    $url = ($u->Visible ? "users.php?loginAsUser=". urlencode($u->ID) : "");
     $loginAsUserLink = Helper::EncapsulateLink(sprintf(__("LOGIN_AS_X"), hsc($u->FirstName)), $url);
     
     ?>
     <tr class="<?php print ($count % 2 == 1 ? "odd" : "even")?>">
-      <?php if(Helper::IsLoggedInAdmin()) { ?>
-      <td><?php print hsc($u->Username)?></td>
-      <?php } ?>
       <td><?php print $nameLink?></td>
       <td><?php print $u->NoOfMaps?></td>
       <td>

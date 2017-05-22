@@ -37,7 +37,7 @@
 <?php Helper::CreateTopbar() ?>
 <div id="content">
 <form method="get" action="<?php print Helper::SelfPath()?>?<?php print Helper::CreateQuerystring(getCurrentUser())?>">
-<input type="hidden" name="user" value="<?php print getCurrentUser()->Username;?>"/>
+<input type="hidden" name="user" value="<?php print getCurrentUser()->ID;?>"/>
 <?php if(count($vd["Errors"]) > 0) { ?>
 <ul class="error">
 <?php

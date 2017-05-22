@@ -12,7 +12,7 @@
       if(Helper::IsLoggedInAdmin() && isset($_GET["loginAsUser"]))
       {
         // login as a certain user and redirect to his page
-        if(Helper::LoginUserByUsername($_GET["loginAsUser"]))
+        if(Helper::LoginUserByID($_GET["loginAsUser"]))
         {
           Helper::Redirect("index.php?". Helper::CreateQuerystring(getCurrentUser()));
         }

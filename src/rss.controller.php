@@ -43,7 +43,7 @@
         $item = array();
         $user = $users[$map->UserID];
         $item["Title"] = hsc(Helper::DateToLongString(Helper::StringToTime($map->Date, true)) .": ". $map->Name);
-        $item["URL"] = ($map->MapImage ? Helper::GlobalPath('show_map.php?user='. urlencode($user->Username) .'&amp;map='. $map->ID) : "");
+        $item["URL"] = ($map->MapImage ? Helper::GlobalPath('show_map.php?user='. urlencode($user->ID) .'&amp;map='. $map->ID) : "");
         
         $atoms = array();
         if(__("SHOW_MAP_AREA_NAME") && $map->MapName != "") $atoms[] = $map->MapName;

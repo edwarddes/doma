@@ -56,13 +56,6 @@
 <p><?php print ($vd["IsAdmin"] ? __("ADMIN_PERSONAL_DETAILS_INFO") : __("PERSONAL_DETAILS_INFO"))?></p>
 
 <div class="container">
-<input type="hidden" name="id" value="<?php print $vd["User"]->ID?>" />
-<label for="username"><?php print __("USERNAME")?></label>
-<input type="text" class="text tooltipControl" name="username" value="<?php print hsc($vd["User"]->Username)?>" /> <span class="required">*</span>
-<div class="tooltip hidden"><?php print ($vd["IsAdmin"] ? __("ADMIN_USERNAME_DESCRIPTION") : __("USERNAME_DESCRIPTION"))?></div>
-</div>
-
-<div class="container">
 <label for="firstName"><?php print __("FIRST_NAME")?></label>
 <input type="text" class="text tooltipControl" name="firstName" value="<?php print hsc($vd["User"]->FirstName)?>" /> <span class="required">*</span>
 <div class="tooltip hidden"><?php print ($vd["IsAdmin"] ? __("ADMIN_FIRST_NAME_DESCRIPTION") : __("FIRST_NAME_DESCRIPTION"))?></div>

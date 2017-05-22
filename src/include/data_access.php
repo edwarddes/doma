@@ -356,7 +356,7 @@
       {
         $user = self::GetUserByID($map->UserID);
         //todo: border gps coords
-        $data = "user=". urlencode($user->Username) .
+        $data = "user=". urlencode($user->ID) .
                 "&map=". $map->ID.
                 ($gpsData ? "&longitude=". $gpsData["Longitude"] ."&latitude=". $gpsData["Latitude"] : "");
         Helper::LogUsage("addMap", $data);
@@ -477,36 +477,7 @@
         return null;
       }
     }
-
-    public static function GetUserByUsername($username)
-    {
-      $username = mysqli_real_escape_string($GLOBALS["dbCon"], $username);
-      $sql = "SELECT * FROM `". DB_USER_TABLE ."` WHERE Username='$username'";
-      $rs = self::Query($sql);
-
-      if($r = mysqli_fetch_assoc($rs))
-      {
-        $user = new User();
-        $user->LoadFromArray($r);
-        return $user;
-      }
-      else
-      {
-        return null;
-      }
-    }
-
-    public static function UsernameExists($username, $excludeUserID)
-    {
-      $username = mysqli_real_escape_string($GLOBALS["dbCon"], strtolower($username));
-      if(!$excludeUserID) $excludeUserID = 0;
-      $excludeUserID = mysqli_real_escape_string($GLOBALS["dbCon"], $excludeUserID);
-      $sql = "SELECT * FROM `". DB_USER_TABLE ."` WHERE LCASE(Username)='$username' AND NOT(ID='$excludeUserID')";
-      $rs = self::Query($sql);
-
-      return (mysqli_num_rows($rs) > 0);
-    }
-
+	
     public static function GetUserSettings($userID)
     {
       $userID = mysqli_real_escape_string($GLOBALS["dbCon"], $userID);
@@ -602,7 +573,7 @@
       $user->Save();
 
       self::SaveUserSettings($user->ID, $userSettings);
-      if($newUser) Helper::LogUsage("createUser", "user=". urlencode($user->Username));
+      if($newUser) Helper::LogUsage("createUser", "user=". urlencode($user->ID));
     }
 
     public static function SaveUserCategories($userID, &$categories)
