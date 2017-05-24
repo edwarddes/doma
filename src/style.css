@@ -114,13 +114,31 @@ a img
 /* tables */
 table
 {
-  border-collapse: collapse;
-  border: 1px solid #9f9f9f;
+	border-collapse: collapse;
+	border-radius: 8px;
+	border-style: hidden; /* hide standard table (collapsed) border */
+	box-shadow: 0 0 0 1px #c00; /* this draws the table border  */ 
+}
+
+table th td:first-child {
+    border-top-left-radius: 8px;
+}
+
+table th td:last-child {
+    border-top-right-radius: 8px;
+}
+
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
 }
 
 thead
 {
-  background-color: #9f9f9f;
+	border-bottom: 1px solid #DDD;
   font-weight: bold;
   text-align: left;
 }
@@ -183,19 +201,31 @@ ul.error
 }
 
 /* LAYOUT ******************************************************************************/
-body
+body 
 {
-  margin: 1em;
-  background: #000040;
-  text-align: center;
-  color: #000000;
+ margin:0px;
+ padding:0;
+ background:#eee;/*#464646;*/
+ text-align:center;
+ font-family:verdana;
+ font-size:12px;
+ height: 100%;
 }
-
-#wrapper
+#header
 {
-  width: 900px;
-  margin: 0 auto;
-  text-align: left;
+    height:80px;
+    background-image:url(gfx/ousalogo.png);
+    background-repeat:no-repeat;
+    background-position:8px center;
+}
+#wrapper 
+{
+ margin:0 auto;
+ width:880px;
+ background:#fff;
+ box-shadow: 0 0 10px rgba(0,0,0,0.4);
+ padding:0 10px 0 10px;
+ text-align:left;
 }
 
 #content
@@ -212,9 +242,25 @@ body
 /* top bar */
 #topbar
 {
-  background-color: #c7c7ff;
-  border-radius: 5px 5px 0 0;
-  font-size: 80%;
+	color: white;
+	background:#152754;
+	padding:2px;
+	border-radius:6px;
+}
+
+#topbar a
+{
+	color: white;
+}
+
+#topbar a:hover
+{
+	color: #CCC;
+}
+
+#topbat a:visited
+{
+	color: white;
 }
 
 #topbar .left
@@ -235,6 +281,7 @@ body
 
 #topbar #languages 
 {
+	color: black;
   background-color: #ffffff;
   border: 1px solid #000000;
   left: -0.75em;
@@ -247,6 +294,7 @@ body
 
 #topbar #languages a
 {
+	color: black;
   display: block;
   padding: 0.25em 0.5em;
 }
@@ -304,33 +352,6 @@ form.wide textarea
 form.wide input.text, form.wide input.password, form.wide select
 {
   width: 35em;
-}
-
-input.submit
-{
-  border-width: 1px;
-  border-top-color: #9f9f9f;
-  border-bottom-color: #3f3f3f;
-  border-left-color: #9f9f9f;
-  border-right-color: #3f3f3f;
-  padding: 0.2em 1em;
-  margin: 0 1em 0 0;
-  background: #ecebe6 url(gfx/button_background.png) repeat-x;
-}
-
-input.submit:active, input.submit:active:hover 
-{
-  background: #dbdae8 url(gfx/button_background_active.png) repeat-x;
-  background-position: bottom left;
-}
-
-input.submit:hover
-{
-  border-top-color: #3f3f3f;
-  border-bottom-color: #9f9f9f;
-  border-left-color: #3f3f3f;
-  border-right-color: #9f9f9f;
-  background: #dbdae8 url(gfx/button_background_hover.png) repeat-x;
 }
 
 form.wide .tooltip
@@ -402,8 +423,9 @@ form.wide h2 + p
 /* Select category and year bar */
 #selectCategoryAndYear
 {
-  background-color: #c7c7ff;
-  border-radius: 5px;
+	color: white;
+	background:#152754;
+  border-radius: 6px;
   text-align: center;
   margin-top: 1em;
   height: 1%; /* holly hack */
@@ -549,11 +571,14 @@ img.button
   border: 1px solid #7f7f7f;
   border-radius: 5px;
 }
-
-/* overview map, show map page */
-#showMapBody #overviewMapContainer > div
+#overviewMapContainer
 {
-  width: 1080px;
+	padding-bottom: 1em;
+}
+/* overview map, show map page */
+#overviewMapContainer > div
+{
+
   height: 500px;
   clear: both;
   border: 1px solid #7f7f7f;
@@ -705,7 +730,7 @@ img.button
 #showMapBody #gmap
 {
   width: 180px;
-  float: right;
+  float: left;
   position: relative;
   text-align: right;
 }

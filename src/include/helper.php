@@ -461,6 +461,7 @@
     {
       $isLoggedIn = (Helper::IsLoggedInUser() && Helper::GetLoggedInUser()->ID == getCurrentUser()->ID);
       ?>
+	  <div id="header"></div>
 	  <div id="topbar">
           <div class="left">
             <a href="users.php"><?php print _SITE_TITLE; ?></a>

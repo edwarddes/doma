@@ -54,8 +54,7 @@
 </head>
 <body id="showMapBody">
 <center>
-<div id="top_menu">
-<div id="wrapper" <?php if($vd["Map"]->IsGeocoded) {print 'style="float:left"';} else {print 'style="float:center"';}?>>
+<div id="wrapper">
 <?php Helper::CreateTopbar() ?>
 
 <div id="navigation">
@@ -144,11 +143,6 @@ if(isset($QR) && $QR->IsValid)
 ?>
 </div>
 
-<div class="clear"></div>
-
-</form>
-</div>
-</div>
 <?php
 if($map->IsGeocoded)
 {
@@ -160,10 +154,22 @@ if($map->IsGeocoded)
   print '</div>';
 }
 ?>
+
 </div>
-<div class="clear">&nbsp;</div>
+
+<div class="clear"></div>
+
+</form>
+
 
 <div id="overviewMapContainer"></div>
+</div>
+</div>
+
+
+<div class="clear">&nbsp;</div>
+
+
 
 <div>
   <img id="mapImage" src="<?php print $vd["FirstMapImageName"]; ?>" alt="<?php print hsc(strip_tags($vd["Name"]))?>"<?php if(isset($vd["SecondMapImageName"])) print ' title="'. __("TOGGLE_IMAGE_CLICK") .'" class="toggleable"'; ?>/>
@@ -174,6 +180,7 @@ if($map->IsGeocoded)
   <input type="hidden" id="imageWidth" value="<?php print $vd["ImageWidth"] ?>" />
   <input type="hidden" id="imageHeight" value="<?php print $vd["ImageHeight"] ?>" />
 </div>
+
 </center>
 <?php Helper::GoogleAnalytics() ?>
 </body>
