@@ -65,6 +65,7 @@
           $map = new Map();
           $map->Date = date("Y-m-d");
           $map->CategoryID = Helper::GetLoggedInUser()->DefaultCategoryID;
+		  $map->UserID = Helper::GetLoggedInUser()->ID;
           $isNewMap = true;
         }
       }
