@@ -21,15 +21,7 @@
 <body id="editUserBody">
 <div id="wrapper">
 <?php 
-  if($vd["IsAdmin"] || $vd["IsNewUser"])
-  {
-    Helper::CreateUserListTopbar(); 
-  }
-  else
-  {
     Helper::CreateTopbar(); 
-  }
-
 ?>
 <div id="content">
 <form class="wide" method="post" action="<?php print $vd["FormActionURL"]; ?>">

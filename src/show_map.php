@@ -14,7 +14,7 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <link rel="stylesheet" href="style.css?v=<?php print DOMA_VERSION; ?>" type="text/css" />
   <link rel="icon" type="image/png" href="gfx/favicon.png" />
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.php?<?php print Helper::CreateQuerystring(getCurrentUser())?>" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.php?<?php print Helper::CreateUserQuerystring($vd['user'])?>" />
   <script type="text/javascript" src="js/jquery/jquery-1.7.1.min.js"></script>  
   <script type="text/javascript" src="js/show_map.js?v=<?php print DOMA_VERSION; ?>"></script>
   <script type="text/javascript" src="js/jquery/jquery.timeago.js"></script>
@@ -75,8 +75,8 @@
   <a href="<?php print $vd["BackUrl"]?>"><?php print __("BACK")?></a>
   </div>
   <div class="right">
-  <?php if($vd["Previous"]) { ?><a href="show_map.php?<?php print Helper::CreateQuerystring(getCurrentUser(), $vd["Previous"]->ID)?>"><?php print "&lt;&lt; ". $vd["PreviousName"]; ?></a><?php } ?>
-  <?php if($vd["Next"]) { ?><span class="separator">|</span><a href="show_map.php?<?php print Helper::CreateQuerystring(getCurrentUser(), $vd["Next"]->ID)?>"><?php print $vd["NextName"] ." &gt;&gt;"; ?></a>
+  <?php if($vd["Previous"]) { ?><a href="show_map.php?<?php print Helper::CreateMapQuerystring( $vd["Previous"]->ID)?>"><?php print "&lt;&lt; ". $vd["PreviousName"]; ?></a><?php } ?>
+  <?php if($vd["Next"]) { ?><span class="separator">|</span><a href="show_map.php?<?php print Helper::CreateMapQuerystring($vd["Next"]->ID)?>"><?php print $vd["NextName"] ." &gt;&gt;"; ?></a>
   
   <?php } ?>
   </div>

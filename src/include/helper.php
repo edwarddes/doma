@@ -86,10 +86,14 @@
       return $settings;
     }
 
-    public static function CreateQuerystring($user, $mapID = 0)
+    public static function CreateUserQuerystring($user)
     {
       $qs = "user=". urlencode($user->ID);
-      if($mapID) $qs .= "&amp;map=". $mapID;
+      return $qs;
+    }
+    public static function CreateMapQuerystring($mapID)
+    {
+      $qs = "map=". $mapID;
       return $qs;
     }
 
@@ -457,65 +461,59 @@
     {
       $isLoggedIn = (Helper::IsLoggedInUser() && Helper::GetLoggedInUser()->ID == getCurrentUser()->ID);
       ?>
-      <div id="topbar">
-        <div class="left">
-          <a href="index.php?<?php print Helper::CreateQuerystring(getCurrentUser())?>"><?php printf(__("DOMA_FOR_X"), getCurrentUser()->FirstName ." ". getCurrentUser()->LastName); ?></a>
-          <span class="separator">|</span>
-          <?php if(!$isLoggedIn) { ?>
-            <a href="login.php?<?php print Helper::CreateQuerystring(getCurrentUser())?>"><?php print __("LOGIN")?></a>
-          <?php } else { ?>
-            <a href="edit_map.php?<?php print Helper::CreateQuerystring(getCurrentUser())?>"><?php print __("ADD_MAP"); ?></a>
-            <span class="separator">|</span>
-            <a href="edit_user.php?<?php print Helper::CreateQuerystring(getCurrentUser())?>"><?php print __("USER_PROFILE"); ?></a>
-            <span class="separator">|</span>
-            <a href="login.php?<?php print Helper::CreateQuerystring(getCurrentUser())?>&amp;action=logout"><?php print __("LOGOUT"); ?></a>
-          <?php } ?>
-        </div>
-        <div class="right">
-          <a href="users.php"><?php print __("ALL_USERS"); ?></a>
-          <span class="separator">|</span>
-          <?php
-          if(SHOW_LANGUAGES_IN_TOPBAR=="1")
-          {
-            Helper::ShowLanguages();?>
-            <span class="separator">|</span>
-          <?php } ?>
-          <a href="http://www.matstroeng.se/doma/?version=<?php print DOMA_VERSION; ?>"><?php printf(__("DOMA_VERSION_X"), DOMA_VERSION); ?></a>
-        </div>
-        <div class="clear"></div>
-      </div>
-      <?php
-    }
-
-    public static function CreateUserListTopbar()
-    {
-      $isLoggedIn = Helper::IsLoggedInAdmin();
-      ?>
-      <div id="topbar">
-        <div class="left">
-          <a href="users.php"><?php print _SITE_TITLE; ?></a>
-          <span class="separator">|</span>
-          <?php if(!$isLoggedIn) { ?>
-            <a href="admin_login.php"><?php print __("ADMIN_LOGIN"); ?></a>
-          <?php } else { ?>
-            <a href="edit_user.php?mode=admin"><?php print __("ADD_USER"); ?></a>
-            <span class="separator">|</span>
-            <a href="admin_login.php?action=logout"><?php print __("ADMIN_LOGOUT"); ?></a>
-          <?php } ?>
-        </div>
-        <div class="right">
-          <?php
-          if(SHOW_LANGUAGES_IN_TOPBAR=="1")
-          {
-            Helper::ShowLanguages();?>
-            <span class="separator">|</span>
-          <?php } ?>
-          <a href="http://www.matstroeng.se/doma/?version=<?php print DOMA_VERSION?>"><?php printf(__("DOMA_VERSION_X"), DOMA_VERSION); ?></a>
-        </div>
-        <div class="clear"></div>
-      </div>
-      <?php
-    }
+	  <div id="topbar">
+          <div class="left">
+            <a href="users.php"><?php print _SITE_TITLE; ?></a>
+			<?php
+			if(Helper::IsLoggedInAdmin())
+			{ ?>
+			  <span class="separator">|</span>
+			  Administrator
+			  <?php
+			  if(Helper::IsLoggedInUser())
+			  { ?>
+			  	<span class="separator">|</span>
+				<?php echo(hsc(Helper::getLoggedInUser()->FirstName ." ". Helper::getLoggedInUser()->LastName)) ?>
+				<span class="separator">|</span>
+				<a href="edit_user.php"><?php print __("USER_PROFILE"); ?></a>
+				<span class="separator">|</span>
+				<a href="login.php?action=logout"><?php print __("LOGOUT"); ?></a>
+			  <?php } ?>
+			  <span class="separator">|</span>
+			  <a href="edit_user.php?mode=new"><?php print __("ADD_USER"); ?></a>
+              <span class="separator">|</span>
+              <a href="admin_login.php?action=logout"><?php print __("ADMIN_LOGOUT"); ?></a>
+			<?php } else if(Helper::IsLoggedInUser())
+			{ ?>
+			  <span class="separator">|</span>
+			  <a href="index.php?<?php print Helper::CreateUserQuerystring(Helper::getLoggedInUser())?>" >
+			  <?php echo(hsc(Helper::getLoggedInUser()->FirstName ." ". Helper::getLoggedInUser()->LastName)) ?>
+		  	  </a>
+			  <span class="separator">|</span>
+			  <a href="edit_user.php"><?php print __("USER_PROFILE"); ?></a>
+			  <span class="separator">|</span>
+			  <a href="edit_map.php"><?php print __("ADD_MAP"); ?></a>
+			  <span class="separator">|</span>
+			  <a href="login.php?action=logout"><?php print __("LOGOUT"); ?></a>
+			<?php } else
+			{?>
+			  <span class="separator">|</span>
+			  <a href="login.php"><?php print __("LOGIN")?></a>
+			<?php } ?>
+		  </div>
+          <div class="right">
+            <?php
+            if(SHOW_LANGUAGES_IN_TOPBAR=="1")
+            {
+              Helper::ShowLanguages();?>
+              <span class="separator">|</span>
+            <?php } ?>
+            <a href="http://www.matstroeng.se/doma/?version=<?php print DOMA_VERSION; ?>"><?php printf(__("DOMA_VERSION_X"), DOMA_VERSION); ?></a>
+          </div>
+          <div class="clear"></div>
+	  </div>
+	  <?php
+	}
 
     public static function LogUsage($action, $data)
     {
@@ -805,7 +803,7 @@
             $info.
           '</div>';
 
-        $data["Url"] = $map->MapImage ? 'show_map.php?'. self::CreateQuerystring($map->GetUser(), $map->ID) : "";
+        $data["Url"] = $map->MapImage ? 'show_map.php?'. self::CreateMapQuerystring($map->ID) : "";
       }
       return $data;
     }

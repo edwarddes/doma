@@ -29,7 +29,7 @@
 
 <body id="usersBody">
 <div id="wrapper">
-<?php Helper::CreateUserListTopbar(); ?>
+<?php Helper::CreateTopbar(); ?>
 <div id="content">
 <form method="post" action="<?php print Helper::SelfPath(); ?>">
 
@@ -93,7 +93,7 @@
     $lastMapUpdated = "";
     $loginAsUserLink = "";
     $thumbnailImage = "";
-    $url = ($u->Visible ? "index.php?". Helper::CreateQuerystring($u) : "");
+    $url = ($u->Visible ? "index.php?". Helper::CreateUserQuerystring($u) : "");
     $nameLink = Helper::EncapsulateLink(hsc($u->FirstName ." ". $u->LastName), $url);    
 
 	  if(isset($vd["LastMapForEachUser"][$u->ID]))
@@ -101,7 +101,7 @@
       $lastMap = $vd["LastMapForEachUser"][$u->ID];
       if($lastMap) 
       {
-        $lastMapLink = '<a href="show_map.php?'. Helper::CreateQuerystring($u, $lastMap->ID) .'" class="thumbnailHoverLink">'. 
+        $lastMapLink = '<a href="show_map.php?'. Helper::CreateMapQuerystring($lastMap->ID) .'" class="thumbnailHoverLink">'. 
                        hsc($lastMap->Name).
                        '</a>'; 
 
@@ -111,7 +111,7 @@
       }
     }
     
-    $url = ($u->Visible ? "users.php?loginAsUser=". urlencode($u->ID) : "");
+    $url = ($u->Visible ? "login.php?loginAsUser=". urlencode($u->ID) : "");
     $loginAsUserLink = Helper::EncapsulateLink(sprintf(__("LOGIN_AS_X"), hsc($u->FirstName)), $url);
     
     ?>
@@ -130,7 +130,7 @@
       <td><?php print $lastMapUpdated?></td>
       <?php if(Helper::IsLoggedInAdmin()) { ?>
       <td><?php print ($u->Visible ? __("YES") : __("NO"))?></td>
-      <td><a href="edit_user.php?mode=admin&amp;<?php print Helper::CreateQuerystring($u)?>"><?php print __("EDIT")?></a></td>
+      <td><a href="edit_user.php?mode=admin&amp;<?php print Helper::CreateUserQuerystring($u)?>"><?php print __("EDIT")?></a></td>
       <td><?php print $loginAsUserLink?></td>
       
       <?php } ?>
@@ -175,9 +175,9 @@
       foreach($vd["LastMaps"] as $map)
       {
         $count++;
-        $url = "index.php?". Helper::CreateQuerystring($map->GetUser());
+        $url = "index.php?". Helper::CreateUserQuerystring($map->GetUser());
         $nameLink = Helper::EncapsulateLink(hsc($map->GetUser()->FirstName ." ". $map->GetUser()->LastName), $url);    
-        $mapLink = '<a href="show_map.php?'. Helper::CreateQuerystring($map->GetUser(), $map->ID) .'" class="thumbnailHoverLink">'. 
+        $mapLink = '<a href="show_map.php?'. Helper::CreateMapQuerystring($map->ID) .'" class="thumbnailHoverLink">'. 
                    hsc($map->Name).
                    '</a>'; 
         

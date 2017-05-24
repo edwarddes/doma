@@ -6,8 +6,17 @@
     public function Execute()
     {
       $viewData = array();
-      // no user specified - redirect to user list page
-      
+	  
+	  if(isset($_GET["user"]))
+	  {
+	      Helper::SetUser(DataAccess::GetUserByID($_GET["user"]));
+	  }
+	  else
+	  {
+	    Helper::Redirect("users.php");
+	  }
+	  
+      // no user specified - redirect to user list page     
       if(!getCurrentUser()) 
       {
         Helper::Redirect("users.php");
@@ -89,7 +98,7 @@
       foreach($viewData["Maps"] as $map)
       {
         $mapInfo = array();
-        $mapInfo["URL"] = ($map->MapImage ? 'show_map.php?'. Helper::CreateQuerystring(getCurrentUser(), $map->ID) : "");
+        $mapInfo["URL"] = ($map->MapImage ? 'show_map.php?'. Helper::CreateMapQuerystring($map->ID) : "");
         $mapInfo["Name"] = $map->Name .' ('. date(__("DATE_FORMAT"), Helper::StringToTime($map->Date, true)) .')';
         $mapInfo["MapThumbnailHtml"] = Helper::EncapsulateLink('<img src="'. Helper::GetThumbnailImage($map) .'" alt="'. $mapInfo["Name"] .'" height="'. THUMBNAIL_HEIGHT .'" width="'. THUMBNAIL_WIDTH .'" />', $mapInfo["URL"]);
 

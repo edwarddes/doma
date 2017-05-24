@@ -59,7 +59,7 @@
           <?php print $map->Views?> 
           <?php print __("VIEWS")?> 
           <span class="separator">|</span> 
-          <a href="edit_map.php?<?php print Helper::CreateQuerystring(getCurrentUser(), $map->ID)?>"><?php print __("EDIT_MAP"); ?></a>
+          <a href="edit_map.php?<?php print Helper::CreateMapQuerystring($map->ID)?>"><?php print __("EDIT_MAP"); ?></a>
         </div>
       <?php } ?>
       

@@ -8,12 +8,6 @@
     {
       $viewData = array();  
 
-      // no user specified - redirect to user list page
-      if(!getCurrentUser()) Helper::Redirect("users.php");
-      
-      // user is hidden - redirect to user list page
-      if(!getCurrentUser()->Visible) Helper::Redirect("users.php");
-
       // the requested map
       $map = new Map();
       $map->Load($_GET["map"]);
@@ -23,17 +17,17 @@
       DataAccess::UnprotectMapIfNeeded($map);
       
       if(Helper::MapIsProtected($map)) die("The map is protected until ". date("Y-m-d H:i:s", Helper::StringToTime($map->ProtectedUntil, true)) .".");
-            
-      if($map->UserID != getCurrentUser()->ID) die();
+	  
+	  $viewData["user"] = $map->GetUser();
 
       $viewData["Name"] = $map->Name .' ('. date(__("DATE_FORMAT"), Helper::StringToTime($map->Date, true)) .')';
 
       // previous map in archive
-      $previous = DataAccess::GetPreviousMap(getCurrentUser()->ID, $map->ID, Helper::GetLoggedInUserID());
+      $previous = DataAccess::GetPreviousMap($map->UserID, $map->ID, Helper::GetLoggedInUserID());
       $viewData["PreviousName"] = $previous == null ? null :$previous->Name .' ('. date(__("DATE_FORMAT"), Helper::StringToTime($previous->Date, true)) .')';
 
       // next map in archive
-      $next = DataAccess::GetNextMap(getCurrentUser()->ID, $map->ID, Helper::GetLoggedInUserID());
+      $next = DataAccess::GetNextMap($map->UserID, $map->ID, Helper::GetLoggedInUserID());
       $viewData["NextName"] = $next == null ? null : $next->Name .' ('. date(__("DATE_FORMAT"), Helper::StringToTime($next->Date, true)) .')';
 
       $size = $map->GetMapImageSize();
@@ -46,7 +40,7 @@
       
       $viewData["BackUrl"] = isset($_SERVER["HTTP_REFERER"]) && basename($_SERVER["HTTP_REFERER"]) == "users.php"
         ? "users.php"
-        : "index.php?". Helper::CreateQuerystring(getCurrentUser());
+        : "index.php?". Helper::CreateUserQuerystring($map->GetUser());
       
       $viewData["Previous"] = $previous;
       $viewData["Next"] = $next;
@@ -58,7 +52,7 @@
       
       if(isset($viewData["QuickRouteJpegExtensionData"]) && $viewData["QuickRouteJpegExtensionData"]->IsValid)
       {
-        $categories = DataAccess::GetCategoriesByUserID(getCurrentUser()->ID);
+        $categories = DataAccess::GetCategoriesByUserID($map->UserID);
         $viewData["OverviewMapData"][] = Helper::GetOverviewMapData($map, true, false, false, $categories);
         
         $viewData["GoogleMapsUrl"] = "http://maps.google.com/maps".

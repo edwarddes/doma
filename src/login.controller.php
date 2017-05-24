@@ -9,20 +9,18 @@
   
       $errors = array();
 
-      // no user specified - redirect to user list page
-      if(!getCurrentUser()) Helper::Redirect("users.php");
-
-      // user is hidden - redirect to user list page
-      if(!getCurrentUser()->Visible) Helper::Redirect("users.php");
-
-      if(isset($_POST["cancel"]))
+      if(Helper::IsLoggedInAdmin() && isset($_GET["loginAsUser"]))
       {
-        Helper::Redirect("index.php?". Helper::CreateQuerystring(getCurrentUser()));
+        // login as a certain user and redirect to his page
+        if(Helper::LoginUserByID($_GET["loginAsUser"]))
+        {
+          Helper::Redirect("index.php?". Helper::CreateUserQuerystring(getCurrentUser()));
+        }
       }
-
+	  
       if(isset($_GET["action"]) && $_GET["action"] == "logout")
       {
-        $location = "index.php?". Helper::CreateQuerystring(getCurrentUser());
+        $location = "index.php?". Helper::CreateUserQuerystring(getCurrentUser());
         Helper::LogoutUser();
         Helper::Redirect($location);
 	  }

@@ -18,7 +18,7 @@
 
 <body id="adminLoginBody">
 <div id="wrapper">
-<?php Helper::CreateUserListTopbar(); ?>
+<?php Helper::CreateTopbar(); ?>
 <div id="content">
 <form class="wide" method="post" action="<?php print Helper::SelfPath()?>">
 

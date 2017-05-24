@@ -8,12 +8,11 @@
       $viewData = array();
 
       $isAdmin = (isset($_GET["mode"]) && $_GET["mode"] == "admin" && Helper::IsLoggedInAdmin());
-      $user = getCurrentUser();
-      $userIsLoggedInUser = $user && Helper::GetLoggedInUser()->ID == $user->ID;
-      $isNewUser = !isset($user) || !$user->ID;
+      $user = Helper::GetLoggedInUser();
+	  $isNewUser = (isset($_GET["mode"]) && $_GET["mode"] == "new" && Helper::IsLoggedInAdmin());;
 
       // no user specified and not admin mode - redirect to user list page
-      if(!($isAdmin || $userIsLoggedInUser || ($isNewUser && Session::GetPublicCreationCodeEntered())))
+      if(!($isAdmin || $isNewUser || $user))
       {
         Helper::Redirect("users.php");
       }
@@ -23,13 +22,13 @@
 
       if(isset($_POST["cancel"]))
       {
-        Helper::Redirect($isAdmin ? "users.php" : "index.php?". Helper::CreateQuerystring($user));
+        Helper::Redirect($isAdmin ? "users.php" : "index.php?". Helper::CreateUserQuerystring($user));
       }
 
       if($isAdmin && isset($_POST["deleteConfirmed"]))
       {
         DataAccess::DeleteUserByID($user->ID);
-        Helper::Redirect($isAdmin ? "users.php" : "index.php?". Helper::CreateQuerystring($user));
+        Helper::Redirect($isAdmin ? "users.php" : "index.php?". Helper::CreateUserQuerystring($user));
       }
 
       // any category handling button clicked?
@@ -239,7 +238,7 @@
           }
           else
           {
-            Helper::Redirect("index.php?". Helper::CreateQuerystring($user));
+            Helper::Redirect("index.php?". Helper::CreateUserQuerystring($user));
           }
         }
       }
@@ -256,7 +255,7 @@
       }
       $atoms = array();
       if($isAdmin) $atoms[] = "mode=admin";
-      if($user->ID) $atoms[] = Helper::CreateQuerystring($user);
+      if($user->ID) $atoms[] = Helper::CreateUserQuerystring($user);
 
       $viewData["FormActionURL"] = Helper::SelfPath() . (count($atoms) > 0 ? "?". join("&amp;", $atoms) : "");
 

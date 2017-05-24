@@ -7,6 +7,11 @@
     {
       $viewData = array();  
 
+	  if(isset($_GET["user"]))
+	  {
+	      Helper::SetUser(DataAccess::GetUserByID($_GET["user"]));
+	  }
+	  
       // check if user is not specified or hidden
       if(!getCurrentUser())
       {
@@ -33,7 +38,7 @@
         $viewData["Title"] = __("PAGE_TITLE");
         $viewData["LastCreatedTime"] = date("r", DataAccess::GetLastCreatedTime(getCurrentUser()->ID));
         $viewData["Description"] = __("RSS_DESCRIPTION");
-        $viewData["WebsiteUrl"] = Helper::GlobalPath("index.php?". Helper::CreateQuerystring(getCurrentUser()));
+        $viewData["WebsiteUrl"] = Helper::GlobalPath("index.php?". Helper::CreateUserQuerystring(getCurrentUser()));
       }
       
       $viewData["Items"] = array();

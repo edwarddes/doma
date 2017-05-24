@@ -22,7 +22,7 @@
 
       if(isset($cancel))
       {
-        Helper::Redirect("index.php?". Helper::CreateQuerystring(getCurrentUser()));
+        Helper::Redirect("index.php?". Helper::CreateUserQuerystring(getCurrentUser()));
       }
 
       if(isset($save) || isset($delete) || isset($deleteConfirmed))
@@ -31,14 +31,14 @@
         if(isset($mapID))
         {
           $map->Load($mapID);
-          if($map->UserID != getCurrentUser()->ID) die("Access denied");
+          if($map->UserID != Helper::GetLoggedInUser()->ID) die("Access denied");
           $isNewMap = false;
         }
         else
         {
           $isNewMap = true;
         }
-        $map->UserID = getCurrentUser()->ID;
+        $map->UserID = Helper::GetLoggedInUser()->ID;
         $map->CategoryID = $categoryID;
         $map->Date = $date;
         $map->Name = $name;
@@ -57,14 +57,14 @@
         {
           $map = new Map();
           $map->Load($mapID);
-          if($map->UserID != getCurrentUser()->ID) die("Access denied");
+          if($map->UserID != Helper::GetLoggedInUser()->ID) die("Access denied");
           $isNewMap = false;
         }
         else
         {
           $map = new Map();
           $map->Date = date("Y-m-d");
-          $map->CategoryID = getCurrentUser()->DefaultCategoryID;
+          $map->CategoryID = Helper::GetLoggedInUser()->DefaultCategoryID;
           $isNewMap = true;
         }
       }
@@ -133,13 +133,13 @@
           if($mapImageData["fileName"] && file_exists($mapImageData["fileName"])) unlink($mapImageData["fileName"]);
           if($blankMapImageData["fileName"] && file_exists($blankMapImageData["fileName"])) unlink($blankMapImageData["fileName"]);
           if($thumbnailImageData["fileName"] && file_exists($thumbnailImageData["fileName"])) unlink($thumbnailImageData["fileName"]);
-          if(count($errors) == 0) Helper::Redirect("index.php?". Helper::CreateQuerystring(getCurrentUser()) . (!$thumbnailCreatedSuccessfully ? "&error=thumbnailCreationFailure" : ""));
+          if(count($errors) == 0) Helper::Redirect("index.php?". Helper::CreateUserQuerystring(Helper::GetLoggedInUser()) . (!$thumbnailCreatedSuccessfully ? "&error=thumbnailCreationFailure" : ""));
         }
       }
       elseif(isset($deleteConfirmed))
       {
         DataAccess::DeleteMap($map);
-        Helper::Redirect("index.php?". Helper::CreateQuerystring(getCurrentUser()));
+        Helper::Redirect("index.php". Helper::CreateUserQuerystring(Helper::GetLoggedInUser()));
       }
 
       $viewData["Errors"] = $errors;

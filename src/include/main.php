@@ -12,21 +12,4 @@
   
   // create database if it does not exist
   if(!Helper::DatabaseVersionIsValid()) Helper::Redirect("create.php?redirectUrl=". urlencode($_SERVER["REQUEST_URI"]));
-  
-  // extract current user from querystring
-  if(isset($_GET["user"]))
-  {
-    $currentUser = getCurrentUser();
-    if(!$currentUser || 
-       $currentUser->ID != $_GET["user"] || 
-       !Session::GetLanguageStrings() || 
-       (isset($_GET["lang"]) && Session::GetLanguageCode() != $_GET["lang"]))
-    {
-      Helper::SetUser(DataAccess::GetUserByID($_GET["user"]));
-    }
-  }
-  else
-  {
-    Helper::SetUser(null);
-  }
 ?>
