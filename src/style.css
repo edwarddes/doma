@@ -145,11 +145,15 @@ thead
 
 td, th
 {
-  padding: 0.5em 1em;
+	padding-left: 0.5em;
   text-align: left;
   font-size: 12px;
   height: 18px;
   line-height: 18px;
+}
+th
+{
+	padding: 0.5em
 }
 
 tr.odd
@@ -159,7 +163,7 @@ tr.odd
 
 tr.even
 {
-  background-color: #efefef;
+  background-color: #f7f7f7;
 }
 
 /* miscellaneous */
@@ -258,7 +262,7 @@ body
 	color: #CCC;
 }
 
-#topbat a:visited
+#topbar a:visited
 {
 	color: white;
 }
@@ -650,10 +654,26 @@ img.button
 
 #showMapBody #navigation
 {
-  background-color: #e7e7ff;
-  border-top: 1px solid #a7a7ff;
-  border-bottom: 1px solid #c7c7ff;
-  font-size: 80%;
+	margin-top:1em;
+	color: white;
+	background:#152754;
+	border-radius:6px;
+  	font-size: 80%;
+}
+
+#showMapBody #navigation a
+{
+	color: white;
+}
+
+#showMapBody #navigation a:hover
+{
+	color: #CCC;
+}
+
+#showMapBody #navigation a:visited
+{
+	color: white;
 }
 
 #showMapBody #navigation .left
@@ -729,7 +749,6 @@ img.button
 
 #showMapBody #gmap
 {
-  width: 180px;
   float: left;
   position: relative;
   text-align: right;
