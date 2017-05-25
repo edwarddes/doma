@@ -114,6 +114,11 @@
 <?php } ?>
 
 <div class="container">
+<label for="comment"><?php print __("COMMENT")?></label>
+<textarea name="comment" id="comment" rows="5" cols="60"><?php print hsc($map->Comment)?></textarea>
+</div>
+
+<div class="container">
 <label for="mapImage"><?php print __("MAP_IMAGE_FILE")?></label>
 <input type="file" id="mapImage" name="mapImage" class="tooltipControl" />
 <div class="tooltip hidden"><?php print __("MAP_INFO"); if(isset($vd["MapID"])) print " ". __("LEAVE_EMPTY_TO_KEEP_EXISTING_MAP"); ?></div>

@@ -141,7 +141,12 @@ if(isset($QR) && $QR->IsValid)
 
 }
 ?>
+
 </div>
+<?php 
+if($map->Comment != "") 
+	print '<div id="comment">'. nl2br($map->Comment) .'</div>'; 
+?>
 
 <?php
 if($map->IsGeocoded)

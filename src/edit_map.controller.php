@@ -48,6 +48,8 @@
         if(__("SHOW_RELAY_LEG")) $map->RelayLeg = $relayLeg;
         if(__("SHOW_MAP_AREA_NAME")) $map->MapName = $mapName;
         if(__("SHOW_RESULT_LIST_URL")) $map->ResultListUrl = $resultListUrl;
+		$map->Comment = $comment;
+		
         $map->ProtectedUntil = $protectedUntil;
       }
       else
