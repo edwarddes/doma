@@ -244,6 +244,21 @@
         Session::SetLanguageFile($languageFileNameAndDate);
       }
     }
+	
+	public static function UpdateUserInfo($data)
+	{
+		$firstName = $data['firstName'];
+		$lastName = $data['lastName'];
+		$email = $data['email'];
+		
+		$user = self::GetLoggedInUser();
+			
+		$user->FirstName = $firstName;
+		$user->LastName = $lastName;
+		$user->Email = $email;
+		
+		$user->Save();
+	}
 
     private static function GetVersion2DefaultLanguageCode()
     {

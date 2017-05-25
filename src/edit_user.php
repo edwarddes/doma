@@ -45,25 +45,60 @@
 
 <h2><?php print __("PERSONAL_DETAILS_TITLE")?></h2>
 
-<p><?php print ($vd["IsAdmin"] ? __("ADMIN_PERSONAL_DETAILS_INFO") : __("PERSONAL_DETAILS_INFO"))?></p>
+<?php if($vd["IsAdmin"] || $vd["IsNewUser"])
+{ ?>
+<p><?php print __("ADMIN_PERSONAL_DETAILS_INFO")?></p>
+
+<div class="container">
+<label for="accountID"><?php print "Account ID"?></label>
+<input type="text" class="text tooltipControl" name="accountID" value="<?php print hsc($vd["User"]->AccountID)?>" /> <span class="required">*</span>
+</div>
 
 <div class="container">
 <label for="firstName"><?php print __("FIRST_NAME")?></label>
 <input type="text" class="text tooltipControl" name="firstName" value="<?php print hsc($vd["User"]->FirstName)?>" /> <span class="required">*</span>
-<div class="tooltip hidden"><?php print ($vd["IsAdmin"] ? __("ADMIN_FIRST_NAME_DESCRIPTION") : __("FIRST_NAME_DESCRIPTION"))?></div>
+<div class="tooltip hidden"><?php print __("ADMIN_FIRST_NAME_DESCRIPTION")?></div>
 </div>
 
 <div class="container">
 <label for="lastName"><?php print __("LAST_NAME")?></label>
 <input type="text" class="text tooltipControl" name="lastName" value="<?php print hsc($vd["User"]->LastName)?>" /> <span class="required">*</span>
-<div class="tooltip hidden"><?php print ($vd["IsAdmin"] ? __("ADMIN_LAST_NAME_DESCRIPTION") : __("LAST_NAME_DESCRIPTION"))?></div>
+<div class="tooltip hidden"><?php print __("ADMIN_LAST_NAME_DESCRIPTION")?></div>
 </div>
 
 <div class="container">
 <label for="email"><?php print __("EMAIL")?></label>
 <input type="text" class="text tooltipControl" name="email" value="<?php print hsc($vd["User"]->Email)?>" /> <span class="required">*</span>
-<div class="tooltip hidden"><?php print ($vd["IsAdmin"] ? __("ADMIN_EMAIL_DESCRIPTION") : __("EMAIL_DESCRIPTION"))?></div>
+<div class="tooltip hidden"><?php print __("ADMIN_EMAIL_DESCRIPTION")?></div>
 </div>
+
+<?php 
+} else
+{ ?>
+	
+<p><?php print __("PERSONAL_DETAILS_INFO")?></p>
+
+<div class="container">
+<label for="accountID"><?php print "Account ID"?></label>
+<span> <?php print hsc($vd["User"]->AccountID)?> </span>
+</div>
+
+<div class="container">
+<label for="firstName"><?php print __("FIRST_NAME")?></label>
+<span> <?php print hsc($vd["User"]->FirstName)?> </span>
+</div>
+
+<div class="container">
+<label for="lastName"><?php print __("LAST_NAME")?></label>
+<span> <?php print hsc($vd["User"]->LastName)?> </span>
+</div>
+
+<div class="container">
+<label for="email"><?php print __("EMAIL")?></label>
+<span> <?php print hsc($vd["User"]->Email)?> </span>
+</div>
+	
+<?php } ?>
 
 <?php if($vd["IsAdmin"] && $vd["IsNewUser"]) { ?>
 <div class="container">

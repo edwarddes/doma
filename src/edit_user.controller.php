@@ -8,8 +8,16 @@
       $viewData = array();
 
       $isAdmin = (isset($_GET["mode"]) && $_GET["mode"] == "admin" && Helper::IsLoggedInAdmin());
-      $user = Helper::GetLoggedInUser();
-	  $isNewUser = (isset($_GET["mode"]) && $_GET["mode"] == "new" && Helper::IsLoggedInAdmin());;
+	  if($isAdmin && isset($_GET["user"]))
+	  {
+		  $user = DataAccess::GetUserByID($_GET["user"]);
+	  }
+	  else
+	  {
+	  	$user = Helper::GetLoggedInUser();
+	  }
+	  
+	  $isNewUser = (isset($_GET["mode"]) && $_GET["mode"] == "new" && Helper::IsLoggedInAdmin());
 
       // no user specified and not admin mode - redirect to user list page
       if(!($isAdmin || $isNewUser || $user))
@@ -51,6 +59,7 @@
       if(isset($_POST["save"]) || isset($_POST["delete"]) || $deleteCategory || $addCategory)
       {
         // populate user object with data from form elements
+		$user->AccountID = stripslashes($_POST["accountID"]);
         $user->FirstName = stripslashes($_POST["firstName"]);
         $user->LastName = stripslashes($_POST["lastName"]);
         $user->Email = stripslashes($_POST["email"]);

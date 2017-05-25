@@ -8,8 +8,6 @@
  * http://github.com/colinpizarek
  */
  
-session_start();
-$_SESSION['neonSession'] = null;
 class Neon 
 {
   /*
@@ -34,45 +32,49 @@ class Neon
   /*
    * Retrieves the session ID
    */
-  private function getSession() {
-    if (isset($_SESSION['neonSession'])) {
-      return $_SESSION['neonSession'];
-    } else {
-      return null;
-    }
+  private function getSession() 
+  {
+	  return $this->sessionID;
   }
   
   /*
    * Saves the session ID
    */
-  private function setSession($session) {
-    $_SESSION['neonSession'] = $session;
+  private function setSession($session) 
+  {
+	  $this->sessionID = $session;
   }
   
   /*
    * Executes a login and stores the Session ID.
    */
-  public function login($keys) {
-    if (isset($keys['orgId']) && isset($keys['apiKey'])) {
-      $request = array();
-      $request['method'] = 'common/login';
-      $request['parameters'] = '&login.apiKey=' . $keys['apiKey'] . '&login.orgid=' . $keys['orgId'];
-      $response = $this->api($request);
-      reset($response);
-      $first_key = key($response);
-      $response = $response[$first_key];
-      if ($response['operationResult'] == 'SUCCESS') {
-        $this->setSession($response['userSessionId']);
-        return $response;
-      } 
-      else {
-        return $response;
-      } 
-    } 
-    else {
-      return null;
-    }
+  public function login() 
+  {
+	  $organizationID = "";
+	  $apiKey         = "";
+	
+	  $request = array();
+	  $request['method'] = 'common/login';
+	  $request['parameters'] = '&login.apiKey=' . $apiKey . '&login.orgid=' . $organizationID;
+	  $response = $this->api($request);
+	  reset($response);
+	  $first_key = key($response);
+	  $response = $response[$first_key];
+	  if ($response['operationResult'] == 'SUCCESS') {
+	    $this->setSession($response['userSessionId']);
+	    return $response;
+	  } 
+	  else {
+	    return $response;
+	  } 
   }
+  
+  public function logout()
+  {
+	  return $this->go( array( 'method' => 'common/logout' ) );
+  }
+  
+  
   /*
    * General purpose API request to be executed after login
    */
@@ -148,6 +150,42 @@ class Neon
     return null;
     }
   }
+  
+	public function getIndividualAccount($accountID)
+	{	
+		$mmbr_data = array();
+		//just fill the fields with default values
+		$mmbr_data['status']          = 'FAIL';
+		$mmbr_data['responseTime']    = '2000-01-01';
+		$mmbr_data['accountId']       = 0;
+		$mmbr_data['firstName']       = '';
+		$mmbr_data['lastName']        = '';
+		$mmbr_data['email']      	  = '';
+		
+		$response =  $this->go( array( 
+			'method' => 'account/retrieveIndividualAccount',
+			'parameters' => array('accountId' => $accountID)) );
+		
+		$mmbr_data['status']          = $response['operationResult'];
+		$mmbr_data['responseTime']       = $response['responseDateTime'];
+		
+		$individualAccount = isset( $response['individualAccount']) ?  $response['individualAccount'] : null;
+
+		$mmbr_data['accountId']      = isset($individualAccount['accountId'])
+										? $individualAccount['accountId'] : "";
+		$mmbr_data['firstName']      = isset($individualAccount['primaryContact']['firstName']) 
+										? $individualAccount['primaryContact']['firstName'] 
+										: "";
+		$mmbr_data['lastName']      = isset($individualAccount['primaryContact']['lastName']) 
+										? $individualAccount['primaryContact']['lastName'] 
+										: "";
+		$mmbr_data['email']      = isset($individualAccount['primaryContact']['email1']) 
+										? $individualAccount['primaryContact']['email1'] 
+										: "";
+		return $mmbr_data;
+	}
+  
+  
   /*
    * Parses the server response for list requests
    */
