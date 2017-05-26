@@ -259,6 +259,28 @@
 		
 		$user->Save();
 	}
+	
+	public static function CreateAndSaveDefaultUser()
+	{
+		$user = new User();
+		
+        $defaultCategoryNames = @explode(";", __("DEFAULT_CATEGORY_NAMES"));
+        sort($defaultCategoryNames);
+		$categories = array();
+		$noOfCategoriesAdded = 0;
+		
+        foreach($defaultCategoryNames as $dcn)
+        {
+          $c = new Category();
+          $c->Name = $dcn;
+          $categories["1_". sprintf("%08d", $noOfCategoriesAdded)] = $c;
+          $noOfCategoriesAdded++;
+        }
+		
+		DataAccess::SaveUser($user, $categories, 0, array());
+		
+		return $user;
+	}
 
     private static function GetVersion2DefaultLanguageCode()
     {

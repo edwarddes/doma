@@ -56,14 +56,21 @@
 			}
 			else
 			{
-	            if(Helper::LoginUserByAccountId($membershipData['accountId']))
-	            { 
-					Helper::UpdateUserInfo($membershipData);
-					$neon->logout();
-					Helper::Redirect("index.php?". Helper::CreateUserQuerystring(getCurrentUser()));
-	            }
-	            $errors[] = "invalid userID from NEON";
+				$isNewUser = false;
+	            if(!Helper::LoginUserByAccountId($membershipData['accountId']))
+	            {
+					$isNewUser = true;
+					$newUser = Helper::CreateAndSaveDefaultUser();
+					$newUser->AccountID = $membershipData['accountId'];
+					$newUser->Save();
+					
+					Helper::LoginUserByAccountId($membershipData['accountId']);
+				}
+				Helper::UpdateUserInfo($membershipData);
+				$neon->logout();
 				
+				$isNewUser ? Helper::Redirect("edit_user.php") :
+					Helper::Redirect("index.php?". Helper::CreateUserQuerystring(getCurrentUser()));
 			}
 			
 			$viewData['membershipData'] = $membershipData;
