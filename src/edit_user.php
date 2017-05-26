@@ -81,21 +81,25 @@
 <div class="container">
 <label for="accountID"><?php print "Account ID"?></label>
 <span> <?php print hsc($vd["User"]->AccountID)?> </span>
+<input type="hidden" class="text" name="accountID" value="<?php print hsc($vd["User"]->AccountID)?>" />
 </div>
 
 <div class="container">
 <label for="firstName"><?php print __("FIRST_NAME")?></label>
 <span> <?php print hsc($vd["User"]->FirstName)?> </span>
+<input type="hidden" class="text" name="firstName" value="<?php print hsc($vd["User"]->FirstName)?>" />
 </div>
 
 <div class="container">
 <label for="lastName"><?php print __("LAST_NAME")?></label>
 <span> <?php print hsc($vd["User"]->LastName)?> </span>
+<input type="hidden" class="text" name="lastName" value="<?php print hsc($vd["User"]->LastName)?>" />
 </div>
 
 <div class="container">
 <label for="email"><?php print __("EMAIL")?></label>
 <span> <?php print hsc($vd["User"]->Email)?> </span>
+<input type="hidden" class="text" name="email" value="<?php print hsc($vd["User"]->Email)?>" />
 </div>
 	
 <?php } ?>

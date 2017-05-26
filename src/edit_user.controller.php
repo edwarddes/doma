@@ -264,7 +264,7 @@
       }
       $atoms = array();
       if($isAdmin) $atoms[] = "mode=admin";
-      if($user->ID) $atoms[] = Helper::CreateUserQuerystring($user);
+      //if($user->ID) $atoms[] = Helper::CreateUserQuerystring($user);
 
       $viewData["FormActionURL"] = Helper::SelfPath() . (count($atoms) > 0 ? "?". join("&amp;", $atoms) : "");
 
