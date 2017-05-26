@@ -239,7 +239,7 @@
           }
 
           // clear language cache
-          Session::SetLanguageStrings(null);
+          //Session::SetLanguageStrings(null);
 
           if($isAdmin)
           {
@@ -262,11 +262,15 @@
         $viewData["Title"] = ($isNewUser ? __("ADD_USER_PROFILE_TITLE") : __("EDIT_USER_PROFILE_TITLE"));
         $viewData["Info"] = sprintf(__("REQUIRED_FIELDS_INFO"), '<span class="required">*</span>');
       }
-      $atoms = array();
-      if($isAdmin) $atoms[] = "mode=admin";
-      //if($user->ID) $atoms[] = Helper::CreateUserQuerystring($user);
+   
+      if($isAdmin) 
+	  {
+	    $formURL = "?mode=admin&" . Helper::CreateUserQuerystring($user);
+	  }
+	  else
+		$formURL= "";
 
-      $viewData["FormActionURL"] = Helper::SelfPath() . (count($atoms) > 0 ? "?". join("&amp;", $atoms) : "");
+      $viewData["FormActionURL"] = Helper::SelfPath() . $formURL;
 
       $viewData["Errors"] = $errors;
       $viewData["IsAdmin"] = $isAdmin;
