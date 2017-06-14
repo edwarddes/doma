@@ -21,6 +21,14 @@
     public static function __($key, $htmlSpecialChars = false)
     {
       $ls = Session::GetLanguageStrings();
+	  if($ls == null)
+	  {
+          if(Session::GetLanguageCode() == null)
+          {
+          	Session::SetLanguageCode(defined('LANGUAGE_CODE') ? LANGUAGE_CODE : self::GetVersion2DefaultLanguageCode());
+          }
+		  Session::SetLanguageStrings(Helper::GetLanguageStrings());
+	  }
       $value = $ls[$key];
       if($htmlSpecialChars) return hsc($value);
       if (!isset($value)) $value = "#".$key."#";
