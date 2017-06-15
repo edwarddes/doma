@@ -44,13 +44,11 @@
             if($previousDatabaseVersion == "0.0")
             {
               // created databse
-              Helper::LogUsage("createSite", "version=". DOMA_VERSION);
               Helper::LoginAdmin(ADMIN_USERNAME, ADMIN_PASSWORD);
             }
             else
             {
               // updated database
-              Helper::LogUsage("updateSite", "oldVersion=$previousDatabaseVersion&newVersion=". DOMA_VERSION);
               // redirect to originally requested page
               $redirectUrl = $_GET["redirectUrl"];
               if(!isset($redirectUrl)) $redirectUrl = "users.php";

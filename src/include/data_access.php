@@ -359,7 +359,6 @@
         $data = "user=". urlencode($user->ID) .
                 "&map=". $map->ID.
                 ($gpsData ? "&longitude=". $gpsData["Longitude"] ."&latitude=". $gpsData["Latitude"] : "");
-        Helper::LogUsage("addMap", $data);
       }
     }
 
@@ -573,7 +572,6 @@
       $user->Save();
 
       self::SaveUserSettings($user->ID, $userSettings);
-      if($newUser) Helper::LogUsage("createUser", "user=". urlencode($user->ID));
     }
 
     public static function SaveUserCategories($userID, &$categories)

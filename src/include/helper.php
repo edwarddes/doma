@@ -561,11 +561,6 @@
 	  <?php
 	}
 
-    public static function LogUsage($action, $data)
-    {
-      @file(DOMA_SERVER ."?url=". urlencode(self::GlobalPath("")) ."&action=". urlencode($action) ."&data=". urlencode($data));
-    }
-
     public static function SendEmail($fromName, $toEmail, $subject, $body)
     {
       if(ADMIN_EMAIL == "email@yourdomain.com") return false; // the address is the default one, don't send

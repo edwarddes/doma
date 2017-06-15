@@ -458,7 +458,6 @@
       if($mapImageFileName) unlink($mapImageFileName);
       if($blankMapImageFileName) unlink($blankMapImageFileName);
       if($thumbnailImageFileName) unlink($thumbnailImageFileName);
-      if(!$mapInfo["ID"]) Helper::LogUsage("addMapWS", "user=". urlencode($user->Username) ."&map=". $map->ID);
       $errorMessage = mysqli_error($GLOBALS["dbCon"]);
       $success = ($errorMessage == "");
       $url = Helper::GlobalPath("show_map.php?user=". urlencode($user->Username) ."&map=". $map->ID);
