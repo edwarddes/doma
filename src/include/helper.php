@@ -265,7 +265,7 @@
 		$user->FirstName = $firstName;
 		$user->LastName = $lastName;
 		$user->Email = $email;
-		$user->AccountId = $accountId;
+		$user->AccountID = $accountId;
 		
 		$user->Save();
 	}
