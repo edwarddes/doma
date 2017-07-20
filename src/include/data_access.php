@@ -1,5 +1,6 @@
 <?php
   include_once(dirname(__FILE__) ."/helper.php");
+  include_once(dirname(__FILE__) ."/neon.php");
 
   class DataAccess
   {
@@ -441,6 +442,19 @@
       self::Query($sql);
     }
 
+	public static function GetUserByUsernameAndPassword($username, $password)
+	{
+		$neon = new Neon();
+		$neon->login();
+		
+		$accountId = $neon->authenticateUser($username,$password);
+		if($accountId != null)
+		{
+			return self::GetUserByAccountId($accountId);
+		}
+		return null;
+	}
+	
     public static function GetUserByID($id)
     {
       $id = mysqli_real_escape_string($GLOBALS["dbCon"], $id);

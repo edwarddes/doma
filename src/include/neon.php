@@ -150,6 +150,19 @@ class Neon
     return null;
     }
   }
+
+	public function authenticateUser($ousa_username,$ousa_password)
+	{
+		$response =  $this->go( array( 
+			'method' => 'common/authenticateUser',
+			'parameters' => array('username' => $ousa_username,'password' => $ousa_password)) );
+			
+		if ($response['operationResult'] == "SUCCESS")
+		{
+			return $response['accountId'];
+		}
+		return null;
+	}
   
 	public function getIndividualAccount($accountID)
 	{	
