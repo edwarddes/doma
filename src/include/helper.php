@@ -258,12 +258,14 @@
 		$firstName = $data['firstName'];
 		$lastName = $data['lastName'];
 		$email = $data['email'];
+		$accountId = $data['accountId'];
 		
 		$user = self::GetLoggedInUser();
 			
 		$user->FirstName = $firstName;
 		$user->LastName = $lastName;
 		$user->Email = $email;
+		$user->AccountId = $accountId;
 		
 		$user->Save();
 	}
