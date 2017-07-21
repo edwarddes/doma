@@ -556,7 +556,7 @@
               Helper::ShowLanguages();?>
               <span class="separator">|</span>
             <?php } ?>
-            <a href="http://www.matstroeng.se/doma/?version=<?php print DOMA_VERSION; ?>"><?php printf(__("DOMA_VERSION_X"), DOMA_VERSION); ?></a>
+			<a href="version.php">OUSA DOMA</a>
           </div>
           <div class="clear"></div>
 	  </div>
