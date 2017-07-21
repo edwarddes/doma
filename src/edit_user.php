@@ -51,7 +51,8 @@
 
 <div class="container">
 <label for="accountID"><?php print "Account ID"?></label>
-<input type="text" class="text tooltipControl" name="accountID" value="<?php print hsc($vd["User"]->AccountID)?>" /> <span class="required">*</span>
+<span> <?php print hsc($vd["User"]->AccountID)?> </span>
+<input type="hidden" class="text" name="accountID" value="<?php print hsc($vd["User"]->AccountID)?>" />
 </div>
 
 <div class="container">
