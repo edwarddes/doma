@@ -89,7 +89,7 @@
 
   // Size and scaling of thumbnail images. Don't change unless you have a good reason.
   define('THUMBNAIL_WIDTH', 400);
-  define('THUMBNAIL_HEIGHT', 100);
+  define('THUMBNAIL_HEIGHT', 200);
   define('THUMBNAIL_SCALE', 0.5);
 
   // *********************************************************************************************************

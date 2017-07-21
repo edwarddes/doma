@@ -454,7 +454,7 @@
 
       $thumbnailCreatedSuccessfully = false;
       $error = null;
-      DataAccess::SaveMapAndThumbnailImage($map, $mapImageFileName, $blankMapImageFileName, $thumbnailImageFileName, $error, $thumbnailCreatedSuccessfully);
+      DataAccess::SaveMapAndThumbnailImage($map, $mapImageFileName, $blankMapImageFileName, null, $error, $thumbnailCreatedSuccessfully);
       if($mapImageFileName) unlink($mapImageFileName);
       if($blankMapImageFileName) unlink($blankMapImageFileName);
       if($thumbnailImageFileName) unlink($thumbnailImageFileName);
