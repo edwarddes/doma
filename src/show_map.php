@@ -51,8 +51,27 @@
   <?php }?>
   
 
+	<meta property="og:url"		content="<?php print "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" />
+	<meta property="og:type"	content="article" />
+	<meta property="og:title"	content="<?php print __("PAGE_TITLE")?> :: <?php print strip_tags($vd["Name"])?>" />
+<?php
+	if($vd["Map"]->Comment != "") 
+	{
+		//print "<meta property=\"og:description\"        content=\" $vd["Map"]->Comment \" />"
+		?><meta property="og:description" content="<?php print $vd["Map"]->Comment ?>"><?php
+	}
+?>
+	<meta property="og:image"	content="<?php print "http://$_SERVER[HTTP_HOST]"; print Helper::GetThumbnailImage($vd["Map"]); ?>" />
 </head>
 <body id="showMapBody">
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
 <center>
 <div id="wrapper">
 <?php Helper::CreateTopbar() ?>
@@ -142,6 +161,8 @@ if(isset($QR) && $QR->IsValid)
 }
 ?>
 
+<div class="fb-share-button" data-href="<?php print "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" data-width="200" data-type="button" data-size="large"></div>
+
 </div>
 <?php 
 if($map->Comment != "") 
@@ -168,6 +189,7 @@ if($map->IsGeocoded)
 
 
 <div id="overviewMapContainer"></div>
+  
 </div>
 </div>
 
