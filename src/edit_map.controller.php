@@ -142,7 +142,7 @@
       elseif(isset($deleteConfirmed))
       {
         DataAccess::DeleteMap($map);
-        Helper::Redirect("index.php". Helper::CreateUserQuerystring(Helper::GetLoggedInUser()));
+        Helper::Redirect("index.php?". Helper::CreateUserQuerystring(Helper::GetLoggedInUser()));
       }
 
       $viewData["Errors"] = $errors;
