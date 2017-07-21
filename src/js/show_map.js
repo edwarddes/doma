@@ -86,7 +86,7 @@ function reloadGM()
 {
   if($("#gmap").size())
   {
-    $("#gmap").html("<a href='"+$("#gmap_url").val()+"' target='_blank'><img src='http://maps.googleapis.com/maps/api/staticmap?center="+$("#gmap_coordinates").val()+"&amp;zoom=6&amp;size=300x174"+"&amp;maptype=terrain&amp;markers=color:red%7C"+$("#gmap_coordinates").val()+"&amp;sensor=false&amp;language="+$("#gmap_lang").val()+"'></a>");
+    $("#gmap").html("<a href='"+$("#gmap_url").val()+"' target='_blank'><img src='http://maps.googleapis.com/maps/api/staticmap?center="+$("#gmap_coordinates").val()+"&zoom=6&amp;size=300x174"+"&maptype=terrain&markers=color:red%7C"+$("#gmap_coordinates").val()+"&sensor=false&language="+$("#gmap_lang").val()+"'></a>");
   }
 }
 
