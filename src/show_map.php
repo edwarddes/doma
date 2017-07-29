@@ -71,11 +71,11 @@
 	<?php
 		if($vd["Map"]->Comment != "") 
 		{
-			?><meta property="twitter:description" content="<?php print $vd["Map"]->Comment ?>"><?php
+			?><meta name="twitter:description" content="<?php print $vd["Map"]->Comment ?>"><?php
 		}
 		else
 		{
-			?><meta property="twitter:description" content=" "><?php
+			?><meta name="twitter:description" content=" "><?php
 		}
 	?>
 	<meta name="twitter:image" content="<?php print "http://$_SERVER[HTTP_HOST]"; print Helper::GetThumbnailImage($vd["Map"]); ?>">
