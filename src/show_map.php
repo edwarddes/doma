@@ -75,7 +75,7 @@
 		}
 		else
 		{
-			?><meta name="twitter:description" content=" "><?php
+			?><meta name="twitter:description" content="<?php print strip_tags($vd["Name"])?>"><?php
 		}
 	?>
 	<meta name="twitter:image" content="<?php print "http://$_SERVER[HTTP_HOST]"; print Helper::GetThumbnailImage($vd["Map"]); ?>">
