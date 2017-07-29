@@ -53,7 +53,7 @@
 
 	<meta property="og:url"		content="<?php print "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" />
 	<meta property="og:type"	content="article" />
-	<meta property="og:title"	content="<?php print __("PAGE_TITLE")?> :: <?php print strip_tags($vd["Name"])?>" />
+	<meta property="og:title"	content="<?php print __("PAGE_TITLE")?> :: <?php print $vd["Map"]->Name ?>" />
 <?php
 	if($vd["Map"]->Comment != "") 
 	{
@@ -67,7 +67,7 @@
 	<meta property="og:image"	content="<?php print "http://$_SERVER[HTTP_HOST]"; print Helper::GetThumbnailImage($vd["Map"]); ?>" />
 
 	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="<?php print __("PAGE_TITLE")?> :: <?php print strip_tags($vd["Name"])?>">
+	<meta name="twitter:title" content="<?php print __("PAGE_TITLE")?> :: <?php  print $vd["Map"]->Name ?>">
 	<?php
 		if($vd["Map"]->Comment != "") 
 		{
@@ -75,7 +75,7 @@
 		}
 		else
 		{
-			?><meta name="twitter:description" content="<?php print strip_tags($vd["Name"])?>"><?php
+			?><meta name="twitter:description" content="<?php print $vd["Map"]->Name ?>"><?php
 		}
 	?>
 	<meta name="twitter:image" content="<?php print "http://$_SERVER[HTTP_HOST]"; print Helper::GetThumbnailImage($vd["Map"]); ?>">
