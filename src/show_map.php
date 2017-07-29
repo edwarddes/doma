@@ -153,6 +153,14 @@
 </div>
 
 <div id="propertyContainer">
+	<div id="social-buttons" >
+		<div class="fb-share-button" data-href="<?php print "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" data-width="200" 	data-type="button" data-size="large" style="vertical-align:top;"></div>
+
+		<a class="twitter-share-button"
+			data-size="large"
+		  	href="https://twitter.com/intent/tweet">
+		Tweet</a>
+	</div>
 <?php
   print '<div class="property"><span class="caption">'. __("CATEGORY") .":</span> ". $map->GetCategory()->Name .'</div>'; 
   if(__("SHOW_MAP_AREA_NAME") && $map->MapName != "") print '<div class="property"><span class="caption">'. __("MAP_AREA_NAME") .':</span> '. $map->MapName .'</div>';
@@ -193,14 +201,6 @@ if(isset($QR) && $QR->IsValid)
 
 }
 ?>
-<div id="social-buttons" >
-	<div class="fb-share-button" data-href="<?php print "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" data-width="200" 	data-type="button" data-size="large" style="vertical-align:top;"></div>
-
-	<a class="twitter-share-button"
-		data-size="large"
-	  	href="https://twitter.com/intent/tweet">
-	Tweet</a>
-</div>
 
 </div>
 <?php 
