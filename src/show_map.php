@@ -61,7 +61,7 @@
 	}
 	else
 	{
-		?><meta property="og:description" content=""><?php
+		?><meta property="og:description" content=" "><?php
 	}
 ?>
 	<meta property="og:image"	content="<?php print "http://$_SERVER[HTTP_HOST]"; print Helper::GetThumbnailImage($vd["Map"]); ?>" />
@@ -75,7 +75,7 @@
 		}
 		else
 		{
-			?><meta property="twitter:description" content=""><?php
+			?><meta property="twitter:description" content=" "><?php
 		}
 	?>
 	<meta name="twitter:image" content="<?php print "http://$_SERVER[HTTP_HOST]"; print Helper::GetThumbnailImage($vd["Map"]); ?>">
