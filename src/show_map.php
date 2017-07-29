@@ -57,11 +57,20 @@
 <?php
 	if($vd["Map"]->Comment != "") 
 	{
-		//print "<meta property=\"og:description\"        content=\" $vd["Map"]->Comment \" />"
 		?><meta property="og:description" content="<?php print $vd["Map"]->Comment ?>"><?php
 	}
 ?>
 	<meta property="og:image"	content="<?php print "http://$_SERVER[HTTP_HOST]"; print Helper::GetThumbnailImage($vd["Map"]); ?>" />
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="<?php print __("PAGE_TITLE")?> :: <?php print strip_tags($vd["Name"])?>">
+	<?php
+		if($vd["Map"]->Comment != "") 
+		{
+			?><meta property="twitter:description" content="<?php print $vd["Map"]->Comment ?>"><?php
+		}
+	?>
+	<meta name="twitter:image" content="<?php print "http://$_SERVER[HTTP_HOST]"; print Helper::GetThumbnailImage($vd["Map"]); ?>">
 </head>
 <body id="showMapBody">
 	<div id="fb-root"></div>
@@ -72,6 +81,22 @@
 	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10";
 	  fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
+	<script>window.twttr = (function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0],
+	    t = window.twttr || {};
+	  if (d.getElementById(id)) return t;
+	  js = d.createElement(s);
+	  js.id = id;
+	  js.src = "https://platform.twitter.com/widgets.js";
+	  fjs.parentNode.insertBefore(js, fjs);
+
+	  t._e = [];
+	  t.ready = function(f) {
+	    t._e.push(f);
+	  };
+
+	  return t;
+	}(document, "script", "twitter-wjs"));</script>
 <center>
 <div id="wrapper">
 <?php Helper::CreateTopbar() ?>
@@ -160,8 +185,14 @@ if(isset($QR) && $QR->IsValid)
 
 }
 ?>
+<div id="social-buttons" >
+	<div class="fb-share-button" data-href="<?php print "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" data-width="200" 	data-type="button" data-size="large" style="vertical-align:top;"></div>
 
-<div class="fb-share-button" data-href="<?php print "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" data-width="200" data-type="button" data-size="large"></div>
+	<a class="twitter-share-button"
+		data-size="large"
+	  	href="https://twitter.com/intent/tweet">
+	Tweet</a>
+</div>
 
 </div>
 <?php 
