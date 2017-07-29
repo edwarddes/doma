@@ -649,6 +649,8 @@ img.button
 
 #showMapBody #content #mapInfo
 {
+	float: right;
+	width: 70%;
   padding: 1em 1em 1em 2em;
 }
 
@@ -747,16 +749,16 @@ img.button
   line-height: 19px;
 }
 
-#showMapBody #gmap
+#showMapBody #staticMap
 {
-  float: left;
-  position: relative;
-  text-align: right;
-}
-
-#showMapBody #gmap img
-{
-  border-radius: 5px;
+	float: left;
+	position: relative;
+	text-align: right;
+	width: 25%;
+	height: 200px;
+	margin-top: 1em;
+	border-radius: 5px;
+	z-index: 0;
 }
 
 #showMapBody #wrapper

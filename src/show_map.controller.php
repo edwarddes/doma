@@ -55,7 +55,7 @@
         $categories = DataAccess::GetCategoriesByUserID($map->UserID);
         $viewData["OverviewMapData"][] = Helper::GetOverviewMapData($map, true, false, false, $categories);
         
-        $viewData["GoogleMapsUrl"] = "export_kml.php?id=". $map->ID ."&format=kml".
+        $viewData["kmlURL"] = "export_kml.php?id=". $map->ID ."&format=kml".
           "&language=". Session::GetLanguageCode();
       }
       

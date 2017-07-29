@@ -1,26 +1,19 @@
 (function($) {
   $.fn.overviewMap = function(options)
   {
-    $(this).each(function() {
+    $(this).each(function() 
+	{
       var mapElement = $(this);
-      var mapBounds = new google.maps.LatLngBounds();
+      var mapBounds = new L.LatLngBounds();
       var markers = [];
       var borderPolygons = [];
       var routePolylines = [];
-      var mapOptions = 
-      {
-        panControl: false,
-        zoomControl: true,
-        scaleControl: true,
-        overviewMapControl: true,
-        scrollwheel: true,
-        mapTypeId: google.maps.MapTypeId.TERRAIN
-      };
-      var map = new google.maps.Map(mapElement.get(0), mapOptions);
-      google.maps.event.addListener(map, 'zoom_changed', function() { zoomChanged(); });
+	  
+	  var map = L.map(mapElement.get(0));	
+	  L.esri.basemapLayer('Topographic').addTo(map);
+	  map.on('zoomstart',function(e) { zoomChanged();});
       var lastZoom = -1;
       var zoomLimit = 10;
-      var lastShownTooltipMapId = 0;
       
       // get bounds of maps
       for(var i in options.data)
@@ -30,79 +23,66 @@
         // the map borders for large scale overview map
         var vertices =         
         [
-          new google.maps.LatLng(data.Corners[0].Latitude, data.Corners[0].Longitude),
-          new google.maps.LatLng(data.Corners[1].Latitude, data.Corners[1].Longitude),
-          new google.maps.LatLng(data.Corners[2].Latitude, data.Corners[2].Longitude),
-          new google.maps.LatLng(data.Corners[3].Latitude, data.Corners[3].Longitude),
-          new google.maps.LatLng(data.Corners[0].Latitude, data.Corners[0].Longitude)
+          new L.LatLng(data.Corners[0].Latitude, data.Corners[0].Longitude),
+          new L.LatLng(data.Corners[1].Latitude, data.Corners[1].Longitude),
+          new L.LatLng(data.Corners[2].Latitude, data.Corners[2].Longitude),
+          new L.LatLng(data.Corners[3].Latitude, data.Corners[3].Longitude),
+          new L.LatLng(data.Corners[0].Latitude, data.Corners[0].Longitude)
         ];
-
-        var borderPolygon = new google.maps.Polygon({
-          paths: vertices,
-          strokeColor: data.BorderColor, 
-          strokeWeight: data.BorderWidth,
-          strokeOpacity: data.BorderOpacity,
-          fillColor: data.FillColor, 
-          fillOpacity: data.FillOpacity
-        });
+		var borderPolygon = L.polygon(vertices, 
+		{
+			color: data.BorderColor,
+			weight: data.BorderWidth,
+			opacity: data.BorderOpacity,
+			fillColor: data.FillColor,
+			fillOpacity: data.FillOpacity
+		}).addTo(map);
         borderPolygon.Data = data;
+		if(data.TooltipMarkup != null)
+			borderPolygon.bindTooltip(data.TooltipMarkup).addTo(map);
+		
         borderPolygons.push(borderPolygon);
         
         // the map as an icon for small scale overview map
-        var icon = new google.maps.MarkerImage("gfx/control_flag.png", new google.maps.Size(16, 16), new google.maps.Point(0, 0), new google.maps.Point(8, 8));
-        var position = new google.maps.LatLng(data.MapCenter.Latitude, data.MapCenter.Longitude);
-        var marker = new google.maps.Marker({ icon: icon, position: position });
+		var marker = new L.Marker(
+			[data.MapCenter.Latitude, data.MapCenter.Longitude],
+			{icon: L.icon({iconUrl: "gfx/control_flag.png",iconSize: [16, 16]})});
+		marker.bindTooltip(data.TooltipMarkup).openTooltip();
         marker.Data = data;
         markers.push(marker);
-
+		
+		
         // tooltips
         if(data.TooltipMarkup != null)
         {
-          function showTooltip(e) 
-          {
-            if(e.Data.MapId != lastShownTooltipMapId)
-            {
-              Tooltip.show(e.Data.TooltipMarkup);
-              lastShownTooltipMapId = e.Data.MapId;
-            }        
-          }
-          google.maps.event.addListener(marker, 'mousemove', function() { showTooltip(this); });
-          google.maps.event.addListener(marker, 'click', function() {
+          marker.on('click', function(e) 
+		  {
             window.location = this.Data.Url.replace('&amp;', '&')
           });
-          google.maps.event.addListener(marker, 'mouseover', function() 
+          marker.on('mouseover', function(e) 
           { 
-            var icon = this.getIcon();
-            this.setIcon(new google.maps.MarkerImage("gfx/control_flag_highlighted.png", icon.size, icon.origin, icon.anchor));
+			  this.setIcon(new L.icon({iconUrl: "gfx/control_flag_highlighted.png",iconSize: [16, 16]}));
           });
-          google.maps.event.addListener(marker, 'mouseout', function()
+          marker.on('mouseout', function(e)
           { 
-            var icon = this.getIcon();
-            this.setIcon(new google.maps.MarkerImage("gfx/control_flag.png", icon.size, icon.origin, icon.anchor));
+            this.setIcon(new L.icon({iconUrl: "gfx/control_flag.png",iconSize: [16, 16]}));
           });
-
-          google.maps.event.addListener(borderPolygon, 'mousemove', function() { showTooltip(this); });
-          google.maps.event.addListener(borderPolygon, 'click', function() {
+		  
+          borderPolygon.on('click', function(e) 
+		  {
             window.location = this.Data.Url.replace('&amp;', '&');
           });
-          google.maps.event.addListener(borderPolygon, 'mouseover', function() 
+          borderPolygon.on('mouseover', function(e) 
           { 
-            this.setOptions({ strokeColor: this.Data.SelectedBorderColor, fillColor: this.Data.SelectedFillColor });
+            this.setStyle({ color: this.Data.SelectedBorderColor, fillColor: this.Data.SelectedFillColor });
           });
-          google.maps.event.addListener(borderPolygon, 'mouseout', function()
+          borderPolygon.on('mouseout', function(e)
           { 
-            this.setOptions({ strokeColor: this.Data.BorderColor, fillColor: this.Data.FillColor });
-          });
-
-          google.maps.event.addListener(map, 'mousemove', function() {
-            if(lastShownTooltipMapId != 0)
-            {
-              Tooltip.hide();
-              lastShownTooltipMapId = 0;
-            }
+            this.setStyle({ color: this.Data.BorderColor, fillColor: this.Data.FillColor });
           });
         }
-
+		
+		
         // the route lines (if data.RouteCoordinates is present)
         if(data.RouteCoordinates != null)
         {
@@ -112,9 +92,14 @@
             for(var j in data.RouteCoordinates[i])
             {
               var vertex = data.RouteCoordinates[i][j];
-              points[j] = new google.maps.LatLng(vertex[1], vertex[0]);
+              points[j] = new L.LatLng(vertex[1], vertex[0]);
             }
-            var polyline = new google.maps.Polyline({ path: points, strokeColor: data.RouteColor, strokeWeight: data.RouteWidth, strokeOpacity: data.RouteOpacity });
+            var polyline = new L.Polyline(points,
+			{
+				color: data.RouteColor, 
+				weight: data.RouteWidth, 
+				opacity: data.RouteOpacity 
+			}).addTo(map);
             routePolylines.push(polyline);
           }
         }
@@ -127,7 +112,7 @@
       }
       
       map.fitBounds(mapBounds);
-
+	  
       function zoomChanged()
       {
         var zoom = map.getZoom();
@@ -136,34 +121,35 @@
         {
           for(var i in borderPolygons)
           {
-            borderPolygons[i].setMap(null);
+            borderPolygons[i].remove();
           }
           for(var i in routePolylines)
           {
-            routePolylines[i].setMap(null);
+            routePolylines[i].remove();
           }
           for(var i in markers)
           {
-            markers[i].setMap(map);
+            markers[i].addTo(map);
           }
         }
         if(zoom >= zoomLimit && (lastZoom < zoomLimit || lastZoom == -1))
         {
           for(var i in markers)
           {
-            markers[i].setMap(null);
+            markers[i].remove();
           }
           for(var i in borderPolygons)
           {
-            borderPolygons[i].setMap(map);
+            borderPolygons[i].addTo(map);
           }
           for(var i in routePolylines)
           {
-            routePolylines[i].setMap(map);
+            routePolylines[i].addTo(map);
           }
         }
         lastZoom = zoom;
-      }    
+      }  
+	    
     });
   };
 })(jQuery);

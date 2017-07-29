@@ -18,8 +18,8 @@ $(document).ready(function()
   
   
   $("abbr.timeago").timeago();
-    
-    reloadGM();
+  
+	reloadStaticMap();
   
 });
 
@@ -82,12 +82,31 @@ function toggleOverviewMap(mapContainer)
   $("#hideOverviewMap").toggle();
 }
 
-function reloadGM()
+function reloadStaticMap()
 {
-  if($("#gmap").size())
-  {
-    $("#gmap").html("<a href='"+$("#gmap_url").val()+"' target='_blank'><img src='http://maps.googleapis.com/maps/api/staticmap?center="+$("#gmap_coordinates").val()+"&zoom=6&amp;size=300x174"+"&maptype=terrain&markers=color:red%7C"+$("#gmap_coordinates").val()+"&sensor=false&language="+$("#gmap_lang").val()+"'></a>");
-  }
+	if($("#staticMap").size())
+	{
+		var staticMap = L.map('staticMap',{ zoomControl:false }).setView([$("#staticMapLatitude").val(),$("#staticMapLongitude").val()], 6);
+		//L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+		//    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+		//}).addTo(staticMap);	
+		L.esri.basemapLayer('Topographic').addTo(staticMap);
+		var marker = L.marker([$("#staticMapLatitude").val(),$("#staticMapLongitude").val()]).addTo(staticMap);
+
+		staticMap.on('click', function(e)
+		{
+			window.location = $("#kmlURL").val()
+		});
+		
+		staticMap.dragging.disable();
+		staticMap.touchZoom.disable();
+		staticMap.doubleClickZoom.disable();
+		staticMap.scrollWheelZoom.disable();
+		staticMap.boxZoom.disable();
+		staticMap.keyboard.disable();
+		if (staticMap.tap) map.tap.disable();
+		$("#staticMap").css( 'cursor', 'pointer' );
+	}
 }
 
 $(function() {
