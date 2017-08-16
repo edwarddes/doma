@@ -13,7 +13,7 @@
       // no user specified - redirect to user list page
       if(!getCurrentUser()) Helper::Redirect("users.php");
 
-      if(!Helper::IsLoggedInUser()) Helper::Redirect("users.php");
+      if(!Helper::IsLoggedInAsUser()) Helper::Redirect("users.php");
 
       if(isset($_GET["map"])) $mapID = $_GET["map"];
 

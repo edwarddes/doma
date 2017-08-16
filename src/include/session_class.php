@@ -28,11 +28,11 @@
       self::SetValue("LANGUAGE_CODE", $value);
     }    
     
-    public static function GetIsLoggedInAdmin()
+    public static function GetIsLoggedInAsAdmin()
     {
       return self::GetValue("IS_LOGGED_IN_ADMIN");
     }
-    public static function SetIsLoggedInAdmin($value)
+    public static function SetIsLoggedInAsAdmin($value)
     {
       self::SetValue("IS_LOGGED_IN_ADMIN", $value);
     }

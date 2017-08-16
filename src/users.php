@@ -67,7 +67,7 @@
   if(count($vd["Users"]) == 0)
   {
     print '<p>'. __("NO_USERS_CREATED");
-    if(Helper::IsLoggedInAdmin()) print ' <a href="edit_user.php?mode=admin">'. __("CREATE_THE_FIRST_USER") .'</a>';
+    if(Helper::IsLoggedInAsAdmin()) print ' <a href="edit_user.php?mode=admin">'. __("CREATE_THE_FIRST_USER") .'</a>';
     print '</p>';
   }
 
@@ -83,7 +83,7 @@
     <th><?php print __("LAST_MAP")?></th>
     <th><?php print __("DATE")?></th>
     <th><?php print __("UPDATED")?></th>
-    <?php if(Helper::IsLoggedInAdmin()) { ?>
+    <?php if(Helper::IsLoggedInAsAdmin()) { ?>
     <th><?php print __("VISIBLE")?></th>
     <th><?php print __("EDIT")?></th>
     <th><?php print __("LOGIN_AS")?></th>
@@ -136,7 +136,7 @@
       </td>
       <td><?php print $lastMapDate?></td>
       <td><?php print $lastMapUpdated?></td>
-      <?php if(Helper::IsLoggedInAdmin()) { ?>
+      <?php if(Helper::IsLoggedInAsAdmin()) { ?>
       <td><?php print ($u->Visible ? __("YES") : __("NO"))?></td>
       <td><a href="edit_user.php?mode=admin&amp;<?php print Helper::CreateUserQuerystring($u)?>"><?php print __("EDIT")?></a></td>
       <td><?php print $loginAsUserLink?></td>

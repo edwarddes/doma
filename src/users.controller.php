@@ -9,7 +9,7 @@
 
       $errors = array();
       
-      $viewData["Users"] = DataAccess::GetAllUsers(!Helper::IsLoggedInAdmin());
+      $viewData["Users"] = DataAccess::GetAllUsers(!Helper::IsLoggedInAsAdmin());
       
       $viewData["LastMapForEachUser"] = DataAccess::GetLastMapsForUsers("date");
       

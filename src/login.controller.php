@@ -9,7 +9,7 @@
   
       $errors = array();
 
-      if(Helper::IsLoggedInAdmin() && isset($_GET["loginAsUser"]))
+      if(Helper::IsLoggedInAsAdmin() && isset($_GET["loginAsUser"]))
       {
         // login as a certain user and redirect to his page
         if(Helper::LoginUserByID($_GET["loginAsUser"]))

@@ -54,7 +54,7 @@
         }
       ?>
 
-      <?php if(Helper::IsLoggedInUser() && Helper::GetLoggedInUser()->ID == getCurrentUser()->ID) { ?>
+      <?php if(Helper::IsLoggedInAsUser() && Helper::GetLoggedInUser()->ID == getCurrentUser()->ID) { ?>
         <div class="admin">
           <?php print $map->Views?> 
           <?php print __("VIEWS")?> 

@@ -7,7 +7,7 @@
     {
       $viewData = array();
 
-      $isAdmin = (isset($_GET["mode"]) && $_GET["mode"] == "admin" && Helper::IsLoggedInAdmin());
+      $isAdmin = (isset($_GET["mode"]) && $_GET["mode"] == "admin" && Helper::IsLoggedInAsAdmin());
 	  if($isAdmin && isset($_GET["user"]))
 	  {
 		  $user = DataAccess::GetUserByID($_GET["user"]);
@@ -17,7 +17,7 @@
 	  	$user = Helper::GetLoggedInUser();
 	  }
 	  
-	  $isNewUser = (isset($_GET["mode"]) && $_GET["mode"] == "new" && Helper::IsLoggedInAdmin());
+	  $isNewUser = (isset($_GET["mode"]) && $_GET["mode"] == "new" && Helper::IsLoggedInAsAdmin());
 
       // no user specified and not admin mode - redirect to user list page
       if(!($isAdmin || $isNewUser || $user))

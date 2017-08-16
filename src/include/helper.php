@@ -152,20 +152,20 @@
     {
       if(stripslashes($username) == ADMIN_USERNAME && stripslashes($password) == ADMIN_PASSWORD)
       {
-        Session::SetIsLoggedInAdmin(true);
+        Session::SetIsLoggedInAsAdmin(true);
         return true;
       }
       return false;
     }
 
-    public static function IsLoggedInAdmin()
+    public static function IsLoggedInAsAdmin()
     {
-       return Session::GetIsLoggedInAdmin();
+       return Session::GetIsLoggedInAsAdmin();
     }
 
     public static function LogoutAdmin()
     {
-       Session::SetIsLoggedInAdmin(null);
+       Session::SetIsLoggedInAsAdmin(null);
     }
 
 	public static function LoginUserByAccountId($accountId)
@@ -192,7 +192,7 @@
         return false;
 	}
 
-    public static function IsLoggedInUser()
+    public static function IsLoggedInAsUser()
     {
       $user = self::GetLoggedInUser();
       return isset($user);
@@ -506,19 +506,19 @@
 
     public static function CreateTopbar()
     {
-      $isLoggedIn = (Helper::IsLoggedInUser() && Helper::GetLoggedInUser()->ID == getCurrentUser()->ID);
+      $isLoggedIn = (Helper::IsLoggedInAsUser() && Helper::GetLoggedInUser()->ID == getCurrentUser()->ID);
       ?>
 	  <div id="header"></div>
 	  <div id="topbar">
           <div class="left">
             <a href="users.php"><?php print _SITE_TITLE; ?></a>
 			<?php
-			if(Helper::IsLoggedInAdmin())
+			if(Helper::IsLoggedInAsAdmin())
 			{ ?>
 			  <span class="separator">|</span>
 			  Administrator
 			  <?php
-			  if(Helper::IsLoggedInUser())
+			  if(Helper::IsLoggedInAsUser())
 			  { ?>
 			  	<span class="separator">|</span>
 				<?php echo(hsc(Helper::getLoggedInUser()->FirstName ." ". Helper::getLoggedInUser()->LastName)) ?>
@@ -531,7 +531,7 @@
 			  <a href="edit_user.php?mode=new"><?php print __("ADD_USER"); ?></a>
               <span class="separator">|</span>
               <a href="admin_login.php?action=logout"><?php print __("ADMIN_LOGOUT"); ?></a>
-			<?php } else if(Helper::IsLoggedInUser())
+			<?php } else if(Helper::IsLoggedInAsUser())
 			{ ?>
 			  <span class="separator">|</span>
 			  <a href="index.php?<?php print Helper::CreateUserQuerystring(Helper::getLoggedInUser())?>" >
