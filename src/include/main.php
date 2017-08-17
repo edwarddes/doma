@@ -20,7 +20,9 @@
   $twig->addFilter('i18n', new Twig_Filter_Function('__'));
   $twig->addFunction('getCurrentUser', new Twig_Function_Function('Helper::GetUser'));
   $twig->addFunction('getLoggedInUser', new Twig_Function_Function('Helper::GetLoggedInUser'));
-  $twig->addFunction('selfPath', new Twig_Function_Function('Helper::selfPath'));
+  $twig->addFunction('selfPath', new Twig_Function_Function('Helper::SelfPath'));
+  $twig->addFunction('serverPath', new Twig_Function_Function('Helper::ServerPath'));
+  $twig->addFunction('globalPath', new Twig_Function_Function('Helper::GlobalPath'));
   $twig->addFunction('encapsulateLink', new Twig_Function_Function('Helper::EncapsulateLink'));
   $twig->addFunction('isLoggedInAsUser', new Twig_Function_Function('Helper::IsLoggedInAsUser'));
   $twig->addFunction('isLoggedInAsAdmin', new Twig_Function_Function('Helper::IsLoggedInAsAdmin'));
