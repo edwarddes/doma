@@ -12,6 +12,29 @@
   // load session
   session_start();
   
+  require_once dirname(__FILE__) . '/../lib/Twig-1.34.4/lib/Twig/Autoloader.php';
+  Twig_Autoloader::register();
+  
+  $twigLoader = new Twig_Loader_Filesystem(dirname(__FILE__) ."/../templates");
+  $twig = new Twig_Environment($twigLoader);
+  $twig->addFilter('i18n', new Twig_Filter_Function('__'));
+  $twig->addFunction('getCurrentUser', new Twig_Function_Function('Helper::GetUser'));
+  $twig->addFunction('getLoggedInUser', new Twig_Function_Function('Helper::GetLoggedInUser'));
+  $twig->addFunction('selfPath', new Twig_Function_Function('Helper::selfPath'));
+  $twig->addFunction('encapsulateLink', new Twig_Function_Function('Helper::EncapsulateLink'));
+  $twig->addFunction('isLoggedInAsUser', new Twig_Function_Function('Helper::IsLoggedInAsUser'));
+  $twig->addFunction('isLoggedInAsAdmin', new Twig_Function_Function('Helper::IsLoggedInAsAdmin'));
+  $twig->addFunction('isMapCurrentlyProtected', new Twig_Function_Function('Helper::IsMapCurrentlyProtected'));
+  $twig->addFunction('protectedUntilText', new Twig_Function_Function('Helper::ProtectedUntilText'));
+  $twig->addFunction('stringToTime', new Twig_Function_Function('Helper::StringToTime'));
+  $twig->addFunction('dateToLongString', new Twig_Function_Function('Helper::DateToLongString'));
+  $twig->addFunction('showLanguageMenu', new Twig_Function_Function('Helper::ShowLanguages'));
+  $twig->addGlobal('DOMA_VERSION', DOMA_VERSION);
+  $twig->addGlobal('_SITE_TITLE', _SITE_TITLE);
+  $twig->addGlobal('GA_TRACKER', GA_TRACKER);
+  $twig->addGlobal('USE_GA', USE_GA);
+  $twig->addGlobal('SHOW_LANGUAGES_IN_TOPBAR',SHOW_LANGUAGES_IN_TOPBAR);
+  
   // create database if it does not exist
   if(!Helper::DatabaseVersionIsValid()) Helper::Redirect("create.php?redirectUrl=". urlencode($_SERVER["REQUEST_URI"]));
 ?>
