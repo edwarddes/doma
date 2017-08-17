@@ -441,12 +441,12 @@ form.wide h2 + p
   margin-left: 1em;
 }
 
-#indexBody #filter
+#filter
 {
   width: 4em;
 }
 
-#indexBody .hideOverviewMap
+.hideOverviewMap
 {
   display: none;
 }
