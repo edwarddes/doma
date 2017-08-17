@@ -902,6 +902,10 @@
 	{
 		return $map->ProtectedUntil != null && $map->ProtectedUntil > gmdate("Y-m-d H:i:s");
 	}
+	public static function ProtectedUntilText($map)
+	{
+		return sprintf(__("MAP_IS_PROTECTED_UNTIL_X"), date(__("DATETIME_FORMAT"), Helper::StringToTime($map->ProtectedUntil, true)));
+	}
 
   }
 
