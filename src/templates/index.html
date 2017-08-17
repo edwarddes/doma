@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ parent() }}
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.php?user={{ getCurrentUser().ID }}" />
+	<script src="js/overview_map.js?v={{DOMA_VERSION}}" type="text/javascript"></script>
+	{% if DisplayMode == "overviewMap" %}
+	<script type="text/javascript">
+	  $(function() {       
+	    $("#overviewMap").overviewMap({ data: {{OverviewMapDataJSON|raw}} });
+	  });
+	</script>
+	{% endif %}
+	<script src="js/index.js?v={{DOMA_VERSION}}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+	{{ parent() }}
+	<form method="get" action="{{ selfPath() }}?user={{ getCurrentUser().ID }}">
+	<input type="hidden" name="user" value="{{getCurrentUser().ID}}"/>
+	{% if not Errors is empty %}
+	<ul class="error">
+	{% for error in Errors %}
+		<li>{{error}}</li>
+	{%endfor%}
+	</ul>
+	{% endif %}
+
+	<div>
+	  <img id="logo" src="gfx/book.png" alt="" />
+	</div>
+
+	<div id="rssIcon"><a href="rss.php?user={{ getCurrentUser().ID }}"><img src="gfx/feed-icon-28x28.png" alt="{{ "RSS_FEED"|i18n }}" title="{{ "RSS_FEED"|i18n }}" /></a></div>
+
+	<div id="intro">
+	{{getCurrentUser()['ID']}}
+	<h1>{{getCurrentUser().FirstName}} {{getCurrentUser().LastName}}</h1>
+	<h1>{{"CAPTION"|i18n}}</h1>
+	<p>{{"INTRO"|i18n}}</p>
+
+	<div id="selectCategoryAndYear">
+	{% if YearsWithText|length < 2 %}
+		{{ "NO_MAPS"|i18n }}
+	{% else %}
+	<label for="categoryID">{{ "SELECT_CATEGORY"|i18n }}:</label>
+	<select name="categoryID" id="categoryID">
+	{{ SearchCriteria["selectedCategoryId"] }}
+	{% for category in CategoriesWithText %}
+		<option value="{{ category.ID }}" {% if SearchCriteria["selectedCategoryID"] == category.ID %} selected="selected" {% endif %}>
+			{{ category.Name }}
+		</option>
+	{% endfor %}
+	</select>
+
+	<label for="year">{{ "SELECT_YEAR"|i18n }}:</label>
+	<select name="year" id="year">
+	<?php
+	{% for year in YearsWithText %}
+	     <option value="{{ year["value"] }}" {% if SearchCriteria["selectedYear"] == year["value"] %} selected="selected" {% endif %}>
+			{{ year["text"] }}
+		</option>
+	{% endfor %}
+	?>
+	</select>
+
+	<label for="filter">{{ "SELECT_FILTER"|i18n }}:</label>
+	<input type="text" name="filter" id="filter" value="{{ SearchCriteria['filter'] }}"/>
+
+	{% if GeocodedMapsExist %}
+	  <label for="displayMode">{{ "SELECT_DISPLAY_MODE"|i18n }}:</label>
+	  <select name="displayMode" id="displayMode">
+	    <option value="list" {% if DisplayMode == "list" %} selected="selected" {% endif %}>{{ "DISPLAY_MODE_LIST"|i18n }}</option>
+	    <option value="overviewMap"  {% if DisplayMode == "overviewMap" %} selected="selected" {% endif %}>{{ "DISPLAY_MODE_OVERVIEW_MAP"|i18n }}</option>
+	  </select>
+	{% endif %}
+
+	{% endif %}
+	</div>
+	</div>
+
+	<div id="maps">
+	  
+	{% if (Maps is empty) and (YearsWithText > 1) %}
+	  <p class="clear">
+		{{"NO_MATCHING_MAPS"|i18n}}
+	  </p>
+	{% endif %}
+
+	{% if DisplayMode == "list" %}
+		{% for map in Maps %}
+			{{include('components/mapInfoBox.html', {map: map, mapInfo: MapInfo[map.ID], category: Categories[map.CategoryID]}, with_context = false) }}
+		{% endfor %}
+	{% endif %}
+	{% if DisplayMode == "overviewMap" %}
+		<div id="overviewMap"></div>
+	{% endif %}
+
+	  </div>
+	<div class="clear"></div>
+
+	<p id="footer">{{"FOOTER"|i18n|raw}}</p>
+
+	</form>
+{% endblock %}
+

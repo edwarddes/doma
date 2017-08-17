@@ -1,0 +1,63 @@
+	<div class="map">
+	<div class="thumbnail">
+		{{ mapInfo["MapThumbnailHtml"]|raw }}
+	</div>
+	<div class="info">
+		<div class="date">
+			{{ dateToLongString(stringToTime(map.Date,true))}}
+		</div>
+		<div class="name">
+			{{ encapsulateLink(map.Name, mapInfo["URL"])|raw }}
+		</div>
+		{% if "SHOW_MAP_AREA_NAME"|i18n or "SHOW_ORGANISER"|i18n or "SHOW_COUNTRY"|i18n %}
+			{% if SearchCriteria["selectedCategoryID"] == 0 %}
+				<div class="category">{{"CATEGORY"|i18n }} : {{ category.Name }} </div>
+			{% endif %}
+		  <div class="organiser">
+			  {{ mapInfo["MapAreaOrganiserCountry"] }}
+		  </div>
+		{% endif %}
+		<div class="discipline">
+			{% if "SHOW_DISCIPLINE"|i18n and map.Discipline %}
+				{{map.Discipline}}
+			{% endif %}
+			{% if "SHOW_RELAY_LEG"|i18n and map.RelayLeg %}
+				{{ "RELAY_LEG"|i18n }} {{ map.RelayLeg}}
+			{% endif %}
+			{% if "SHOW_RESULT_LIST_URL"|i18n and map.CreateResultListUrl %}
+				<a href="{{map.CreateResultListUrl}}">{{ "RESULTS"|i18n }}</a>
+			{% endif %}
+		</div>
+		{% if map.IsGeocoded %}
+			<div class="listOverviewMapLink">
+				<input type="hidden" value="{{ map.ID}}" />
+				<a class="showOverviewMap" href="#">{{ "SHOW_OVERVIEW_MAP"|i18n }}</a>
+				<a class="hideOverviewMap" href="#">{{ "HIDE_OVERVIEW_MAP"|i18n }}</a>
+				<span class="separator">|</span> 
+				<a href="export_kml.php?id={{ map.ID }}&amp;format=kml" title="{{"KMZ_TOOLTIP"|i18n }}">{{ "KMZ"|i18n }}</a>
+			</div>
+		{% endif %}
+
+		{% if isLoggedInAsUser() and (getLoggedInUser().ID == getCurrentUser().ID) %}
+			<div class="admin">
+				{{ map.Views }} 
+				{{ "VIEWS"|i18n }}
+				<span class="separator">|</span> 
+				<a href="edit_map.php?map={{ map.ID}}">{{ "EDIT_MAP"|i18n }}</a>
+			</div>
+		{% endif %}
+
+		{% if isMapCurrentlyProtected(map) %}
+		<div class="protected">
+		  {{ protectedUntilText(map)|raw }}
+		</div>
+		{% endif %}
+
+	</div>
+
+	{% if map.IsGeocoded %}
+		<div class="clear"></div>
+		<div class="googleMapsContainer"></div>
+	{% endif %}     
+	<div class="clear"></div>
+	</div>

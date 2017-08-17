@@ -1,0 +1,43 @@
+<div id="topbar">
+	<div class="left">
+	<a href="users.php">{{_SITE_TITLE}}</a>
+	{% if isLoggedInAsAdmin() %}
+	  <span class="separator">|</span>
+	  Administrator
+	  {% if isLoggedInAsUser() %}
+	  	<span class="separator">|</span>
+		{{getLoggedInUser().FirstName}} {{getLoggedInUser().LastName}}
+		<span class="separator">|</span>
+		<a href="edit_user.php"><?php print __("USER_PROFILE"); ?></a>
+		<span class="separator">|</span>
+		<a href="login.php?action=logout"><?php print __("LOGOUT"); ?></a>
+	  {% endif %}
+	  <span class="separator">|</span>
+	  <a href="edit_user.php?mode=new">{{"ADD_USER"|i18n}}</a>
+	  <span class="separator">|</span>
+	  <a href="admin_login.php?action=logout">{{"ADMIN_LOGOUT"|i18n}}</a>
+	{% elseif isLoggedInAsUser() %}
+	  <span class="separator">|</span>
+	  <a href="index.php?user={{getLoggedInUser().ID}}">
+	  {{getLoggedInUser().FirstName}} {{getLoggedInUser().LastName}}
+	  </a>
+	  <span class="separator">|</span>
+	  <a href="edit_user.php">{{"USER_PROFILE"|i18n}}</a>
+	  <span class="separator">|</span>
+	  <a href="edit_map.php">{{"ADD_MAP"|i18n}}</a>
+	  <span class="separator">|</span>
+	  <a href="login.php?action=logout">{{"LOGOUT"|i18n}}</a>
+	{% else %}
+	  <span class="separator">|</span>
+	  <a href="login.php">{{"LOGIN"|i18n}}</a>
+	{% endif %}
+	</div>
+	<div class="right">
+	{% if SHOW_LANGUAGES_IN_TOPBAR =="1" %}
+	  {{ showLanguageMenu()|raw}}
+	  <span class="separator">|</span>
+	{% endif %}
+	<a href="version.php">OUSA DOMA</a>
+	</div>
+	<div class="clear"></div>
+</div>
