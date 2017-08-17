@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ parent()}} :: {{ "LOGIN"|i18n}}{% endblock %}
+	
+{% block content %}
+	<form>
+
+	<h1>{{"LOGIN"|i18n}}</h1>
+
+	<script>
+	                (function(w,d,t,s,p,c,r,u){a=d.createElement(t);a.async=1;
+	                    a.src=u+s;es=d.getElementsByTagName(t);e=es[es.length-1];
+	                    e.parentNode.insertBefore(a,e);w[p]=c;w[r]=u;
+			})(window,document,'script','/js/oauth/npsi.js','client_id',
+	                'zd17Stpsdmpuyh2/TozYtYglWLg6LHxx3t2+ECvmrDmKZdnb2QTbuu10+3ym8/y106LsDlsRniY=','domain',
+	                'https://secure.orienteeringusa.org/np');
+
+			setting = {	
+	                    "redirect_uri":"{{ globalPath("oauth.php") }}"
+			}		
+			c_css = {
+				"label":"Sign In with OUSA"
+			}
+		  </script>
+	</form>
+
+{% endblock %}
