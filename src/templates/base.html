@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         {% block head %}
-	  	  <title>{{ "PAGE_TITLE"|i18n }}</title>
+	  	  <title>{% block title %}{{ "PAGE_TITLE"|i18n }}{% endblock %}</title>
 	  	  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	  	  <link rel="icon" type="image/png" href="gfx/favicon.png" />
 	  	  <link rel="stylesheet" href="style.css?v={{DOMA_VERSION}}" type="text/css" />
@@ -26,6 +26,13 @@
 			<div id="header"></div>
 			{{ include('components/topbar.html')}}
 			<div id="content">
+				{% if not Errors is empty %}
+				<ul class="error">
+				{% for error in Errors %}
+					<li>{{error}}</li>
+				{%endfor%}
+				</ul>
+				{% endif %}
 				{% block content %}
 				{% endblock %}
 			</div>
