@@ -898,6 +898,10 @@
 
       }
     }
+	public static function IsMapCurrentlyProtected($map)
+	{
+		return $map->ProtectedUntil != null && $map->ProtectedUntil > gmdate("Y-m-d H:i:s");
+	}
 
   }
 
