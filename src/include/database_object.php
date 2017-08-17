@@ -8,6 +8,13 @@
     protected $PrimaryKey = "ID";
     protected $AutoIncrement = true;
 
+	public function __isset($key)
+	{
+		if ( isset($this->Data[$key]) ) 
+			return true ;
+		return false;
+	}
+	
     public function __set($name, $value)
     {
       if(array_key_exists($name, $this->Data))
