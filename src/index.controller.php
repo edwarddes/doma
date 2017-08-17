@@ -113,6 +113,7 @@
         if(($viewData["DisplayMode"] == "overviewMap")&&($map->IsGeocoded))
         {
           $viewData["OverviewMapData"][] = Helper::GetOverviewMapData($map, false, true, false, $categories, $searchCriteria["selectedCategoryID"]);
+		  $viewData["OverviewMapDataJSON"] = json_encode($viewData["OverviewMapData"]);
         }
         if($map->IsGeocoded) $viewData["GeocodedMapsExist"] = true;
       }
