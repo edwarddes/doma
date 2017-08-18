@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ parent()}} :: {{ "ADMIN_LOGIN"|i18n}}{% endblock %}
+	
+{% block content %}
+	<form class="wide" method="post" action="{{ selfPath() }}">
+		<h1>{{"ADMIN_LOGIN"|i18n}}</h1>
+
+		<p>{{"ADMIN_LOGIN_INFO"|i18n}}</p>
+
+		<div class="container">
+		<label for="username">{{"USERNAME"|i18n}}</label>
+		<input type="text" class="text" id="username" name="username" value="" />
+		</div>
+
+		<div class="container">
+		<label for="password">{{"PASSWORD"|i18n}}</label>
+		<input type="password" class="password" name="password" id="password" value="" />
+		</div>
+
+		<div class="buttons">
+		<input type="submit" class="submit" name="login" value="{{"LOGIN"|i18n}}" />
+		<input type="submit" class="submit" name="cancel" value="{{"CANCEL"|i18n}}" />
+		</div>
+
+	</form>
+{% endblock %}
