@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}{{ parent()}} :: {{ Title }} {% endblock %}
+	
+{% block head %}
+    {{ parent() }}
+	<script src="js/edit_map.js?v={{DOMA_VERSION}}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+	<form class="wide" method="post" action="{{ selfPath() }}{% if MapID %} ?map={{MapID}} {% endif %}" enctype="multipart/form-data">
+
+	<h1>{{Title}}</h1>
+
+	<div class="container">
+	<label for="categoryID">{{"CATEGORY"|i18n}}</label>
+	<select name="categoryID" class="tooltipControl">
+	{% for category in Categories %}
+		<option value="{{category.ID}}" {% if category.ID == Map.CategoryID %} selected="selected" {% endif %}>{{category.Name}}</option>
+	{% endfor %}
+	</select>
+	<div class="tooltip hidden">{{"CATEGORY_TOOLTIP"|i18n}}</div>
+	</div>
+
+	<div class="container">
+	<label for="date">{{"DATE"|i18n}}</label>
+	<input type="text" class="text tooltipControl" name="date" id="date" value="{{ mapDateText(Map) }}" />
+	<div class="tooltip hidden">{{"MAP_DATE_FORMAT"|i18n}}</div>
+	</div>
+
+	<div class="container">
+	<label for="name">{{"NAME"|i18n}}</label>
+	<input type="text" class="text" name="name" id="name" value="{{ Map.Name }}" />
+	</div>
+
+	{% if "SHOW_MAP_AREA_NAME"|i18n %}
+	<div class="container">
+	<label for="relayLeg">{{"MAP_AREA_NAME"|i18n}}</label>
+	<input type="text" class="text" name="mapName" id="mapName" value="{{Map.MapName}}" />
+	</div>
+	{% endif %}
+
+	{% if "SHOW_ORGANISER"|i18n %}
+	<div class="container">
+	<label for="organiser">{{"ORGANISER"|i18n}}</label>
+	<input type="text" class="text" name="organiser" id="organiser" value="{{Map.Organiser}}" />
+	</div>
+	{% endif %}
+
+	{% if "SHOW_COUNTRY"|i18n %}
+	<div class="container">
+	<label for="country">{{"COUNTRY"|i18n}}</label>
+	<input type="text" class="text" name="country" id="country" value="{{Map.Country}}" />
+	</div>
+	{% endif %}
+
+	{% if "SHOW_DISCIPLINE"|i18n %}
+	<div class="container">
+	<label for="discipline">{{"DISCIPLINE"|i18n}}</label>
+	<input type="text" class="text" name="discipline" id="discipline" value="{{Map.Discipline}}" />
+	</div>
+	{% endif %}
+
+	{% if "SHOW_RELAY_LEG"|i18n %}
+	<div class="container">
+	<label for="relayLeg">{{"RELAY_LEG_LONG"|i18n}}</label>
+	<input type="text" class="text" name="relayLeg" id="relayLeg" value="{{Map.RelayLeg}}" />
+	</div>
+	{% endif %}
+
+	{% if "SHOW_RESULT_LIST_URL"|i18n %}
+	<div class="container">
+	<label for="relayLeg">{{"LINK_TO_RESULT_LIST"|i18n}}</label>
+	<input type="text" class="text" name="resultListUrl" id="resultListUrl" value="{{Map.ResultListUrl}}" />
+	</div>
+	{% endif %}
+
+	<div class="container">
+	<label for="comment">{{"COMMENT"|i18n}}</label>
+	<textarea name="comment" id="comment" rows="5" cols="60">{{ Map.Comment }}</textarea>
+	</div>
+
+	<div class="container">
+	<label for="mapImage">{{"MAP_IMAGE_FILE"|i18n}}</label>
+	<input type="file" id="mapImage" name="mapImage" class="tooltipControl" />
+	<div class="tooltip hidden">{{"MAP_INFO"|i18n}}{% if MapID %} {{ "LEAVE_EMPTY_TO_KEEP_EXISTING_MAP"|i18n}}{% endif %}</div>
+	</div>
+
+	<div class="container">
+	<label for="blankMapImage">{{"BLANK_MAP_IMAGE_FILE"|i18n}}</label>
+	<input type="file" id="blankMapImage" name="blankMapImage" class="tooltipControl" />
+	<div class="tooltip hidden">{{"BLANK_MAP_INFO"|i18n}}{% if MapID %} {{ "LEAVE_EMPTY_TO_KEEP_EXISTING_MAP"|i18n}}{% endif %}</div>
+	</div>
+
+	<div class="container">
+	<label for="thumbnailImage">{{"THUMBNAIL_IMAGE_FILE"|i18n}}</label>
+	<input type="file" id="thumbnailImage" name="thumbnailImage" class="tooltipControl" />
+	<div class="tooltip hidden">{{ thumbnailInfoText() }}</div>
+	</div>
+
+	<div class="container">
+	<label for="protectedUntil">{{"PROTECTED_UNTIL"|i18n}}</label>
+	<input type="text" id="protectedUntil" class="text tooltipControl" name="protectedUntil" value="{{ protectedUntilTimeText(Map) }}" />
+	<div class="tooltip hidden">{{"PROTECTED_UNTIL_INFO"|i18n}}</div>
+	</div>
+
+	<div class="buttons">
+	<input type="submit" class="submit" name="save" id="save" value="{{"SAVE"|i18n}}" />
+	{% if ConfirmDeletionButtonVisible %}
+		<input type="submit" class="submit" name="deleteConfirmed" id="delete" value="{{"CONFIRM_DELETION"|i18n}}" />
+	{% else %}
+		<input type="submit" class="submit" name="delete" id="delete" value="{{"DELETE"|i18n}}" />
+	{% endif %}
+	<input type="submit" class="submit" name="cancel" id="cancel" value="{{"CANCEL"|i18n}}" />
+	</div>
+
+	</form>
+{% endblock %}
