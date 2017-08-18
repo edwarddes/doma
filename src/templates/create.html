@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+	
+{% block content %}
+	<form method="post" action="{{ selfPath() }}">
+
+	{% if Errors|length == 0 %}
+		<h1>{{"SITE_SUCCESSFULLY_CREATED_TITLE"|i18n}}</h1>
+		<p>{{"SITE_SUCCESSFULLY_CREATED_MESSAGE"|i18n}}</p>
+		<p><a href="users.php">{{"GOTO_START_PAGE"|i18n}}</a></p>
+	{% else %}
+		<h1>{{"ERRORS_WHEN_CREATING_SITE_TITLE"|i18n}}</h1>
+		<p>{{"ERRORS_WHEN_CREATING_SITE_MESSAGE"|i18n}}</p>
+
+		<p><a href="create.php">{{ "ERRORS_TRY_AGAIN"|i18n }}</a></p>
+	{% endif %}
+	</form>
+
+{% endblock %}
