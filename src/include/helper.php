@@ -904,7 +904,30 @@
 	}
 	public static function ProtectedUntilText($map)
 	{
-		return sprintf(__("MAP_IS_PROTECTED_UNTIL_X"), date(__("DATETIME_FORMAT"), Helper::StringToTime($map->ProtectedUntil, true)));
+		return sprintf(__("MAP_IS_PROTECTED_UNTIL_X"), Helper::ProtectedUntilTimeText($map));
+	}
+	public static function ProtectedUntilTimeText($map)
+	{
+		if($map->ProtectedUntil == null)
+		{
+			return "";
+		}
+		return date(__("DATETIME_FORMAT"), Helper::StringToTime($map->ProtectedUntil, true));
+	}
+	public static function ThumbnailInfoText()
+	{
+		return printf(__("THUMBNAIL_INFO"), THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT);
+	}
+	public static function MapDateText($map)
+	{
+  	  if(date("H:i:s", Helper::StringToTime($map->Date, true)) == "00:00:00")
+  	  {
+  	    return date(__("DATE_FORMAT"), Helper::StringToTime($map->Date, true));
+  	  }
+  	  else
+  	  {
+  	    return date(__("DATE_FORMAT") ." H:i:s", Helper::StringToTime($map->Date, true));
+  	  }
 	}
 
   }

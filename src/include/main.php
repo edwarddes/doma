@@ -28,6 +28,9 @@
   $twig->addFunction('isLoggedInAsAdmin', new Twig_Function_Function('Helper::IsLoggedInAsAdmin'));
   $twig->addFunction('isMapCurrentlyProtected', new Twig_Function_Function('Helper::IsMapCurrentlyProtected'));
   $twig->addFunction('protectedUntilText', new Twig_Function_Function('Helper::ProtectedUntilText'));
+  $twig->addFunction('protectedUntilTimeText', new Twig_Function_Function('Helper::ProtectedUntilTimeText'));
+  $twig->addFunction('thumbnailInfoText', new Twig_Function_Function('Helper::ThumbnailInfoText'));
+  $twig->addFunction('mapDateText', new Twig_Function_Function('Helper::MapDateText'));
   $twig->addFunction('stringToTime', new Twig_Function_Function('Helper::StringToTime'));
   $twig->addFunction('dateToLongString', new Twig_Function_Function('Helper::DateToLongString'));
   $twig->addFunction('showLanguageMenu', new Twig_Function_Function('Helper::ShowLanguages'));
