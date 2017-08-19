@@ -586,6 +586,7 @@
       $user->Save();
 
       self::SaveUserSettings($user->ID, $userSettings);
+	  Session::SetLanguageStrings(Helper::GetLanguageStrings($user->ID));
     }
 
     public static function SaveUserCategories($userID, &$categories)
