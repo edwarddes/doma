@@ -156,10 +156,6 @@
         }
 
         $customizableSettings = Helper::GetCustomizableStrings();
-        foreach($customizableSettings["settings"] as $key => $value)
-        {
-          $_POST["CV_$key"] = __($key);
-        }
       }
 
       // create category data for output and make sure that there is a default category
@@ -240,15 +236,18 @@
 
           // clear language cache
           //Session::SetLanguageStrings(null);
-
-          if($isAdmin)
-          {
-            Helper::Redirect("users.php". ($emailSent && !$emailSentSuccessfully ? "?error=email" : ""));
-          }
-          else
-          {
-            Helper::Redirect("index.php?". Helper::CreateUserQuerystring($user));
-          }
+		  if(empty($errors))
+		  {
+			  
+	          if($isAdmin)
+	          {
+	            Helper::Redirect("users.php". ($emailSent && !$emailSentSuccessfully ? "?error=email" : ""));
+	          }
+	          else 
+	          {
+	            Helper::Redirect("index.php?". Helper::CreateUserQuerystring($user));
+	          }
+	  	  }
         }
       }
 

@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}{{ parent()}} :: {{ Title }} {% endblock %}
+	
+{% block head %}
+    {{ parent() }}
+	<script src="js/edit_user.js?v={{DOMA_VERSION}}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+	<form class="wide" method="post" action="{{ FormActionURL }}">
+
+		<h1>{{Title}}</h1>
+
+		<p>{{Info|raw}}</p>
+
+		<h2>{{"PERSONAL_DETAILS_TITLE"|i18n}}</h2>
+		
+		{% if IsAdmin or IsNewUser %}
+			<p>{{"ADMIN_PERSONAL_DETAILS_INFO"|i18n}}</p>
+
+			<div class="container">
+			<label for="accountID">Account ID</label>
+			<span> {{User.AccountID}}</span>
+			<input type="hidden" class="text" name="accountID" value="{{User.AccountID}}" />
+			</div>
+
+			<div class="container">
+			<label for="firstName">{{"FIRST_NAME"|i18n}}</label>
+			<input type="text" class="text tooltipControl" name="firstName" value="{{User.FirstName}}" /> <span class="required">*</span>
+			<div class="tooltip hidden">{{"ADMIN_FIRST_NAME_DESCRIPTION"|i18n}}</div>
+			</div>
+
+			<div class="container">
+			<label for="lastName">{{"LAST_NAME"|i18n}}</label>
+			<input type="text" class="text tooltipControl" name="lastName" value="{{User.LastName}}" /> <span class="required">*</span>
+			<div class="tooltip hidden">{{"ADMIN_LAST_NAME_DESCRIPTION"|i18n}}</div>
+			</div>
+
+			<div class="container">
+			<label for="email">{{"EMAIL"|i18n}}</label>
+			<input type="text" class="text tooltipControl" name="email" value="{{User.Email}}" /> <span class="required">*</span>
+			<div class="tooltip hidden">{{"ADMIN_EMAIL_DESCRIPTION"|i18n}}</div>
+			</div>
+		{% else %}
+			<p>{{"PERSONAL_DETAILS_INFO"|i18n}}</p>
+
+			<div class="container">
+			<label for="accountID">Account ID</label>
+			<span> {{User.AccountID}} </span>
+			<input type="hidden" class="text" name="accountID" value="{{User.AccountID}}" />
+			</div>
+
+			<div class="container">
+			<label for="firstName">{{"FIRST_NAME"|i18n}}</label>
+			<span> {{User.FirstName}} </span>
+			<input type="hidden" class="text" name="firstName" value="{{User.FirstName}}" />
+			</div>
+
+			<div class="container">
+			<label for="lastName">{{"LAST_NAME"|i18n}}</label>
+			<span> {{User.LastName}} </span>
+			<input type="hidden" class="text" name="lastName" value="{{User.LastName}}" />
+			</div>
+
+			<div class="container">
+			<label for="email">{{"EMAIL"|i18n}}</label>
+			<span> {{User.Email}} </span>
+			<input type="hidden" class="text" name="email" value="{{User.Email}}" />
+			</div>
+		{% endif %}
+
+		{% if IsAdmin and IsNewUser %}
+			<div class="container">
+			<label for="sendEmail">{{"SEND_CONFIRMATION_EMAIL"|i18n}}</label>
+			<input type="checkbox" class="checkbox" name="sendEmail" id="sendEmail" {% if SendEmail %} checked="checked" {% endif %} />
+			{{"SEND_CONFIRMATION_EMAIL_DESCRIPTION"|i18n}}
+			</div>
+		{% endif %}
+
+		{% if IsAdmin %}
+			<div class="container">
+			<label for="visible">{{"VISIBLE"|i18n}}</label>
+			<input type="checkbox" class="checkbox" name="visible" id="visible" {% if User.Visible %} checked="checked" {% endif %} /> 			{{"ADMIN_VISIBLE_DESCRIPTION"|i18n}}
+			</div>
+		{% endif %}
+
+		<h2>{{"MAP_CATEGORIES_TITLE"|i18n}}</h2>
+
+		<p>
+			{% if IsAdmin %}
+				{{ "ADMIN_MAP_CATEGORIES_INFO"|i18n }}
+			{% else %}
+				{{ "MAP_CATEGORIES_INFO"|i18n }}
+			{% endif %}
+		</p>
+		
+		<div class="container">
+		<label for="categoryContainer">{{"MAP_CATEGORIES"|i18n}}</label>
+
+		<div id="categoryContainer">
+		  <div class="category">
+		    <span id="allCategoriesText">{{"ALL_CATEGORIES"|i18n}}</span>
+		    <input type="radio" class="radio" name="defaultCategory" id="categoryDefault_0" value="0" {% if DefaultCategory == 0 %} checked="checked" {% endif %} />
+		    <label for="categoryDefault_0">{{"DEFAULT_CATEGORY"|i18n}}</label>   
+			{% for d in CategoryData %}
+  		      <div class="category">
+  		        <input type="text" class="text" name="{{d.nameId}}" id="{{d.nameId}}" value="{{d.category.Name}}" />
+  		        <input type="radio" class="radio" name="defaultCategory" value="{{d.defaultValue}}" id="{{d.defaultId}}" {% if DefaultCategory == d.defaultValue %} checked="checked" {% endif %} />
+  		        <label for="{{d.defaultId}}">{{"DEFAULT_CATEGORY"|i18n}}</label>        
+  		        <input type="submit" class="submit" name="{{d.deleteId}}" id="{{d.deleteId}}" value="{{"DELETE_CATEGORY"|i18n}}" />
+  		      </div>
+			{% endfor %}
+		  	<div class="clear">
+		    <input type="submit" class="submit" name="addCategory" id="addCategory" value="{{"ADD_CATEGORY"|i18n}}" />
+		  </div>  
+
+		</div>
+		</div>
+
+		<h2>{{"TEXTS_AND_SETTINGS_TITLE"|i18n}}</h2>
+
+		<p>
+			{% if IsAdmin %}
+				{{ "ADMIN_TEXTS_AND_SETTINGS_INFO"|i18n }}
+			{% else %}
+				{{ "TEXTS_AND_SETTINGS_INFO"|i18n }}
+			{% endif %}
+		</p>
+		{% for key,value in CustomizableSettings.settings %}
+			<div class="container">
+			<label for="CV_{{key}}">{{key}}</label>
+			{% if value|length < 60 %}
+				<input type="text" class="text tooltipControl" name="CV_{{key}}" value="{{key|i18n}}" />
+			{% else %}
+				<textarea class="tooltipControl" name="CV_{{key}}" rows="3" cols="50" style="height: {{2+2*value|length/80}}em;">{{key|i18n}}</textarea>
+			{% endif %}
+			<div class="tooltip hidden">{{attribute(CustomizableSettings.descriptions,key)|i18n}}</div>
+			</div>
+		{% endfor %}
+
+		<div class="buttons">
+		<input type="submit" class="submit" name="save" id="save" value="{{"SAVE"|i18n}}" />
+		{% if IsAdmin and (not DeleteButtonClicked) and (not IsNewUser) %}
+			<input type="submit" class="submit" name="delete" id="delete" value="{{"DELETE"|i18n}}" />
+		{% elseif IsAdmin and DeleteButtonClicked %}
+			<input type="submit" class="submit" name="deleteConfirmed" id="deleteConfirmed" value="{{"CONFIRM_DELETION"|i18n}}" />
+		{% endif %}
+		<input type="submit" class="submit" name="cancel" id="cancel" value="{{"CANCEL"|i18n}}" />
+		<input type="hidden" name="noOfCategoriesAdded" value="{{NoOfCategoriesAdded}}" />
+		</div>
+
+	</form>
+{% endblock %}
