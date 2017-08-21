@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block title %}{{ parent()}} :: {{ Name }}{% endblock %}
+	
+{% block head %}
+    {{ parent() }}
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.php?user={{ user.ID }}" />
+	<script src="js/show_map.js?v={{DOMA_VERSION}}" type="text/javascript"></script>
+	<script type="text/javascript" src="js/jquery/jquery.timeago.js"></script>
+
+    {% if getLanguageCode() != "" and getLanguageCode != "en" %}
+      <script type="text/javascript" src="js/jquery/jquery.timeago.{{getLanguageCode()}}.js"></script>
+	{% endif %}
+
+	{% if OverviewMapData %}
+	    <script src="js/overview_map.js" type="text/javascript"></script>
+	    <script type="text/javascript">
+	      $(function() { 
+	        var overviewMapData = {{OverviewMapData|json_encode|raw}};        
+	        $("#overviewMap").overviewMap({ data: overviewMapData });
+	      });
+	    </script>
+	{% endif %}
+	{% if ProcessRerun %} 
+	    {% if RerunMaps != "" %}
+	    	<script type="text/javascript" src="js/rerun.js?v={{DOMA_VERSION}}"></script>
+	    {% else %}
+	      <script type="text/javascript">
+	        $.get("ajax_server.php?action=saveLastRerunCheck");
+	      </script>
+	    {% endif %}
+	{% endif %}
+  
+	<meta property="og:url"		content="{{globalPath("show_map.php")}}?map={{Map.ID}}" />
+	<meta property="og:type"	content="article" />
+	<meta property="og:title"	content="{{"PAGE_TITLE"|i18n}} :: {{Map.Name}}" />
+	{% if Map.Comment != "" %}
+		<meta property="og:description" content="{{Map.Comment}}">
+	{% else %}
+		<meta property="og:description" content=" ">
+	{% endif %}
+	<meta property="og:image"	content="{{globalPath(getThumbnailImage(Map))}}" />
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="{{"PAGE_TITLE"|i18n}} :: {{Map.Name}}">
+	{% if Map.Comment != "" %}
+		<meta name="twitter:description" content="{{Map.Comment}}">
+	{% else %}
+		<meta name="twitter:description" content="{{Map.Name}}">
+	{% endif %}
+	<meta name="twitter:image" content="{{globalPath(getThumbnailImage(Map))}}">
+{% endblock %}
+
+{% block bodystart %}
+	{{parent()}}
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+	<script>window.twttr = (function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0],
+	    t = window.twttr || {};
+	  if (d.getElementById(id)) return t;
+	  js = d.createElement(s);
+	  js.id = id;
+	  js.src = "https://platform.twitter.com/widgets.js";
+	  fjs.parentNode.insertBefore(js, fjs);
+
+	  t._e = [];
+	  t.ready = function(f) {
+	    t._e.push(f);
+	  };
+
+	  return t;
+	}(document, "script", "twitter-wjs"));</script>
+{% endblock %}
+
+{% block content %}
+<div id="navigation">
+	<div class="left">
+	  	{% if SecondMapImageName %}
+	    	<a href="#" id="showSecondImage" title="{{"TOGGLE_IMAGE_TOOLTIP"|i18n}}">{{"SHOW_ROUTE_ON_MAP"|i18n}}</a>
+	    	<a href="#" id="hideSecondImage" title="{{"TOGGLE_IMAGE_TOOLTIP"|i18n}}">{{"HIDE_ROUTE_ON_MAP"|i18n}}</a>
+	    	<span class="separator">|</span>
+	  	{% endif %}
+	  	{% if QR and QR.IsValid %}
+	    	<a id="showOverviewMap" href="#">{{"SHOW_OVERVIEW_MAP"|i18n}}</a>
+	    	<a id="hideOverviewMap" href="#">{{"HIDE_OVERVIEW_MAP"|i18n}}</a>
+	    	<span class="separator">|</span>
+	    	<a href="export_kml.php?id={{Map.ID}}&amp;format=kml" title="<{{"KMZ_TOOLTIP"|i18n}}">{{"KMZ"|i18n}}</a>
+		{% endif %}
+	</div>
+	<div class="right">
+		{% if Previous %}
+			<a href="show_map.php?map={{Previous.ID}}">&lt;&lt; {{PreviousName}}</a>
+		{% endif %}
+		{% if Next %}
+			<span class="separator">|</span>
+			<a href="show_map.php?map={{Next.ID}}">{{NextName}} &gt;&gt;</a>
+		{% endif %}
+	</div>
+	<div class="clear"></div>
+</div>
+
+<form id="frm" method="post" action="{{selfPath()}}">
+	{% if ProcessRerun and (RerunMaps != "") %}
+  		<input id="rerun_maps" type="hidden" value="{{RerunMaps}}" />
+  	  	<input id="base_url" type="hidden" value="{{BASE_URL}}" />
+  	  	<input id="rerun_apikey" type="hidden" value="{{RERUN_APIKEY}}" />
+  	  	<input id="rerun_apiurl" type="hidden" value="{{RERUN_APIURL}}" />  
+  	  	<input id="total_rerun_maps" type="hidden" value="<{{TotalRerunMaps}}" />
+  	  	<input id="processed_rerun_maps" type="hidden" value="0" />
+	{% endif %}
+	
+	{% if Map.IsGeocoded %}
+		<input id="staticMapLatitude" type="hidden" value="{{Map.MapCenterLatitude}}" />
+	  	<input id="staticMapLongitude" type="hidden" value="{{Map.MapCenterLongitude}}" />
+	  	<input id="kmlURL" type="hidden" value="{{kmlURL}}" />
+	  	<div id="staticMap"></div>
+	{% endif %}
+
+	
+	<div id="mapInfo">
+		<div id="name">{{Name}}</div>
+
+		<div id="zoomButtonDiv">
+  			<div id="zoomIn" class="zoomButton"></div>
+  		  	<div id="zoomOut" class="zoomButton"></div>
+		</div>
+
+		<div id="propertyContainer">
+			<div id="social-buttons" >
+				<div class="fb-share-button" data-href="{{globalPath("show_map.php")}}?map={{Map.ID}}" data-width="200" 	data-type="button" data-size="large" style="vertical-align:top;"></div>
+
+				<a class="twitter-share-button"
+					data-size="large"
+		  			href="https://twitter.com/intent/tweet">
+					Tweet</a>
+			</div><!-- social buttons -->
+		    <div class="property">
+				<span class="caption">{{"CATEGORY"|i18n}}:</span> {{Map.GetCategory.Name}}
+			</div> 
+			{% if "SHOW_MAP_AREA_NAME"|i18n  and Map.MapName != "" %}
+		   	<div class="property">
+				 <span class="caption">{{"MAP_AREA_NAME"|i18n}}:</span> {{Map.MapName}}
+			</div>
+		 	{% endif %}
+			{% if "SHOW_ORGANISER"|i18n  and Map.Oraniser != "" %}
+		   	<div class="property">
+				 <span class="caption">{{"ORGANISER"|i18n}}:</span> {{Map.Oraniser}}
+			</div>
+		 	{% endif %}
+			{% if "SHOW_COUNTRY"|i18n  and Map.Country != "" %}
+		   	<div class="property">
+				 <span class="caption">{{"COUNTRY"|i18n}}:</span> {{Map.Country}}
+			</div>
+		 	{% endif %}
+			{% if "SHOW_DISCIPLINE"|i18n  and Map.Discipline != "" %}
+		   	<div class="property">
+				 <span class="caption">{{"DISCIPLINE"|i18n}}:</span> {{Map.Discipline}}
+			</div>
+		 	{% endif %}
+			{% if "SHOW_RELAY_LEG"|i18n  and Map.RelayLeg != "" %}
+		   	<div class="property">
+				 <span class="caption">{{"RELAY_LEG"|i18n}}:</span> {{Map.RelayLeg}}
+			</div>
+		 	{% endif %}
+			{% if "SHOW_RESULT_LIST_URL"|i18n  and Map.ResultListUrl != "" %}
+		   	<div class="property">
+				<span class="caption"><a href="{{map.CreateResultListUrl}}">{{ "RESULTS"|i18n }}</a></span>
+			</div>
+		 	{% endif %}
+			{% if QR and QR.IsValid %}	
+				{% if "SHOW_DISTANCE"|i18n or "SHow_ELAPSEDTIME"|i18n %}
+					{% if "SHOW_DISTANCE"|i18n and Map.Distance != "" %} 
+						<div class="property">
+							<span class="caption">{{"DISTANCE"|i18n}}:</span>{{(Map.Distance/1000)|round(2)}} km
+						</div>
+					{% endif %}
+					{% if "SHOW_ELAPSEDTIME"|i18n and Map.ElapsedTime != "" %}
+						<div class="property">
+							<span class="caption">{{"ELAPSEDTIME"|i18n}}:</span>{{convertToTime(Map.ElapsedTime,"MM:SS")}}
+						</div>
+					{% endif %}
+				{% endif %}
+				
+				{% if QR.Sessions[0].Route.AvgHR != 0 %}
+					{% if "SHOW_AVGHR"|i18n %}
+						<div class="property"><span class="caption">{{"AVGHR"|i18n}}:</span> {{QR.Sessions[0].Route.AvgHR|round(0)}}</div>
+					{% endif %}
+					{% if "SHOW_MAXHR"|i18n %}
+						<div class="property"><span class="caption">{{"MAXHR"|i18n}}:</span> {{QR.Sessions[0].Route.MaxHR|round(0)}}</div>
+					{% endif %}
+				{% endif %}
+				
+				{% if Map.RerunID and Map.RerunID != 0 and USE_3DRERUN == "1" %} 
+					<div class="property">
+						<a href="http://3drerun.worldofo.com/?id='{{Map.RerunID}}&type=info" target="_blank">{{"3DRERUN"|i18n}}</a>
+					</div>';
+				{% endif %}
+			{% endif %}
+
+		</div><!-- property container -->
+
+		{% if Map.Comment != "" %}
+			<div id="comment"> {{Map.Comment|nl2br}}</div>
+		{% endif %}
+
+	</div><!-- mapInfo -->
+
+	<div class="clear"></div>
+</form>
+
+
+<div id="overviewMapContainer"></div>
+<div class="clear">&nbsp;</div>
+
+{% endblock %}
+
+{% block bodyend %}
+	{{parent()}}
+	<div>
+		<img id="mapImage" src="{{FirstMapImageName}}" alt="{{Name}}" {% if SecondMapImageName %} title="{{"TOGGLE_IMAGE_CLICK"|i18n}}" class="toggleable" {% endif %}/>
+	  	{% if SecondMapImageName %}
+			<img id="hiddenMapImage" src="{{SecondMapImageName}}" alt="{{Name}}" {% if SecondMapImageName %} title="{{"TOGGLE_IMAGE_CLICK"|i18n}}"{% endif %}/>
+		{% endif %}
+	  	<input type="hidden" id="id" value="{{Map.ID}}" />
+	  	<input type="hidden" id="imageWidth" value="{{ImageWidth}}" />
+	  	<input type="hidden" id="imageHeight" value="{{ImageHeight}}" />
+	</div>
+{% endblock %}

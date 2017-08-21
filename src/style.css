@@ -647,14 +647,14 @@ img.button
   min-height: 60px;
 }
 
-#showMapBody #content #mapInfo
+#content #mapInfo
 {
 	float: right;
 	width: 70%;
   padding: 1em 1em 1em 2em;
 }
 
-#showMapBody #navigation
+#navigation
 {
 	margin-top:1em;
 	color: white;
@@ -663,22 +663,22 @@ img.button
   	font-size: 80%;
 }
 
-#showMapBody #navigation a
+#navigation a
 {
 	color: white;
 }
 
-#showMapBody #navigation a:hover
+#navigation a:hover
 {
 	color: #CCC;
 }
 
-#showMapBody #navigation a:visited
+#navigation a:visited
 {
 	color: white;
 }
 
-#showMapBody #navigation .left
+#navigation .left
 {
   position: relative;
   float: left;
@@ -686,7 +686,7 @@ img.button
   line-height: 15px;
 }
 
-#showMapBody #navigation .right
+#navigation .right
 {
   position: relative;
   float: right;
@@ -694,7 +694,7 @@ img.button
   line-height: 15px;
 }
 
-#showMapBody #mapImage
+#mapImage
 {
   border-width: 0;
   margin: 3em auto;
@@ -702,17 +702,17 @@ img.button
   display: block;
 }
 
-#showMapBody #mapImage.toggleable
+#mapImage.toggleable
 {
   cursor: pointer;
 }
 
-#showMapBody #hiddenMapImage
+#hiddenMapImage
 {
   display: none;
 }
 
-#showMapBody #name
+#name
 {
   font-size: 130%;
   font-weight: bold;
@@ -721,14 +721,14 @@ img.button
   width: 62%;
 }
 
-#showMapBody #propertyContainer
+#propertyContainer
 {
   width: 90%;
   float: left;
   margin-bottom: 0.5em;
 }
 
-#showMapBody .property
+.property
 {
   float: left;
   position: relative;
@@ -737,19 +737,19 @@ img.button
   line-height: 20px;
 }
 
-#showMapBody .property .caption
+.property .caption
 {
   font-weight: normal;
 }
 
-#showMapBody #comment
+#comment
 {
   clear: both;
   margin: 0.5em 0;
   line-height: 19px;
 }
 
-#showMapBody #staticMap
+#staticMap
 {
 	float: left;
 	position: relative;
@@ -766,13 +766,13 @@ img.button
   position: relative;
 }
 
-#showMapBody #top_menu
+#top_menu
 {
   width: 1080px;
   position: relative;
 }
 
-#showMapBody #previousAndNext
+#previousAndNext
 {
   float: right;
   font-size: 80%;
@@ -782,17 +782,17 @@ img.button
   line-height: 15px;
 }
 
-#showMapBody #zoomButtonDiv
+#zoomButtonDiv
 {
   float: right;
 }
 
-#showMapBody #showSecondImage
+#showSecondImage
 {
   display: none;
 }
 
-#showMapBody #hideOverviewMap
+#hideOverviewMap
 {
   display: none;
 }
