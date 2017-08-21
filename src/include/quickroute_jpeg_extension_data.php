@@ -781,11 +781,18 @@
     // derived properties
     public $Distance = null;
     public $ElapsedTime = null;
+	public $MaxHR = null;
+	public $AvgHR = null;
 
     public function CalculateParameters()
     {
       $this->Distance = 0;
       $this->ElapsedTime = 0;
+	  
+	  $this->MaxHR = 0;
+	  $c1 = 0;
+	  $c2 = 0;
+
       foreach($this->Segments as $s)
       {
         $count = count($s->Waypoints);
@@ -793,6 +800,12 @@
         $longLats = array();
         foreach($s->Waypoints as $w)
         {
+		  $c1 += $w->HeartRate;
+		  $c2 += 1;
+		  if($w->HeartRate > $this->MaxHR)
+		  {
+		    $this->MaxHR = $w->HeartRate;
+		  }
           $longLats[] = $w->Position;
         }
         $distances = QRLongLat::PolyDistances($longLats);
@@ -810,6 +823,8 @@
             $s->Waypoints[$i]->Speed = 0.0;
           }
         }
+		//update average heartrate;
+		$this->AvgHr = $c1/$c2;
         // update distance sum
         $this->Distance += $distance;
         // update elapsed time sum
@@ -931,7 +946,6 @@
   class QRRouteSegment
   {
     public $Waypoints;
-
   }
 
   class QRWaypoint
