@@ -36,15 +36,19 @@
   $twig->addFunction('showLanguageMenu', new Twig_Function_Function('Helper::ShowLanguages'));
   $twig->addFunction('convertToTime', new Twig_Function_Function('Helper::ConvertToTime'));
   $twig->addFunction('getThumbnailImage', new Twig_Function_Function('Helper::GetThumbnailImage'));
-  $twig->addFunction('getLanguageCode', new Twig_Function_Function('Session::GetLanguageCode()'));
+  $twig->addFunction('loginAsXText', new Twig_Function_Function('Helper::LoginAsXText'));
+  $twig->addFunction('getLanguageCode', new Twig_Function_Function('Session::GetLanguageCode'));
   $twig->addGlobal('DOMA_VERSION', DOMA_VERSION);
   $twig->addGlobal('_SITE_TITLE', _SITE_TITLE);
+  $twig->addGlobal('_SITE_DESCRIPTION',_SITE_DESCRIPTION);
   $twig->addGlobal('GA_TRACKER', GA_TRACKER);
   $twig->addGlobal('USE_GA', USE_GA);
   $twig->addGlobal('SHOW_LANGUAGES_IN_TOPBAR',SHOW_LANGUAGES_IN_TOPBAR);
   $twig->addGlobal('RERUN_APIKEY', RERUN_APIKEY);
   $twig->addGlobal('RERUN_APIURL', RERUN_APIURL);
   $twig->addGlobal('BASE_URL', BASE_URL);
+  $twig->addGlobal('THUMBNAIL_HEIGHT', THUMBNAIL_HEIGHT);
+  $twig->addGlobal('THUMBNAIL_WIDTH', THUMBNAIL_WIDTH);
   
   // create database if it does not exist
   if(!Helper::DatabaseVersionIsValid()) Helper::Redirect("create.php?redirectUrl=". urlencode($_SERVER["REQUEST_URI"]));
