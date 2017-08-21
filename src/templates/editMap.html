@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-	<form class="wide" method="post" action="{{ selfPath() }}{% if MapID %} ?map={{MapID}} {% endif %}" enctype="multipart/form-data">
+	<form class="wide" method="post" action="{{ selfPath() }}{% if MapID %}?map={{MapID}} {% endif %}" enctype="multipart/form-data">
 
 	<h1>{{Title}}</h1>
 
