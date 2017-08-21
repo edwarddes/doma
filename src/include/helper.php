@@ -929,6 +929,10 @@
   	    return date(__("DATE_FORMAT") ." H:i:s", Helper::StringToTime($map->Date, true));
   	  }
 	}
+	public static function LoginAsXText($user)
+	{
+		return sprintf(__("LOGIN_AS_X"), $user->FirstName);
+	}
 
   }
 
