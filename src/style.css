@@ -156,12 +156,12 @@ th
 	padding: 0.5em
 }
 
-tr.odd
+tr:nth-child(odd)
 {
 
 }
 
-tr.even
+tr:nth-child(even)
 {
   background-color: #f7f7f7;
 }
