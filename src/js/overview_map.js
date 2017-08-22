@@ -112,6 +112,7 @@
       }
       
       map.fitBounds(mapBounds);
+	  zoomChanged();
 	  
       function zoomChanged()
       {
@@ -147,7 +148,10 @@
             routePolylines[i].addTo(map);
           }
         }
-        lastZoom = zoom;
+		if(zoom != undefined)
+		{
+        	lastZoom = zoom;
+		}
       }  
 	    
     });
