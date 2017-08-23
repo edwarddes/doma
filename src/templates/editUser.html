@@ -8,147 +8,211 @@
 {% endblock %}
 
 {% block content %}
-	<form class="wide" method="post" action="{{ FormActionURL }}">
-
-		<h1>{{Title}}</h1>
-
-		<p>{{Info|raw}}</p>
-
-		<h2>{{"PERSONAL_DETAILS_TITLE"|i18n}}</h2>
-		
+<div class="row mt-3">
+	<div class="col">
+		<h3>{{Title}}</h3>
+		<p>{{Info|raw}}</p>		
+	</div>
+</div>
+<form method="post" action="{{ FormActionURL }}">
+<div class="row mt-3">
+	<div class="col">
+		<h5>{{"PERSONAL_DETAILS_TITLE"|i18n}}</h5>
+	</div>
+</div>
+<div class="row">
+	<div class="col ml-3 mr-3 divider"></div>
+</div>
+<div class="row mt-3">
+	<div class="col-lg-6">
 		{% if IsAdmin or IsNewUser %}
 			<p>{{"ADMIN_PERSONAL_DETAILS_INFO"|i18n}}</p>
-
-			<div class="container">
-			<label for="accountID">Account ID</label>
-			<span> {{User.AccountID}}</span>
-			<input type="hidden" class="text" name="accountID" value="{{User.AccountID}}" />
-			</div>
-
-			<div class="container">
-			<label for="firstName">{{"FIRST_NAME"|i18n}}</label>
-			<input type="text" class="text tooltipControl" name="firstName" value="{{User.FirstName}}" /> <span class="required">*</span>
-			<div class="tooltip hidden">{{"ADMIN_FIRST_NAME_DESCRIPTION"|i18n}}</div>
-			</div>
-
-			<div class="container">
-			<label for="lastName">{{"LAST_NAME"|i18n}}</label>
-			<input type="text" class="text tooltipControl" name="lastName" value="{{User.LastName}}" /> <span class="required">*</span>
-			<div class="tooltip hidden">{{"ADMIN_LAST_NAME_DESCRIPTION"|i18n}}</div>
-			</div>
-
-			<div class="container">
-			<label for="email">{{"EMAIL"|i18n}}</label>
-			<input type="text" class="text tooltipControl" name="email" value="{{User.Email}}" /> <span class="required">*</span>
-			<div class="tooltip hidden">{{"ADMIN_EMAIL_DESCRIPTION"|i18n}}</div>
-			</div>
 		{% else %}
 			<p>{{"PERSONAL_DETAILS_INFO"|i18n}}</p>
-
-			<div class="container">
-			<label for="accountID">Account ID</label>
-			<span> {{User.AccountID}} </span>
-			<input type="hidden" class="text" name="accountID" value="{{User.AccountID}}" />
+		{% endif %}
+		
+		<div class="form-group row">
+			<label class="col-md-3 col-form-label" for="accountID">Account ID</label>
+			<div class="col-md-9">
+			<input type="text" readonly class="form-control" id="accountID" value="{{User.AccountID}}">
+			<input type="hidden" class="form-control" name="accountID" value="{{User.AccountID}}" />
+			</div>
+		</div>
+		
+		{% if IsAdmin or IsNewUser %}
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="firstName">{{"FIRST_NAME"|i18n}}<span class="required">*</span></label>
+				<div class="col-md-9">
+				<input type="text" class="form-control" name="firstName" value="{{User.FirstName}}"/>
+				<small id="firstNameHelp" class="form-text text-muted">{{"ADMIN_FIRST_NAME_DESCRIPTION"|i18n}}</small>
+				</div>
 			</div>
 
-			<div class="container">
-			<label for="firstName">{{"FIRST_NAME"|i18n}}</label>
-			<span> {{User.FirstName}} </span>
-			<input type="hidden" class="text" name="firstName" value="{{User.FirstName}}" />
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="lastName">{{"LAST_NAME"|i18n}}<span class="required">*</span></label>
+				<div class="col-md-9">
+				<input type="text" class="form-control" name="lastName" value="{{User.LastName}}" />
+				<small id="firstNameHelp" class="form-text text-muted">{{"ADMIN_LAST_NAME_DESCRIPTION"|i18n}}</small>			
+				</div>
 			</div>
 
-			<div class="container">
-			<label for="lastName">{{"LAST_NAME"|i18n}}</label>
-			<span> {{User.LastName}} </span>
-			<input type="hidden" class="text" name="lastName" value="{{User.LastName}}" />
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="email">{{"EMAIL"|i18n}}<span class="required">*</span></label>
+				<div class="col-md-9">
+				<input type="text" class="form-control" name="email" value="{{User.Email}}" />
+				<small id="firstNameHelp" class="form-text text-muted">{{"ADMIN_EMAIL_DESCRIPTION"|i18n}}</small>
+				</div>
+			</div>
+		{% else %}
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="firstName">{{"FIRST_NAME"|i18n}}</label>
+				<div class="col-md-9">
+				<input type="text" readonly class="form-control" name="firstName" value="{{User.FirstName}}"/>
+				<input type="hidden" class="text" name="firstName" value="{{User.FirstName}}" />
+				</div>
 			</div>
 
-			<div class="container">
-			<label for="email">{{"EMAIL"|i18n}}</label>
-			<span> {{User.Email}} </span>
-			<input type="hidden" class="text" name="email" value="{{User.Email}}" />
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="lastName">{{"LAST_NAME"|i18n}}</label>
+				<div class="col-md-9">
+				<input type="text" readonly class="form-control" name="lastName" value="{{User.LastName}}"/>
+				<input type="hidden" class="text" name="lastName" value="{{User.LastName}}" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="email">{{"EMAIL"|i18n}}</label>
+				<div class="col-md-9">
+				<input type="text" readonly class="form-control" name="email" value="{{User.Email}}"/>
+				<input type="hidden" class="text" name="email" value="{{User.Email}}" />
+				</div>
 			</div>
 		{% endif %}
 
 		{% if IsAdmin and IsNewUser %}
-			<div class="container">
-			<label for="sendEmail">{{"SEND_CONFIRMATION_EMAIL"|i18n}}</label>
-			<input type="checkbox" class="checkbox" name="sendEmail" id="sendEmail" {% if SendEmail %} checked="checked" {% endif %} />
-			{{"SEND_CONFIRMATION_EMAIL_DESCRIPTION"|i18n}}
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="sendEmail">{{"SEND_CONFIRMATION_EMAIL"|i18n}}</label>
+				<div class="col-md-9">
+				<input type="checkbox" class="checkbox form-control" name="sendEmail" id="sendEmail" {% if SendEmail %} checked="checked" {% endif %} />
+				<small class="form-text text-muted">{{"SEND_CONFIRMATION_EMAIL_DESCRIPTION"|i18n}}</small>
+				</div>
 			</div>
 		{% endif %}
 
 		{% if IsAdmin %}
-			<div class="container">
-			<label for="visible">{{"VISIBLE"|i18n}}</label>
-			<input type="checkbox" class="checkbox" name="visible" id="visible" {% if User.Visible %} checked="checked" {% endif %} /> 			{{"ADMIN_VISIBLE_DESCRIPTION"|i18n}}
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="visible">{{"VISIBLE"|i18n}}</label>
+				<div class="col-md-9">
+				<input type="checkbox" class="checkbox form-control" name="visible" id="visible" {% if User.Visible %} checked="checked" {% endif %} />
+				<small class="form-text text-muted">{{"ADMIN_VISIBLE_DESCRIPTION"|i18n}}</small>
+				</div>
 			</div>
 		{% endif %}
-
-		<h2>{{"MAP_CATEGORIES_TITLE"|i18n}}</h2>
-
-		<p>
-			{% if IsAdmin %}
-				{{ "ADMIN_MAP_CATEGORIES_INFO"|i18n }}
-			{% else %}
-				{{ "MAP_CATEGORIES_INFO"|i18n }}
-			{% endif %}
-		</p>
+	</div>
+</div>
+<div class="row mt-3">
+	<div class="col">
+		<h5>{{"MAP_CATEGORIES_TITLE"|i18n}}</h5>
+	</div>
+</div>
+<div class="row">
+	<div class="col ml-3 mr-3 divider"></div>
+</div>
+<div class="row mt-3">
+	<div class="col-lg-8">
+		{% if IsAdmin %}
+			<p>{{ "ADMIN_MAP_CATEGORIES_INFO"|i18n }}</p>
+		{% else %}
+			<p>{{ "MAP_CATEGORIES_INFO"|i18n }}</p>
+		{% endif %}
 		
-		<div class="container">
-		<label for="categoryContainer">{{"MAP_CATEGORIES"|i18n}}</label>
-
-		<div id="categoryContainer">
-		  <div class="category">
-		    <span id="allCategoriesText">{{"ALL_CATEGORIES"|i18n}}</span>
-		    <input type="radio" class="radio" name="defaultCategory" id="categoryDefault_0" value="0" {% if DefaultCategory == 0 %} checked="checked" {% endif %} />
-		    <label for="categoryDefault_0">{{"DEFAULT_CATEGORY"|i18n}}</label>   
-			{% for d in CategoryData %}
-  		      <div class="category">
-  		        <input type="text" class="text" name="{{d.nameId}}" id="{{d.nameId}}" value="{{d.category.Name}}" />
-  		        <input type="radio" class="radio" name="defaultCategory" value="{{d.defaultValue}}" id="{{d.defaultId}}" {% if DefaultCategory == d.defaultValue %} checked="checked" {% endif %} />
-  		        <label for="{{d.defaultId}}">{{"DEFAULT_CATEGORY"|i18n}}</label>        
-  		        <input type="submit" class="submit" name="{{d.deleteId}}" id="{{d.deleteId}}" value="{{"DELETE_CATEGORY"|i18n}}" />
-  		      </div>
-			{% endfor %}
-		  	<div class="clear">
-		    <input type="submit" class="submit" name="addCategory" id="addCategory" value="{{"ADD_CATEGORY"|i18n}}" />
-		  </div>  
-
+		<div class="form-group row">
+			<label class="col-md-3 col-form-label" for="categoryContainer">{{"MAP_CATEGORIES"|i18n}}</label>
+			<div class="col-md-4">
+				<input type="text" readonly class="form-control" value="{{"ALL_CATEGORIES"|i18n}}">
+			</div>
+			<div class="form-check col-md-2">
+			  <label class="form-check-label">
+			    <input class="form-check-input" type="radio" name="defaultCategory" id="categoryDefault_0" value="0" {% if DefaultCategory == 0 %} checked="checked" {% endif %}>
+			    {{"DEFAULT_CATEGORY"|i18n}}
+			  </label>
+			</div>
+			<div class="col-md-3"></div>
 		</div>
-		</div>
-
-		<h2>{{"TEXTS_AND_SETTINGS_TITLE"|i18n}}</h2>
-
-		<p>
-			{% if IsAdmin %}
-				{{ "ADMIN_TEXTS_AND_SETTINGS_INFO"|i18n }}
-			{% else %}
-				{{ "TEXTS_AND_SETTINGS_INFO"|i18n }}
-			{% endif %}
-		</p>
-		{% for key,value in CustomizableSettings.settings %}
-			<div class="container">
-			<label for="CV_{{key}}">{{key}}</label>
-			{% if value|length < 60 %}
-				<input type="text" class="text tooltipControl" name="CV_{{key}}" value="{{key|i18n}}" />
-			{% else %}
-				<textarea class="tooltipControl" name="CV_{{key}}" rows="3" cols="50" style="height: {{2+2*value|length/80}}em;">{{key|i18n}}</textarea>
-			{% endif %}
-			<div class="tooltip hidden">{{attribute(CustomizableSettings.descriptions,key)|i18n}}</div>
+		{% for d in CategoryData %}
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="categoryContainer"></label>
+				<div class="col-md-4">
+					<input type="text" class="form-control" name="{{d.nameId}}" id="{{d.nameId}}" value="{{d.category.Name}}">
+				</div>
+				<div class="form-check col-md-2">
+				  <label class="form-check-label">
+				    <input class="form-check-input" type="radio" name="defaultCategory"value="{{d.defaultValue}}" id="{{d.defaultId}}" {% if DefaultCategory == d.defaultValue %} checked="checked" {% endif %} >
+				    {{"DEFAULT_CATEGORY"|i18n}}
+				  </label>
+				</div>
+				<div class="col-md-3">
+					<button type="submit" class="btn btn-dark-blue" name="{{d.deleteId}}" id="{{d.deleteId}}" value="{{"DELETE_CATEGORY"|i18n}}" >{{"DELETE_CATEGORY"|i18n}}</button>
+				</div>
 			</div>
 		{% endfor %}
-
-		<div class="buttons">
-		<input type="submit" class="submit" name="save" id="save" value="{{"SAVE"|i18n}}" />
-		{% if IsAdmin and (not DeleteButtonClicked) and (not IsNewUser) %}
-			<input type="submit" class="submit" name="delete" id="delete" value="{{"DELETE"|i18n}}" />
-		{% elseif IsAdmin and DeleteButtonClicked %}
-			<input type="submit" class="submit" name="deleteConfirmed" id="deleteConfirmed" value="{{"CONFIRM_DELETION"|i18n}}" />
-		{% endif %}
-		<input type="submit" class="submit" name="cancel" id="cancel" value="{{"CANCEL"|i18n}}" />
-		<input type="hidden" name="noOfCategoriesAdded" value="{{NoOfCategoriesAdded}}" />
+		<div class="form-group row">
+			<div class="col-md-3"></div>
+			<div class="col-md-4">
+				<button type="submit" class="btn btn-dark-blue" name="addCategory" id="addCategory" value="{{"ADD_CATEGORY"|i18n}}" >{{"ADD_CATEGORY"|i18n}}</button>
+			</div>
+			<div class="col-md-5"></div>
 		</div>
+	</div>
+</div>
+<div class="row mt-3">
+	<div class="col">
+		<h5>{{"TEXTS_AND_SETTINGS_TITLE"|i18n}}</h5>
+	</div>
+</div>
+<div class="row">
+	<div class="col ml-3 mr-3 divider"></div>
+</div>
+<div class="row mt-3">
+	<div class="col-lg-8">
+		{% if IsAdmin %}
+			<p>{{ "ADMIN_TEXTS_AND_SETTINGS_INFO"|i18n }}</p>
+		{% else %}
+			<p>{{ "TEXTS_AND_SETTINGS_INFO"|i18n }}</p>
+		{% endif %}
+		
+		{% for key,value in CustomizableSettings.settings %}
+		<div class="form-group row">
+			<label class="col-md-4 col-form-label" for="CV_{{key}}">{{key}}</label>
+			<div class="col-md-8">
+				{% if value|length < 60 %}
+					<input type="text" class="form-control" name="CV_{{key}}" value="{{key|i18n}}" />
+				{% else %}
+					<textarea class="form-control" name="CV_{{key}}" rows="3" cols="50" style="height: {{2+2*value|length/80}}em;">{{key|i18n}}</textarea>
+				{% endif %}
+				<small class="form-text text-muted">{{attribute(CustomizableSettings.descriptions,key)|i18n}}</small>
+			</div>
+		</div>
+		{% endfor %}
+		
+	</div>
+</div>
 
-	</form>
+<div class="row mt-3">
+	<div class="col">
+		<button type="submit" class="btn btn-dark-blue" name="save" id="save" value="{{"SAVE"|i18n}}">{{"SAVE"|i18n}}</button>
+		{% if IsAdmin and (not DeleteButtonClicked) and (not IsNewUser) %}
+			<button type="submit" class="btn btn-dark-blue" name="delete" id="delete" value="{{"DELETE"|i18n}}">{{"DELETE"|i18n}}</button>
+		{% elseif IsAdmin and DeleteButtonClicked %}
+			<button type="submit" class="btn btn-dark-blue" name="deleteConfirmed" id="deleteConfirmed" value="{{"CONFIRM_DELETION"|i18n}}">{{"CONFIRM_DELETION"|i18n}}</button>
+		{% endif %}
+		<button type="submit" class="btn btn-dark-blue" name="cancel" id="cancel" value="{{"CANCEL"|i18n}}">{{"CANCEL"|i18n}}</button>
+		<input type="hidden" name="noOfCategoriesAdded" value="{{NoOfCategoriesAdded}}" />
+	</div>
+</div>
+		
+</form>
+
+<div class="row mt-3 mb-3"><div class="col"></div></div>
+
 {% endblock %}

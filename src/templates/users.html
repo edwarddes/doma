@@ -13,133 +13,141 @@
 {% endblock %}
 
 {% block content %}
-<form method="post" action="{{selfPath()}}">
-
-<div id="rssIcon"><a href="rss.php"><img src="gfx/feed-icon-28x28.png" alt="{{"RSS_FEED"|i18n}}" title="{{"RSS_FEED"|i18n}}" /></a></div>
-
-<h1>{{_SITE_TITLE}}</h1>
-
-<p>{{_SITE_DESCRIPTION}}</p>
-
-<h2>{{"USERS"|i18n}}</h2>      
-<table class="fullWidth">
-<thead>
-  <tr>
-    <th>{{"NAME"|i18n}}</th>
-    <th>{{"NO_OF_MAPS"|i18n}}</th>
-    <th>{{"LAST_MAP"|i18n}}</th>
-    <th>{{"DATE"|i18n}}</th>
-    <th>{{"UPDATED"|i18n}}</th>
-    {% if isLoggedInAsAdmin() %}
-    <th>{{"VISIBLE"|i18n}}</th>
-    <th>{{"EDIT"|i18n}}</th>
-    <th>{{"LOGIN_AS"|i18n}}</th>
-    {% endif %}
-  </tr>
-</thead>
-<tbody>
-{% for user in Users %}
-	<tr>
-		<td>
-			{% if user.Visible %}
-				<a href="{{serverPath("index.php")}}?user={{user.ID}}">{{user.FirstName}} {{user.LastName}}</a>
-			{% else %}
-				{{user.FirstName}} {{user.LastName}}
-			{% endif %}
-		</td>
-		<td>{{user.NoOfMaps}}</td>
-		<td>
-			<span class="hoverThumbnailContainer">
-  				<span class="hoverThumbnail hidden">
-  					{% if LastMapForEachUser[user.ID] %}
-						<img src="{{getThumbnailImage(LastMapForEachUser[user.ID])}}" alt="{{LastMapForEachUser[user.ID].Name}}" height="{{THUMBNAIL_HEIGHT}}" width="{{THUMBNAIL_WIDTH}}"/>
+<div class="row mt-3">
+	<div class="col">
+		<div class="float-right"><a href="rss.php"><img src="gfx/feed-icon-28x28.png" alt="{{"RSS_FEED"|i18n}}" title="{{"RSS_FEED"|i18n}}" /></a></div>
+		<h2>{{_SITE_TITLE}}</h2>
+		<p>{{_SITE_DESCRIPTION}}</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col ml-3 mr-3 divider"></div>
+</div>
+<div class="row mt-3 mb-3">
+	<div class="col">
+		<div class="card card-red">
+			<h4 class="card-header">{{"USERS"|i18n}}</h4>
+			<table class="table table-striped table-sm mb-0">
+			<thead>
+			  <tr>
+			    <th>{{"NAME"|i18n}}</th>
+			    <th>{{"NO_OF_MAPS"|i18n}}</th>
+			    <th>{{"LAST_MAP"|i18n}}</th>
+			    <th>{{"DATE"|i18n}}</th>
+			    <th>{{"UPDATED"|i18n}}</th>
+			    {% if isLoggedInAsAdmin() %}
+			    <th>{{"VISIBLE"|i18n}}</th>
+			    <th>{{"EDIT"|i18n}}</th>
+			    <th>{{"LOGIN_AS"|i18n}}</th>
+			    {% endif %}
+			  </tr>
+			</thead>
+			<tbody>
+			</tbody>
+			{% for user in Users %}
+				<tr>
+					<td>
+						{% if user.Visible %}
+							<a href="{{serverPath("index.php")}}?user={{user.ID}}">{{user.FirstName}} {{user.LastName}}</a>
+						{% else %}
+							{{user.FirstName}} {{user.LastName}}
+						{% endif %}
+					</td>
+					<td>{{user.NoOfMaps}}</td>
+					<td>
+						<span class="hoverThumbnailContainer">
+			  				<span class="hoverThumbnail" style="display:none">
+			  					{% if LastMapForEachUser[user.ID] %}
+									<img src="{{getThumbnailImage(LastMapForEachUser[user.ID])}}" alt="{{LastMapForEachUser[user.ID].Name}}" height="{{THUMBNAIL_HEIGHT}}" width="{{THUMBNAIL_WIDTH}}"/>
+								{% endif %}
+			  				</span>
+						</span>
+						{% if LastMapForEachUser[user.ID] %}
+						<a href="{{serverPath("show_map.php")}}?map={{LastMapForEachUser[user.ID].ID}}" class="thumbnailHoverLink">
+							{{LastMapForEachUser[user.ID].Name}}
+						</a>
+						{% endif %}
+					</td>
+					<td>
+						{% if LastMapForEachUser[user.ID] %}
+							{{stringToTime(LastMapForEachUser[user.ID].Date, true)|date("DATE_FORMAT"|i18n)}}
+						{% endif %}
+					</td>
+					<td>
+						{% if LastMapForEachUser[user.ID] %}
+							{{stringToTime(LastMapForEachUser[user.ID].LastChangedTime, true)|date("DATETIME_FORMAT"|i18n)}}
+						{% endif %}
+					</td>
+					{% if isLoggedInAsAdmin() %}
+						<td>{{user.Visible ? "YES"|i18n :"NO"|i18n}}</td>
+						<td><a href="{{serverPath("edit_user.php")}}?mode=admin&amp;user={{user.ID}}">{{"EDIT"|i18n}}</a></td>
+						<td>
+							{% if user.Visible %} 
+								<a href="{{serverPath("login.php")}}?loginAsUser={{user.ID}}">{{loginAsXText(user)}}</a>
+							{% endif %}
+						</td>
 					{% endif %}
-  				</span>
-			</span>
-			{% if LastMapForEachUser[user.ID] %}
-			<a href="{{serverPath("show_map.php")}}?map={{LastMapForEachUser[user.ID].ID}}" class="thumbnailHoverLink">
-				{{LastMapForEachUser[user.ID].Name}}
-			</a>
-			{% endif %}
-		</td>
-		<td>
-			{% if LastMapForEachUser[user.ID] %}
-				{{stringToTime(LastMapForEachUser[user.ID].Date, true)|date("DATE_FORMAT"|i18n)}}
-			{% endif %}
-		</td>
-		<td>
-			{% if LastMapForEachUser[user.ID] %}
-				{{stringToTime(LastMapForEachUser[user.ID].LastChangedTime, true)|date("DATETIME_FORMAT"|i18n)}}
-			{% endif %}
-		</td>
-		{% if isLoggedInAsAdmin() %}
-			<td>{{user.Visible ? "YES"|i18n :"NO"|i18n}}</td>
-			<td><a href="{{serverPath("edit_user.php")}}?mode=admin&amp;user={{user.ID}}">{{"EDIT"|i18n}}</a></td>
-			<td>
-				{% if user.Visible %} 
-					<a href="{{serverPath("login.php")}}?loginAsUser={{user.ID}}">{{loginAsXText(user)}}</a>
-				{% endif %}
-			</td>
-		{% endif %}
-	</tr>
-{% endfor %}
-</tbody>
-</table>
-
-
+				</tr>
+			{% endfor %}
+			</table>
+		</div>		
+	</div>
+</div>
 {% if LastMaps|length > 0 %}
-
-<h2>
-  {{"LAST_MAPS"|i18n}}
-  <span class="selectNumber">
-    <a href="users.php?lastMaps=10">10</a>
-    <span class="separator">|</span>
-    <a href="users.php?lastMaps=20">20</a>
-    <span class="separator">|</span>
-    <a href="users.php?lastMaps=50">50</a>
-    <span class="separator">|</span>
-    <a href="users.php?lastMaps=all">{{"SHOW_ALL"|i18n}}</a>
-  </span>
-</h2>      
-<table class="fullWidth">
-<thead>
-  <tr>
-    <th>{{"NAME"|i18n}}</th>
-    <th>{{"MAP"|i18n}}</th>
-    <th>{{"DATE"|i18n}}</th>
-    <th>{{"CATEGORY"|i18n}}</th>
-    <th>{{"UPDATED"|i18n}}</th>
-  </tr>
-</thead>
-<tbody>
-{% for map in LastMaps %}
-	<tr>
-		<td>
-			<a href="{{serverPath("index.php")}}?user={{map.GetUser.ID}}">{{map.GetUser.FirstName}} {{map.GetUser.LastName}}</a>
-		</td>
-		<td>
-			<span class="hoverThumbnailContainer">
-  				<span class="hoverThumbnail hidden">
-    				<img src="{{getThumbnailImage(map)}}" alt="{{map.Name}}" height="{{THUMBNAIL_HEIGHT}}" width="{{THUMBNAIL_WIDTH}}"/>
-  				</span>
-			</span>
-			<a href="{{serverPath("show_map.php")}}?map={{map.ID}}" class="thumbnailHoverLink">{{map.Name}}</a>
-		</td>
-		<td>{{stringToTime(map.Date, true)|date("DATE_FORMAT"|i18n)}}</td>
-		<td>{{map.getCategory.Name}}</td>
-		<td>{{stringToTime(map.LastChangedTime, true)|date("DATETIME_FORMAT"|i18n)}}</td>
-	</tr>
-{% endfor %}
-</tbody>
-</table>
+<div class="row mt-3 mb-3">
+	<div class="col">
+		<div class="card card-red">
+			<h4 class="card-header">
+				{{"LAST_MAPS"|i18n}}
+			    <span class="float-right">
+			      <a href="users.php?lastMaps=10">10</a>
+			      <span class="separator">|</span>
+			      <a href="users.php?lastMaps=20">20</a>
+			      <span class="separator">|</span>
+			      <a href="users.php?lastMaps=50">50</a>
+			      <span class="separator">|</span>
+			      <a href="users.php?lastMaps=all">{{"SHOW_ALL"|i18n}}</a>
+			    </span>
+			</h4>
+			<table class="table table-striped table-sm mb-0">
+			<thead>
+			  <tr>
+			    <th>{{"NAME"|i18n}}</th>
+			    <th>{{"MAP"|i18n}}</th>
+			    <th>{{"DATE"|i18n}}</th>
+			    <th>{{"CATEGORY"|i18n}}</th>
+			    <th>{{"UPDATED"|i18n}}</th>
+			  </tr>
+			</thead>
+			<tbody>
+			{% for map in LastMaps %}
+				<tr>
+					<td>
+						<a href="{{serverPath("index.php")}}?user={{map.GetUser.ID}}">{{map.GetUser.FirstName}} {{map.GetUser.LastName}}</a>
+					</td>
+					<td>
+						<span class="hoverThumbnailContainer">
+			  				<span class="hoverThumbnail" style="display:none">
+			    				<img src="{{getThumbnailImage(map)}}" alt="{{map.Name}}" height="{{THUMBNAIL_HEIGHT}}" width="{{THUMBNAIL_WIDTH}}"/>
+			  				</span>
+						</span>
+						<a href="{{serverPath("show_map.php")}}?map={{map.ID}}" class="thumbnailHoverLink">{{map.Name}}</a>
+					</td>
+					<td>{{stringToTime(map.Date, true)|date("DATE_FORMAT"|i18n)}}</td>
+					<td>{{map.getCategory.Name}}</td>
+					<td>{{stringToTime(map.LastChangedTime, true)|date("DATETIME_FORMAT"|i18n)}}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			</table>
+		</div>		
+	</div>
+</div>	
 {% endif %}
-
-{% if OverviewMapData %}
-  <div id="overviewMapContainer">
-    <a id="showOverviewMap" href="#">{{"SHOW_OVERVIEW_MAP"|i18n}}</a>
-    <a id="hideOverviewMap" href="#">{{"HIDE_OVERVIEW_MAP"|i18n}}</a>
-  </div>
-{% endif %}
-
-</form>
+<div class="row mt-3 mb-3"><div class="col">
+	{% if OverviewMapData %}
+	  <div id="overviewMapContainer"></div>
+	{% endif %}
+</div></div>
+<div class="row mt-3 mb-3"><div class="col"></div></div>
 {% endblock %}

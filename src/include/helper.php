@@ -658,17 +658,18 @@
       $langs = explode("|", LANGUAGES_AVAILABLE);
       if(is_array($langs))
       {
-        print __("LANGUAGE").": ";
-        print '<span id="currentLanguage">';
-        $langcode = Session::GetLanguageCode();
-        print self::CreateLanguageImageAndText($langcode);
-        print '<span id="languages">';
-        foreach ($langs as $lang)
-        {
-          self::CreateLanguageLink($lang);
-        }
-        print '</span>';
-        print '</span>';
+		  print '<li class="nav-item dropdown">';
+		  print ' <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+		  $langcode = Session::GetLanguageCode();
+		  print self::CreateLanguageImageAndText($langcode);
+		  print '</a>';
+		  print '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
+          foreach ($langs as $lang)
+          {
+			  self::CreateLanguageLink($lang);
+		  }
+		  print '</div>';
+		  print '</li>';
       }
     }
 
@@ -678,7 +679,7 @@
       list($languageName, $languageCode) = explode(";", $lang);
       $get['lang'] = $languageCode;
       $queryString = http_build_query($get);
-      print '<a href="?'. $queryString .'">'. self::CreateLanguageImageAndText($languageCode, $languageName) ."</a>";
+      print '<a class="dropdown-item" href="?'. $queryString .'">'. self::CreateLanguageImageAndText($languageCode, $languageName) ."</a>";
     }
 
     private static function CreateLanguageImageAndText($languageCode, $languageName = null)

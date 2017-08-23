@@ -2,18 +2,15 @@ $(document).ready(function()
 {
   $(".thumbnailHoverLink").mouseover(function() 
   {
-    var x = $(".hoverThumbnail", $(this).parent()).removeClass('hidden');
+    var x = $(".hoverThumbnail", $(this).parent()).show();
   });
 
   $(".thumbnailHoverLink").mouseout(function() 
   {
-    $(".hoverThumbnail", $(this).parent()).addClass('hidden');
+    $(".hoverThumbnail", $(this).parent()).hide();
   });
 
-  $("#showOverviewMap,#hideOverviewMap").click(function() {
     toggleOverviewMap();
-    return false;
-  });
 
 });
 
@@ -31,6 +28,4 @@ function toggleOverviewMap()
     $("#overviewMapContainer").append(overviewMap);
     overviewMap.overviewMap({ data: overviewMapData });
   }
-  $("#showOverviewMap").toggle();
-  $("#hideOverviewMap").toggle();
 }

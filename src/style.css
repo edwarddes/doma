@@ -1,864 +1,99 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-
-/* GENERAL ******************************************************************************/
-
-html, body, form, select, input, textarea, table, thead, tbody, tfoot, tr, th, td
-{
-  font-family: "Trebuchet MS", Verdana, Helvetica, sans-serif;
-  font-size: 12px;
-}
-
-form, div
-{
-  padding: 0;
-  margin: 0;
-}
-
-/* headers and paragraphs */
-h1
-{
-  margin: 0 0 0.7em 0;
-  font-size: 180%;
-  font-weight: bold;
-}
-
-h2
-{
-  font-size: 135%;
-  font-weight: bold;
-}
-
-h2, h3, h4, h5, h6
-{
-  padding: 0;
-  margin: 1em 0 0.7em 0;
-}
-
-p
-{
-  padding: 0;
-  margin: 0 0 0.7em 0;
-  line-height: 19px;
-}
-
-i
-{
-  font-style: italic;
-}
-
-/* links */
-a, a:visited
-{
-  color: #3f3fff;
-  text-decoration: none;
-}
-
-a:hover 
-{
-  color: #0000ff; 
-  text-decoration: underline;
-} 
-
-a img
-{
-  border: 0;
-}
-
-/* tables */
-table
-{
-	border-collapse: collapse;
-	border-radius: 8px;
-	border-style: hidden; /* hide standard table (collapsed) border */
-	box-shadow: 0 0 0 1px #c00; /* this draws the table border  */ 
-}
-
-table th td:first-child {
-    border-top-left-radius: 8px;
-}
-
-table th td:last-child {
-    border-top-right-radius: 8px;
-}
-
-table tr:last-child td:first-child {
-    border-bottom-left-radius: 8px;
-}
-
-table tr:last-child td:last-child {
-    border-bottom-right-radius: 8px;
-}
-
-thead
-{
-	border-bottom: 1px solid #DDD;
-  font-weight: bold;
-  text-align: left;
-}
-
-td, th
-{
-	padding-left: 0.5em;
-  text-align: left;
-  font-size: 12px;
-  height: 18px;
-  line-height: 18px;
-}
-th
-{
-	padding: 0.5em
-}
-
-tr:nth-child(odd)
-{
-
-}
-
-tr:nth-child(even)
-{
-  background-color: #f7f7f7;
-}
-
-/* miscellaneous */
-span.separator
-{
-}
-
-ul.error
-{
-  color: #ff0000;
-  margin-bottom: 1em;
-}
-
-.clear
-{
-  clear: both;
-}
-
-.fullWidth
-{
-  width: 100%;
-}
-
-.hidden
-{
-  display: none;
-}
-
-.loadingIcon
-{
-  margin: 4em auto;
-  text-align: center;
-  background-image: url(gfx/loading_icon.gif);
-  height: 32px;
-  width: 32px;
-  display: block;
-  text-align: center;
-}
-
-/* LAYOUT ******************************************************************************/
 body 
 {
- margin:0px;
- padding:0;
- background:#eee;/*#464646;*/
- text-align:center;
- font-family:verdana;
- font-size:12px;
- height: 100%;
+	background:#eee;
 }
-#header
+
+.container 
+{
+	background:#fff;
+	box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+#headerImage
 {
     height:80px;
     background-image:url(gfx/ousalogo.png);
     background-repeat:no-repeat;
     background-position:8px center;
 }
-#wrapper 
-{
- margin:0 auto;
- width:80%;
- min-width:880px;
- background:#fff;
- box-shadow: 0 0 10px rgba(0,0,0,0.4);
- padding:0 10px 0 10px;
- text-align:left;
+
+.card-img-left {
+  border-bottom-left-radius: calc(.25rem - 1px);
 }
 
-#content
-{
-  background-color: #ffffff;
-  border-radius: 0 0 5px 5px;
-}
-
-#content form
-{
-  padding: 2em;
-}
-
-/* top bar */
-#topbar
+.bg-dark-blue
 {
 	color: white;
 	background:#152754;
-	padding:2px;
+}
+
+.btn-dark-blue
+{
+	color: white;
+	background-color: #152754;
+}
+
+.card-red
+{
+	border: none;
+	box-shadow: 0 0 0 1px #c00; /* this draws the table border  */ 
+}
+
+.card-red .card-header
+{
+	border-bottom: 1px solid #c00;
+}
+
+/* override larger font for navbar brand element */
+.navbar-brand
+{
+	font-size: 1rem;
+}
+.nav-rounded
+{
 	border-radius:6px;
+	padding-top: 0.2rem;
+	padding-bottom: 0.2rem;
 }
 
-#topbar a
+.divider
 {
-	color: white;
+	border: 2px solid #152754;
+	border-radius:2px;
 }
 
-#topbar a:hover
-{
-	color: #CCC;
-}
 
-#topbar a:visited
-{
-	color: white;
-}
-
-#topbar .left
-{
-  position: relative;
-  float: left;
-  padding: 0.5em 1em;
-  line-height: 15px;
-}
-
-#topbar .right
-{
-  position: relative;
-  float: right;
-  padding: 0.5em 1em;
-  line-height: 15px;
-}
-
-#topbar #languages 
-{
-	color: black;
-  background-color: #ffffff;
-  border: 1px solid #000000;
-  left: -0.75em;
-  position: absolute;
-  top: 2em;
-  width: 12em;
-  z-index: 1000;
-  display: none;
-}
-
-#topbar #languages a
-{
-	color: black;
-  display: block;
-  padding: 0.25em 0.5em;
-}
-
-#topbar #languages img,
-#topbar #currentLanguage img
-{
-  padding: 0 0.5em 2px 0.25em;
-  vertical-align: middle;
-}
-
-#topbar #currentLanguage
-{
-  position: relative;
-  cursor: pointer;
-  background: url(gfx/dropdown_arrow.png) top right no-repeat;
-  padding-right: 15px;
-  border: 1px solid #9595bf;
-}
-
-#topbar #currentLanguage:hover
-{
-  background-color: #d5d5ff;
-}
-
-/* FORM ELEMENTS ******************************************************************************/
-
-form.wide div.container
-{
-  clear: both;
-  position: relative;
-}
-
-form.wide label
-{
-  float: left;
-  position: relative;
-  width: 15em;
-  margin: 0.3em 0 0.9em 0;
-}
-
-form.wide .buttons
-{
-  margin: 1em 0 0 15em;
-}
-
-form.wide textarea
-{
-  position: relative;
-  margin-bottom: 0.5em;
-  height: 8em;
-  width: 35em;
-}
-
-form.wide input.text, form.wide input.password, form.wide select
-{
-  width: 35em;
-}
-
-form.wide .tooltip
-{
-  width: 20em;
-}
-
-form.wide h2
-{
-  clear: left;
-  margin: 1.5em 0 0.7em 0;
-  padding-bottom: 0.2em;
-  border-bottom: 1px dashed #7f7f7f;
-}
-
-form.wide h2 + p
-{
-  margin-bottom: 0.7em;
-}
-
-.tooltip
-{
-  border: 1px solid #000000;
-  position: absolute;
-  z-index: 100;
-  background: #ffffdd;
-  padding: 0.5em;
-  right: 0;
-  top: 0;
-  font-size: 80%;
-}
-
-.required
-{
-  color: #ff0000;
-}
-
-/* index.php ******************************************************************************/
-
-#indexBody #content form
-{
-  padding-bottom: 1em;
-}
-
-#intro
-{
-  margin: 0 0 1em 11em; 
-}
-
-#intro h1
-{
-  margin-top: 0;
-}
-
-#logo
-{
-  float: left;
-  margin-bottom: 1.5em;
-  display: block;
-}
-
-#rssIcon
-{
-  float: right;
-  position: relative;
-  z-index: 100;
-}
-
-/* Select category and year bar */
-#selectCategoryAndYear
-{
-	color: white;
-	background:#152754;
-  border-radius: 6px;
-  text-align: center;
-  margin-top: 1em;
-  height: 1%; /* holly hack */
-  padding: 0.5em;
-}
-
-#selectCategoryAndYear label
-{
-  margin-left: 1em;
-}
-
-#filter
-{
-  width: 4em;
-}
-
-.hideOverviewMap
-{
-  display: none;
-}
-
-/* map thumbnail and info */
-.map
-{
-  margin-bottom: 1em;
-  clear: both;
-  background-color: #efefef;
-  border: 1px solid #eaeaea;
-  height: 1%; /* holly hack */
-  border-radius: 5px;
-  padding: 1em;
-}
-
-.map .thumbnail
-{
-  margin-right: 2em;
-  float: left;
-  height: 1%; /* holly hack */
-}
-
-.map .thumbnail a
-{
-  display: block;
-}
-
-.map .thumbnail img
-{
-  border: 1px solid #7f7f7f;
-  display: block;
-  border-radius: 5px;
-}
-
-.map .thumbnail img:hover
-{
-  border: 1px solid #0000ff;
-}
-
-.info 
-{
-  line-height: 18px;
-}
-
-.map .info .name
-{
-  font-size: 140%;
-  font-weight: bold;
-}
-
-.map .info .protected
-{
-  font-size: 80%;
-  font-style: italic;
-  color: #7f7f7f;
-}
-
-.map .date, .map .category, .map .organiser, .map .discipline, .map.resultListUrl
-{
-
-}
-
-.map .info .admin
-{
-  font-size: 80%;
-}
-
-.map .bottom
-{
-  clear: both;
-}
-
-/* map comment */
-.indent
-{
-  margin-left: 1em;
-  line-height: 18px;
-}
-
-img.button
-{
-  float: left;
-  position: relative;
-  cursor: pointer;
-  margin-top: 4px;
-}
-
-/* footer */
-#footer
-{
-  font-size: 80%;
-  color: #7f7f7f;
-  margin: 1em 0 0 0;
-  padding: 0;
-}
-
-#footer a
-{
-  color: #7f7fff;
-}
-
-.map .googleMapsContainer
-{
-  padding-top: 1em;
-  display: none;
-}
-
-/* overview map, one single map */
-.map .singleOverviewMap
-{
-  width: 100%;
-  height: 300px;
-  clear: both;
-  border: 1px solid #7f7f7f;
-  border-radius: 5px;
-  background-color: #ffffff;
-}
-
-/* overview map, all maps */
 #overviewMap
 {
   width: 100%;
   height: 500px;
   clear: both;
-  border: 1px solid #7f7f7f;
+  border: 1px solid #c00;
   border-radius: 5px;
 }
-#overviewMapContainer
-{
-	padding-bottom: 1em;
-}
-/* overview map, show map page */
-#overviewMapContainer > div
-{
 
-  height: 500px;
+.singleOverviewMap
+{
+  width: 100%;
+  height: 300px;
   clear: both;
-  border: 1px solid #7f7f7f;
-  border-radius: 5px;
   background-color: #ffffff;
-}
-
-/* overview map, show map page */
-#usersBody #overviewMapContainer
-{
-  margin-top: 1em;
-}
-
-#usersBody #overviewMap
-{
-  margin-top: 1em;
-}
-
-#usersBody #hideOverviewMap
-{
-  display: none;
-}
-
-.pointer
-{
-  cursor: pointer;  
-}
-
-.gmInfoWindow
-{
-  line-height: 20px;
-}
-
-.gmInfoWindow .mapName
-{
-  font-weight: bold;
-  font-size: 120%;
-  margin-bottom: 0.5em;
-}
-
-.gmInfoWindow .thumbnail a
-{
-  display: block;
-}
-
-.gmInfoWindow .thumbnail img
-{
-  border: 1px solid #7f7f7f;
-  display: block;
-}
-
-.gmInfoWindow .thumbnail img:hover
-{
-  border: 1px solid #0000ff;
-}
-
-/* show_map.php ******************************************************************************/
-
-#showMapBody #content form
-{
-  padding: 0;
-  min-height: 60px;
-}
-
-#content #mapInfo
-{
-	float: right;
-	width: 70%;
-  padding: 1em 1em 1em 2em;
-}
-
-#navigation
-{
-	margin-top:1em;
-	color: white;
-	background:#152754;
-	border-radius:6px;
-  	font-size: 80%;
-}
-
-#navigation a
-{
-	color: white;
-}
-
-#navigation a:hover
-{
-	color: #CCC;
-}
-
-#navigation a:visited
-{
-	color: white;
-}
-
-#navigation .left
-{
-  position: relative;
-  float: left;
-  padding: 0.5em 1em;
-  line-height: 15px;
-}
-
-#navigation .right
-{
-  position: relative;
-  float: right;
-  padding: 0.5em 1em;
-  line-height: 15px;
-}
-
-#mapImage
-{
-  border-width: 0;
-  margin: 3em auto;
-  clear: both;
-  display: block;
-}
-
-#mapImage.toggleable
-{
-  cursor: pointer;
-}
-
-#hiddenMapImage
-{
-  display: none;
-}
-
-#name
-{
-  font-size: 130%;
-  font-weight: bold;
-  margin-bottom: 0.5em;
-  float: left;
-  width: 62%;
-}
-
-#propertyContainer
-{
-  width: 90%;
-  float: left;
-  margin-bottom: 0.5em;
-}
-
-.property
-{
-  float: left;
-  position: relative;
-  margin-bottom: 0.5em;
-  margin-right: 2em;
-  line-height: 20px;
-}
-
-.property .caption
-{
-  font-weight: normal;
-}
-
-#comment
-{
-  clear: both;
-  margin: 0.5em 0;
-  line-height: 19px;
 }
 
 #staticMap
 {
-	float: left;
-	position: relative;
-	text-align: right;
-	width: 25%;
 	height: 200px;
-	margin-top: 1em;
-	border-radius: 5px;
 	z-index: 0;
 }
 
-#showMapBody #wrapper
+#mapContainer
 {
-  position: relative;
+    width: 100%;
+    height: 750px;
+    clear: both;
+    border: 1px solid #c00;
+    border-radius: 5px;
 }
-
-#top_menu
-{
-  width: 1080px;
-  position: relative;
-}
-
-#previousAndNext
-{
-  float: right;
-  font-size: 80%;
-  text-align: right;
-  margin-right: 1em;
-  width: 30%;
-  line-height: 15px;
-}
-
-#zoomButtonDiv
-{
-  float: right;
-}
-
-#showSecondImage
-{
-  display: none;
-}
-
-#hideOverviewMap
-{
-  display: none;
-}
-
-.zoomButton
-{
-  cursor: pointer;
-  width: 27px;
-  height: 27px;
-  display: block;
-  margin-bottom: 6px;
-  background-position: 0 0;
-}
-
-#zoomIn
-{
-  background-image: url(gfx/zoom_out.png);
-}
-
-#zoomOut
-{
-  background-image: url(gfx/zoom_in.png);
-}
-
-.zoomButton:hover
-{
-  background-position: 27px 0;
-}
-
-/* edit_user.php *******************************************************************************************************/
-
-#categoryContainer
-{
-  display: inline;
-  float: left;
-  position: relative;
-}
-
-#categoryContainer .category
-{
-  clear: both;
-  margin-bottom: 0.5em;
-  position: relative;
-}
-
-#categoryContainer input.text, #categoryContainer #allCategoriesText
-{
-  width: 15em;
-  display: block;
-  float: left;
-}
-
-#categoryContainer #allCategoriesText
-{
-  margin: 0.25em 0.5em 1em 0;
-}
-
-#categoryContainer label
-{
-  width: auto;
-  margin: 0 1em 0 0;
-  float: none;
-}
-
-
-/* users.php *******************************************************************************************************/
 
 .hoverThumbnailContainer
 {
@@ -881,46 +116,21 @@ img.button
   display: block;
 }
 
-.selectNumber
+.zoomButton
 {
-  float: right; 
-  font-size: 75%; 
-  font-weight: normal; 
-  vertical-align: bottom; 
-  padding-top: 0.5em;  
+  cursor: pointer;
+  width: 27px;
+  height: 27px;
+  display: block;
+  background-position: 0 0;
 }
 
-/* tooltip for overview maps *******************************************************************************************************/
-#tt 
-{ 
-  position:absolute; 
-  display:block; 
-  background-color:#666; 
-  border-top: 1px solid #888; 
-  border-left: 1px solid #888; 
-  border-right: 1px solid #444; 
-  border-bottom: 1px solid #444; 
-  color:#fff; 
-  padding: 1em; 
-  border-radius: 5px; 
+#zoomIn
+{
+  background-image: url(gfx/zoom_out.png);
 }
 
-#tt > div 
-{ 
-  text-align: left; 
-  line-height: 130%; 
-}
-
-#tt > div + div 
-{ 
-  margin-top: 0.5em; 
-}
-
-#tt img 
-{ 
-  border-radius: 5px;
-  border-top: 1px solid #444;
-  border-left: 1px solid #444;
-  border-right: 1px solid #888;
-  border-bottom: 1px solid #888; 
+#zoomOut
+{
+  background-image: url(gfx/zoom_in.png);
 }

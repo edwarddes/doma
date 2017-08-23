@@ -8,7 +8,7 @@
 	<script src="js/show_map.js?v={{DOMA_VERSION}}" type="text/javascript"></script>
 	<script type="text/javascript" src="js/jquery/jquery.timeago.js"></script>
 
-    {% if getLanguageCode() != "" and getLanguageCode != "en" %}
+    {% if getLanguageCode() != "" and getLanguageCode() != "en" %}
       <script type="text/javascript" src="js/jquery/jquery.timeago.{{getLanguageCode()}}.js"></script>
 	{% endif %}
 
@@ -80,33 +80,7 @@
 {% endblock %}
 
 {% block content %}
-<div id="navigation">
-	<div class="left">
-	  	{% if SecondMapImageName %}
-	    	<a href="#" id="showSecondImage" title="{{"TOGGLE_IMAGE_TOOLTIP"|i18n}}">{{"SHOW_ROUTE_ON_MAP"|i18n}}</a>
-	    	<a href="#" id="hideSecondImage" title="{{"TOGGLE_IMAGE_TOOLTIP"|i18n}}">{{"HIDE_ROUTE_ON_MAP"|i18n}}</a>
-	    	<span class="separator">|</span>
-	  	{% endif %}
-	  	{% if QR and QR.IsValid %}
-	    	<a id="showOverviewMap" href="#">{{"SHOW_OVERVIEW_MAP"|i18n}}</a>
-	    	<a id="hideOverviewMap" href="#">{{"HIDE_OVERVIEW_MAP"|i18n}}</a>
-	    	<span class="separator">|</span>
-	    	<a href="export_kml.php?id={{Map.ID}}&amp;format=kml" title="<{{"KMZ_TOOLTIP"|i18n}}">{{"KMZ"|i18n}}</a>
-		{% endif %}
-	</div>
-	<div class="right">
-		{% if Previous %}
-			<a href="show_map.php?map={{Previous.ID}}">&lt;&lt; {{PreviousName}}</a>
-		{% endif %}
-		{% if Next %}
-			<span class="separator">|</span>
-			<a href="show_map.php?map={{Next.ID}}">{{NextName}} &gt;&gt;</a>
-		{% endif %}
-	</div>
-	<div class="clear"></div>
-</div>
-
-<form id="frm" method="post" action="{{selfPath()}}">
+<div class="row mt-3">
 	{% if ProcessRerun and (RerunMaps != "") %}
   		<input id="rerun_maps" type="hidden" value="{{RerunMaps}}" />
   	  	<input id="base_url" type="hidden" value="{{BASE_URL}}" />
@@ -115,121 +89,139 @@
   	  	<input id="total_rerun_maps" type="hidden" value="<{{TotalRerunMaps}}" />
   	  	<input id="processed_rerun_maps" type="hidden" value="0" />
 	{% endif %}
-	
 	{% if Map.IsGeocoded %}
+	<div class="col-md-5 col-lg-3">
 		<input id="staticMapLatitude" type="hidden" value="{{Map.MapCenterLatitude}}" />
 	  	<input id="staticMapLongitude" type="hidden" value="{{Map.MapCenterLongitude}}" />
 	  	<input id="kmlURL" type="hidden" value="{{kmlURL}}" />
 	  	<div id="staticMap"></div>
+	</div>
+	<div class="col-md-7 col-lg-9">
+	{% else %}
+	<div class="col">
 	{% endif %}
+		<div><h4><strong>{{Name}}</strong></h4></div>
+		<div id="social-buttons" >
+			<div class="fb-share-button" data-href="{{globalPath("show_map.php")}}?map={{Map.ID}}" data-width="200" 	data-type="button" data-size="large" style="vertical-align:top;"></div>
 
-	
-	<div id="mapInfo">
-		<div id="name">{{Name}}</div>
-
-		<div id="zoomButtonDiv">
-  			<div id="zoomIn" class="zoomButton"></div>
-  		  	<div id="zoomOut" class="zoomButton"></div>
+			<a class="twitter-share-button"
+				data-size="large"
+	  			href="https://twitter.com/intent/tweet">
+				Tweet</a>
 		</div>
-
-		<div id="propertyContainer">
-			<div id="social-buttons" >
-				<div class="fb-share-button" data-href="{{globalPath("show_map.php")}}?map={{Map.ID}}" data-width="200" 	data-type="button" data-size="large" style="vertical-align:top;"></div>
-
-				<a class="twitter-share-button"
-					data-size="large"
-		  			href="https://twitter.com/intent/tweet">
-					Tweet</a>
-			</div><!-- social buttons -->
-		    <div class="property">
+		<div>
+		    <span class="property">
 				<span class="caption">{{"CATEGORY"|i18n}}:</span> {{Map.GetCategory.Name}}
-			</div> 
+			</span> 
 			{% if "SHOW_MAP_AREA_NAME"|i18n  and Map.MapName != "" %}
-		   	<div class="property">
+		   	<span class="property">
 				 <span class="caption">{{"MAP_AREA_NAME"|i18n}}:</span> {{Map.MapName}}
-			</div>
+			</span>
+		</div>
+		<div>
 		 	{% endif %}
 			{% if "SHOW_ORGANISER"|i18n  and Map.Oraniser != "" %}
-		   	<div class="property">
+		   	<span class="property">
 				 <span class="caption">{{"ORGANISER"|i18n}}:</span> {{Map.Oraniser}}
-			</div>
+			</span>
 		 	{% endif %}
 			{% if "SHOW_COUNTRY"|i18n  and Map.Country != "" %}
-		   	<div class="property">
+		   	<span class="property">
 				 <span class="caption">{{"COUNTRY"|i18n}}:</span> {{Map.Country}}
-			</div>
+			</span>
 		 	{% endif %}
+		</div>
+		<div>
 			{% if "SHOW_DISCIPLINE"|i18n  and Map.Discipline != "" %}
-		   	<div class="property">
+		   	<span class="property">
 				 <span class="caption">{{"DISCIPLINE"|i18n}}:</span> {{Map.Discipline}}
-			</div>
+			</span>
 		 	{% endif %}
 			{% if "SHOW_RELAY_LEG"|i18n  and Map.RelayLeg != "" %}
-		   	<div class="property">
+		   	<span class="property">
 				 <span class="caption">{{"RELAY_LEG"|i18n}}:</span> {{Map.RelayLeg}}
-			</div>
+			</span>
 		 	{% endif %}
 			{% if "SHOW_RESULT_LIST_URL"|i18n  and Map.ResultListUrl != "" %}
-		   	<div class="property">
+		   	<span class="property">
 				<span class="caption"><a href="{{map.CreateResultListUrl}}">{{ "RESULTS"|i18n }}</a></span>
-			</div>
+			</span>
 		 	{% endif %}
+		</div>
+		<div>
 			{% if QR and QR.IsValid %}	
 				{% if "SHOW_DISTANCE"|i18n or "SHow_ELAPSEDTIME"|i18n %}
 					{% if "SHOW_DISTANCE"|i18n and Map.Distance != "" %} 
-						<div class="property">
+						<span class="property">
 							<span class="caption">{{"DISTANCE"|i18n}}:</span>{{(Map.Distance/1000)|round(2)}} km
-						</div>
+						</span>
 					{% endif %}
 					{% if "SHOW_ELAPSEDTIME"|i18n and Map.ElapsedTime != "" %}
-						<div class="property">
+						<span class="property">
 							<span class="caption">{{"ELAPSEDTIME"|i18n}}:</span>{{convertToTime(Map.ElapsedTime,"MM:SS")}}
-						</div>
+						</span>
 					{% endif %}
 				{% endif %}
 				
 				{% if QR.Sessions[0].Route.AvgHR != 0 %}
 					{% if "SHOW_AVGHR"|i18n %}
-						<div class="property"><span class="caption">{{"AVGHR"|i18n}}:</span> {{QR.Sessions[0].Route.AvgHR|round(0)}}</div>
+						<span class="property"><span class="caption">{{"AVGHR"|i18n}}:</span> {{QR.Sessions[0].Route.AvgHR|round(0)}}</span>
 					{% endif %}
 					{% if "SHOW_MAXHR"|i18n %}
-						<div class="property"><span class="caption">{{"MAXHR"|i18n}}:</span> {{QR.Sessions[0].Route.MaxHR|round(0)}}</div>
+						<span class="property"><span class="caption">{{"MAXHR"|i18n}}:</span> {{QR.Sessions[0].Route.MaxHR|round(0)}}</span>
 					{% endif %}
 				{% endif %}
 				
 				{% if Map.RerunID and Map.RerunID != 0 and USE_3DRERUN == "1" %} 
-					<div class="property">
+					<span class="property">
 						<a href="http://3drerun.worldofo.com/?id='{{Map.RerunID}}&type=info" target="_blank">{{"3DRERUN"|i18n}}</a>
-					</div>';
+					</span>';
 				{% endif %}
 			{% endif %}
-
-		</div><!-- property container -->
-
+		</div>
 		{% if Map.Comment != "" %}
 			<div id="comment"> {{Map.Comment|nl2br}}</div>
 		{% endif %}
-
-	</div><!-- mapInfo -->
-
-	<div class="clear"></div>
-</form>
-
-
-<div id="overviewMapContainer"></div>
-<div class="clear">&nbsp;</div>
-
-{% endblock %}
-
-{% block bodyend %}
-	{{parent()}}
-	<div>
-		<img id="mapImage" src="{{FirstMapImageName}}" alt="{{Name}}" {% if SecondMapImageName %} title="{{"TOGGLE_IMAGE_CLICK"|i18n}}" class="toggleable" {% endif %}/>
-	  	{% if SecondMapImageName %}
-			<img id="hiddenMapImage" src="{{SecondMapImageName}}" alt="{{Name}}" {% if SecondMapImageName %} title="{{"TOGGLE_IMAGE_CLICK"|i18n}}"{% endif %}/>
-		{% endif %}
-	  	<input type="hidden" id="id" value="{{Map.ID}}" />
-	  	<input type="hidden" id="imageWidth" value="{{ImageWidth}}" />
-	  	<input type="hidden" id="imageHeight" value="{{ImageHeight}}" />
 	</div>
+</div>
+<div class="row mt-3"><div class="col"></div></div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark-blue nav-rounded">
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#showMapNavBar" aria-controls="showMapNavBar" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+    </button>
+	<div class="collapse navbar-collapse" id="showMapNavBar">
+	<ul class="navbar-nav">
+	  	{% if QR and QR.IsValid %}
+	    	<li class="nav-item" id="showOverviewMap"><a class="nav-link" href="#">{{"SHOW_OVERVIEW_MAP"|i18n}}</a></li>
+	    	<li class="nav-item" id="hideOverviewMap" style="display:none"><a class="nav-link" href="#">{{"HIDE_OVERVIEW_MAP"|i18n}}</a></li>
+	    	<li class="nav-item"><a class="nav-link" href="export_kml.php?id={{Map.ID}}&amp;format=kml" title="<{{"KMZ_TOOLTIP"|i18n}}">{{"KMZ"|i18n}}</a></li>
+		{% endif %}
+	</ul>
+	<ul class="navbar-nav ml-auto">
+		{% if Previous %}
+			<li class="nav-item"><a class="nav-link" href="show_map.php?map={{Previous.ID}}">&lt;&lt; {{PreviousName}}</a></li>
+		{% endif %}
+		{% if Next %}
+			<li class="nav-item"><a class="nav-link" href="show_map.php?map={{Next.ID}}">{{NextName}} &gt;&gt;</a></li>
+		{% endif %}
+	</ul>
+	</div>
+</nav>
+
+<div class="row mt-3 mb-3"><div class="col">
+	<input type="hidden" id="id" value="{{Map.ID}}" />
+	<div id="overviewMapContainer"></div>
+</div></div>
+
+<div class="row mt-3 mb-3"><div class="col">
+	<input type="hidden" id="mapURL" value="{{FirstMapImageName}}" />
+	{% if SecondMapImageName %}
+		<input type="hidden" id="secondMapURL" value="{{SecondMapImageName}}" />
+	{% endif %}
+	<input type="hidden" id="mapWidth" value="{{ImageWidth}}">
+	<input type="hidden" id="mapHeight" value="{{ImageHeight}}">
+	<div id="mapContainer"></div>
+</div></div>
+	
+<div class="row mt-3 mb-3"><div class="col"></div></div>
 {% endblock %}

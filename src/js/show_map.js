@@ -1,71 +1,24 @@
 $(document).ready(function() 
-{
-
-  $("#zoomIn").click(function() 
-  {
-    ZoomIn();
-  });
-  
-  $("#zoomOut").click(function() 
-  {
-    ZoomOut();
-  });
-
-  $("#showSecondImage,#hideSecondImage,#mapImage").click(function() 
-  {
-    ToggleImage();
-  });
-  
-  
+{ 
   $("abbr.timeago").timeago();
   
 	reloadStaticMap();
+	loadMap($("#mapContainer"));
   
 });
-
-var zoom = 1;
-
-function ZoomIn()
-{
-  zoom *= 1.25;
-  $("#mapImage").get(0).width = zoom * $("#imageWidth").val();
-  $("#mapImage").get(0).height = zoom * $("#imageHeight").val();
-}
-
-function ZoomOut()
-{
-  zoom /= 1.25;
-  $("#mapImage").get(0).width = zoom * $("#imageWidth").val();
-  $("#mapImage").get(0).height = zoom * $("#imageHeight").val();
-}
-
-function ToggleImage()
-{
-  var mapImage = $("#mapImage").get(0).src;
-  var hiddenMapImageControl = $("#hiddenMapImage");
-  
-  if(hiddenMapImageControl.length > 0)
-  {
-    var hiddenMapImage = hiddenMapImageControl.get(0).src;
-    $("#mapImage").get(0).src = hiddenMapImage;
-    $("#hiddenMapImage").get(0).src = mapImage;
-    $("#showSecondImage").toggle();
-    $("#hideSecondImage").toggle();
-  }
-}
 
 function toggleOverviewMap(mapContainer)
 {
   var id = $("#id").val();
-  var mapExists = $(".overviewMap", mapContainer).length > 0;
+  var mapExists = $("#overviewMap", mapContainer).length > 0;
   
   if(mapExists)
   {
-    $(".overviewMap").toggle();
+    $("#overviewMap").toggle();
   }
   else
   {
-    var mapDiv = $('<div class="overviewMap"/>');
+    var mapDiv = $('<div id="overviewMap"/>');
     var loadingIcon = $('<div class="loadingIcon"/>');
     mapDiv.append(loadingIcon);
     mapContainer.append(mapDiv);
@@ -84,7 +37,7 @@ function toggleOverviewMap(mapContainer)
 
 function reloadStaticMap()
 {
-	if($("#staticMap").size())
+	if($("#staticMap").length)
 	{
 		var staticMap = L.map('staticMap',{ zoomControl:false }).setView([$("#staticMapLatitude").val(),$("#staticMapLongitude").val()], 6);
 		//L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -107,6 +60,28 @@ function reloadStaticMap()
 		if (staticMap.tap) map.tap.disable();
 		$("#staticMap").css( 'cursor', 'pointer' );
 	}
+}
+
+function loadMap()
+{
+	var mapImageURL = $("#mapURL").val();
+	var secondMapImageURL = $("#secondMapURL").val();
+	var mapWidth = $("#mapWidth").val();
+	var mapHeight = $("#mapHeight").val();
+	var ratio = mapWidth/mapHeight
+	var map = L.map('mapContainer', {
+	    crs: L.CRS.Simple,
+		minZoom: 0
+	});
+	var bounds = [[0,0], [750,750*ratio]];
+	var primaryMapLayer = L.imageOverlay(mapImageURL, bounds)
+	if(secondMapImageURL)
+	{
+		var secondaryMapLayer = L.imageOverlay(secondMapImageURL, bounds).addTo(map);
+		L.control.layers({}, {"Route":primaryMapLayer},{"collapsed":false}).addTo(map);
+	}
+	primaryMapLayer.addTo(map);
+	map.fitBounds(bounds);
 }
 
 $(function() {

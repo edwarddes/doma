@@ -1,43 +1,44 @@
-<div id="topbar">
-	<div class="left">
-	<a href="users.php">{{_SITE_TITLE}}</a>
-	{% if isLoggedInAsAdmin() %}
-	  <span class="separator">|</span>
-	  Administrator
-	  {% if isLoggedInAsUser() %}
-	  	<span class="separator">|</span>
-		{{getLoggedInUser().FirstName}} {{getLoggedInUser().LastName}}
-		<span class="separator">|</span>
-		<a href="edit_user.php"><?php print __("USER_PROFILE"); ?></a>
-		<span class="separator">|</span>
-		<a href="login.php?action=logout"><?php print __("LOGOUT"); ?></a>
-	  {% endif %}
-	  <span class="separator">|</span>
-	  <a href="edit_user.php?mode=new">{{"ADD_USER"|i18n}}</a>
-	  <span class="separator">|</span>
-	  <a href="admin_login.php?action=logout">{{"ADMIN_LOGOUT"|i18n}}</a>
-	{% elseif isLoggedInAsUser() %}
-	  <span class="separator">|</span>
-	  <a href="index.php?user={{getLoggedInUser().ID}}">
-	  {{getLoggedInUser().FirstName}} {{getLoggedInUser().LastName}}
-	  </a>
-	  <span class="separator">|</span>
-	  <a href="edit_user.php">{{"USER_PROFILE"|i18n}}</a>
-	  <span class="separator">|</span>
-	  <a href="edit_map.php">{{"ADD_MAP"|i18n}}</a>
-	  <span class="separator">|</span>
-	  <a href="login.php?action=logout">{{"LOGOUT"|i18n}}</a>
-	{% else %}
-	  <span class="separator">|</span>
-	  <a href="login.php">{{"LOGIN"|i18n}}</a>
-	{% endif %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark-blue nav-rounded">
+	<a class="navbar-brand" href="users.php">{{_SITE_TITLE}}</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav">
+		{% if isLoggedInAsAdmin() %}
+  	      	<li class="nav-item"><span class="navbar-text">Administrator</span></li>
+			{% if isLoggedInAsUser() %}
+				<li class="nav-item">{{getLoggedInUser().FirstName}} {{getLoggedInUser().LastName}}</li>
+				<li class="nav-item"><a class="nav-link" href="edit_user.php">{{"USER_PROFILE"|i18n}}</a></li>
+				<li class="nav-item"><a class="nav-link" href="login.php?action=logout">{{"LOGOUT"|i18n}}</a></li>
+			{% endif %}
+			<li class="nav-item"><a class="nav-link" href="edit_user.php?mode=new">{{"ADD_USER"|i18n}}</a></li>
+			<li class="nav-item"><a class="nav-link" href="admin_login.php?action=logout">{{"ADMIN_LOGOUT"|i18n}}</a></li>
+		{% elseif isLoggedInAsUser() %}
+  	    	<li class="nav-item">
+		  	  	<a class="nav-link" href="index.php?user={{getLoggedInUser().ID}}">
+		  	  	  {{getLoggedInUser().FirstName}} {{getLoggedInUser().LastName}}
+		  	  	</a>
+  	    	</li>
+  	    	<li class="nav-item">
+  	        	<a class="nav-link" href="edit_user.php">{{"USER_PROFILE"|i18n}}</a>
+  	    	</li>
+  	    	<li class="nav-item">
+  	        	<a class="nav-link" href="edit_map.php">{{"ADD_MAP"|i18n}}</a>
+  	    	</li>
+  	    	<li class="nav-item">
+  	        	<a class="nav-link" href="login.php?action=logout">{{"LOGOUT"|i18n}}</a>
+  	    	</li>
+		{% else %}
+  	    	<li class="nav-item">
+  	        	<a class="nav-link" href="login.php">{{"LOGIN"|i18n}}</a>
+  	    	</li>
+		{% endif %}	
+			
+		</ul>
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item">{{ showLanguageMenu()|raw}}</li>
+			<li class="nav-item"><a class="nav-link" href="version.php">OUSA DOMA</a></li>
+		</ul>
 	</div>
-	<div class="right">
-	{% if SHOW_LANGUAGES_IN_TOPBAR =="1" %}
-	  {{ showLanguageMenu()|raw}}
-	  <span class="separator">|</span>
-	{% endif %}
-	<a href="version.php">OUSA DOMA</a>
-	</div>
-	<div class="clear"></div>
-</div>
+</nav>
